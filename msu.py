@@ -3,17 +3,23 @@ import numpy as np
 
 # teamsurl = 'https://www.sports-reference.com/cbb/schools/michigan-state/2018-gamelogs.html#sgl-basic::none'
 
-teams = ['michigan-state']
+teams = ['north-florida', 'michigan-state', 'duke', 'stony-brook', 'depaul',
+         'connecticut', 'north-carolina', 'notre-dame']
+# teams = ['michigan-state']
 
-def df_creator(team):
+def df_creator(teams, season):
     '''
-    INPUT: list of teams (formatted as in url)
+    INPUTs:
+        teams = list of teams (formatted as in url)
+        season = season year
+
     OUTPUT: DataFrame of all games
     '''
-    teams_df = {}
+    games_df = pd.DataFrame()
+
     for team in teams:
 
-        url = 'https://www.sports-reference.com/cbb/schools/{}/2018-gamelogs.html#sgl-basic::none'.format(team)
+        url = 'https://www.sports-reference.com/cbb/schools/{}/{}-gamelogs.html#sgl-basic::none'.format(team, season)
 
         '''Read team gamelog'''
         df = pd.read_html(url)[0]
@@ -35,6 +41,14 @@ def df_creator(team):
                    'AST', 'STL', 'BLK', 'TO', 'PF']
         df.columns = newcols
 
+        '''reformat Opp column strings'''
+        df['Opp'] = df['Opp'].str.lower()
+        df['Opp'] = df['Opp'].str.replace("'",'')
+        df['Opp'] = df['Opp'].str.replace(".",'')
+        df['Opp'] = df['Opp'].str.replace("(",'')
+        df['Opp'] = df['Opp'].str.replace(")",'')
+        df['Opp'] = df['Opp'].str.replace(" ",'-')
+
         '''Only take the first charcter in W field then map to 0's and 1's'''
         df['W'] = df['W'].astype(str).str[0]
         df['W'] = df['W'].map({'W': 1, 'L': 0})
@@ -45,7 +59,7 @@ def df_creator(team):
         df['ppg'] = df['Pts'].rolling(window=5,center=False).mean()
         df['pApg'] = df['PtsA'].rolling(window=5,center=False).mean()
         df['FGp'] = df['FG%'].rolling(window=5,center=False).mean()
-        df['3Pg'] = df['3P%'].rolling(window=5,center=False).mean()
+        df['3Pp'] = df['3P%'].rolling(window=5,center=False).mean()
         df['FTp'] = df['FT%'].rolling(window=5,center=False).mean()
         df['ORBpg'] = df['ORB'].rolling(window=5,center=False).mean()
         df['RBpg'] = df['RB'].rolling(window=5,center=False).mean()
@@ -56,7 +70,7 @@ def df_creator(team):
         df['PFpg'] = df['PF'].rolling(window=5,center=False).mean()
 
         '''Remove columns after rolling ave calcs'''
-        df = df.drop(['G', 'Date', 'Blank', 'Pts', 'PtsA', 'FG', 'FGA', 'FG%',
+        df = df.drop(['G', 'Blank', 'Pts', 'PtsA', 'FG', 'FGA', 'FG%',
                       '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 'ORB', 'RB',
                       'AST', 'STL', 'BLK', 'TO', 'PF'], axis=1)
 
@@ -65,3 +79,17 @@ def df_creator(team):
 
         '''Add Team Column'''
         df['Tm'] = team
+
+        '''Add df to games_df'''
+        games_df = games_df.append(df, ignore_index=True)
+
+    return games_df
+def create_teams(row):
+    t1 = row['tm']
+    t2 = row['Opp']
+    sorted
+
+
+if __name__ == '__main__':
+    # print(df_creator(teams, 2018))
+    games = df_creator(teams, 2018)
