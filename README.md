@@ -24,3 +24,29 @@ process:
 Data:
 - team gamelog data
 - opponents gamelog data
+
+
+format names:
+dictionary from sos table for name mapping
+Op
+sos
+
+team list
+tm
+
+delta pts
+sos
+
+connect tm w/ opponents
+
+train
+
+make functionality to test games
+
+
+
+Future:
+Add features:
+ - pace
+ - offensive rating
+ - defensive rating
