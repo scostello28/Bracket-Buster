@@ -17,7 +17,7 @@ Arkansas-State,arkansas-state,-3.01
 Arkansas-Little-Rock,arkansas-little-rock,-3.61
 Arkansas-Pine-Bluff,arkansas-pine-bluff,-8.64
 Army,army,-4.65
-Auburn-Tigers,auburn-tigers,4.02
+Auburn,auburn,4.02
 Austin-Peay,austin-peay,-3.35
 Ball-State,ball-state,-0.71
 Baylor,baylor,2.39
@@ -39,8 +39,8 @@ Cal-Poly,cal-poly,-1.72
 Cal-State-Bakersfield,cal-state-bakersfield,-3.18
 Cal-State-Fullerton,cal-state-fullerton,-0.26
 Cal-State-Northridge,cal-state-northridge,-1.82
-Campbell-Fighting,campbell-fighting,-7.17
-Canisius-Golden,canisius-golden,-1.6
+Campbell,campbell,-7.17
+Canisius,canisius,-1.6
 Central-Arkansas,central-arkansas,-5.56
 Central-Connecticut-State,central-connecticut-state,-7.77
 Central-Florida,central-florida,-3.04
@@ -87,7 +87,7 @@ Fairfield,fairfield,-2.83
 Fairleigh-Dickinson,fairleigh-dickinson,-6.96
 Florida-A&M,florida-am,-9.12
 Florida-Atlantic,florida-atlantic,-3.5
-Florida-Gators,florida-gators,4.79
+Florida,florida,4.79
 Florida-Gulf-Coast,florida-gulf-coast,-3.79
 Florida-International,florida-international,-3.42
 Florida-State,florida-state,4.78
@@ -147,7 +147,7 @@ Lipscomb,lipscomb,-4.67
 Long-Beach-State,long-beach-state,1.27
 Long-Island-University,long-island-university,-6.37
 Longwood,longwood,-5.13
-Louisiana,louisiana,-1.12
+Louisiana,louisiana-lafayette,-1.12
 LSU,louisiana-state,4.33
 Louisiana-Tech,louisiana-tech,-1.6
 Louisiana-Monroe,louisiana-monroe,-4.43
@@ -155,7 +155,7 @@ Louisville,louisville,6.41
 Loyola-(IL),loyola-il,1.5
 Loyola-(MD),loyola-md,-4.69
 Loyola-Marymount,loyola-marymount,0.32
-Maine-Black,maine-black,-7.42
+Maine,maine,-7.42
 Manhattan,manhattan,-2.3
 Marist,marist,-5.48
 Marquette,marquette,4.61
@@ -249,7 +249,7 @@ Rice,rice,0.83
 Richmond,richmond,-1.56
 Rider,rider,-6.06
 Robert-Morris,robert-morris,-6.77
-Rutgers-Scarlet,rutgers-scarlet,0.37
+Rutgers,rutgers,0.37
 Sacramento-State,sacramento-state,-2.93
 Sacred-Heart,sacred-heart,-6.91
 Saint-Francis-(PA),saint-francis-pa,-4.41
@@ -258,7 +258,7 @@ Saint-Louis,saint-louis,4.01
 Saint-Mary's-(CA),saint-marys-ca,0.17
 Saint-Peter's,saint-peters,-3.93
 Sam-Houston-State,sam-houston-state,-5.34
-Samford-Bulldogs,samford-bulldogs,-5.46
+Samford,samford,-5.46
 San-Diego-State,san-diego-state,3.34
 San-Diego,san-diego,0.41
 San-Francisco,san-francisco,0.59
@@ -306,7 +306,7 @@ Texas-State,texas-state,-5.71
 Texas-Tech,texas-tech,2.4
 Texas-Arlington,texas-arlington,-4.71
 UTEP,texas-el-paso,0.77
-Texas-Rio-Grande-Valley,texas-rio-grande-valley,-3.15
+Texas-Rio-Grande-Valley,texas-pan-american,-3.15
 UTSA,texas-san-antonio,-4.74
 Toledo,toledo,-0.26
 Towson,towson,-4.37
@@ -318,7 +318,7 @@ UC-Irvine,california-irvine,0.36
 UC-Riverside,california-riverside,-1.85
 UCSB,california-santa-barbara,0.18
 UCLA,ucla,6.9
-University-of-California,university-of-california,6.03
+University-of-California,california,6.03
 Utah-State,utah-state,0.88
 Utah,utah,3.55
 Utah-Valley,utah-valley,-5.48
