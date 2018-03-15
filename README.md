@@ -1,4 +1,6 @@
-# capstone_1
+# Bracket Buster
+
+![NCAA or Bust](https://media.giphy.com/media/3o84U3i3nkhYoJOm3K/giphy.gif)
 
 Goal:
 Pick a winner
