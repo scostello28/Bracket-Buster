@@ -47,6 +47,8 @@ Data Cleaning:
   - generate a unique id by mapping names with formatted names
   - combine data to one row for each match!
 
+![CorreationMatrix](pictures/corrmatrix.png)
+
 ## Modeling
 **Basic Logistic Regression**
 
