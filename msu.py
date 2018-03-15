@@ -1,51 +1,8 @@
 import pandas as pd
 import numpy as np
+import pickle
 
 # teamsurl = 'https://www.sports-reference.com/cbb/schools/michigan-state/2018-gamelogs.html#sgl-basic::none'
-
-# teams = ['north-florida', 'michigan-state', 'duke', 'stony-brook', 'depaul',
-#          'connecticut', 'north-carolina', 'notre-dame']
-# teams = ['michigan', 'wisconsin']
-
-# teams = ['abilene-christian', 'air-force', 'akron', 'alabama-am', 'alabama', 'alabama-state', 'alabama-birmingham', 'albany-ny', 'alcorn-state', 'american']
-
-# teams = ['appalachian-state', 'arizona-state', 'arizona', 'arkansas', 'arkansas-state']
-# teams = ['arkansas-little-rock', 'arkansas-pine-bluff', 'army', 'auburn']
-# teams = ['austin-peay', 'ball-state', 'baylor', 'belmont', 'bethune-cookman', 'binghamton', 'boise-state', 'boston-college', 'boston-university', 'bowling-green-state', 'bradley', 'brigham-young', 'brown', 'bryant', 'bucknell', 'buffalo', 'butler', 'cal-poly', 'cal-state-bakersfield']
-# teams = ['cal-state-fullerton', 'cal-state-northridge', 'campbell', 'canisius', 'central-arkansas', 'central-connecticut-state', 'central-florida', 'central-michigan', 'charleston-southern', 'charlotte', 'chattanooga', 'chicago-state', 'cincinnati', 'citadel', 'clemson']
-# teams = ['cleveland-state', 'coastal-carolina', 'colgate', 'college-of-charleston', 'colorado', 'colorado-state', 'columbia', 'connecticut', 'coppin-state', 'cornell', 'creighton', 'dartmouth', 'davidson', 'dayton', 'delaware', 'delaware-state', 'denver', 'depaul', 'detroit-mercy']
-# teams = ['drake', 'drexel', 'duke', 'duquesne', 'east-carolina', 'east-tennessee-state', 'eastern-illinois', 'eastern-kentucky', 'eastern-michigan', 'eastern-washington', 'elon', 'evansville', 'fairfield', 'fairleigh-dickinson']
-# teams = ['florida-am', 'florida-atlantic', 'florida', 'florida-gulf-coast', 'florida-international', 'florida-state']
-# teams = ['fordham', 'fresno-state', 'furman', 'gardner-webb', 'george-mason', 'george-washington', 'georgetown', 'georgia']
-# teams = ['georgia-southern', 'georgia-state', 'georgia-tech', 'gonzaga', 'grambling', 'grand-canyon', 'green-bay', 'hampton', 'hartford', 'harvard', 'hawaii', 'high-point', 'hofstra', 'holy-cross', 'houston-baptist', 'houston', 'howard', 'idaho-state', 'idaho']
-# teams = ['illinois', 'illinois-state', 'illinois-chicago', 'incarnate-word', 'indiana', 'indiana-state', 'iona', 'iowa', 'iowa-state', 'ipfw', 'iupui', 'jackson-state', 'jacksonville', 'jacksonville-state', 'james-madison', 'kansas', 'kansas-state', 'kennesaw-state', 'kent-state']
-# teams = ['kentucky', 'la-salle', 'lafayette', 'lamar', 'lehigh', 'liberty', 'lipscomb', 'long-beach-state']
-# teams = ['long-island-university']
-# teams =  ['longwood']
-# teams = ['louisiana-lafayette']
-# teams = ['louisiana-state']
-# teams = ['louisiana-tech', 'louisiana-monroe', 'louisville']
-# teams = ['loyola-il', 'loyola-md', 'loyola-marymount', 'maine', 'manhattan', 'marist', 'marquette', 'marshall', 'maryland', 'maryland-baltimore-county', 'maryland-eastern-shore', 'massachusetts', 'massachusetts-lowell']
-# teams = ['mcneese-state', 'memphis', 'mercer', 'miami-fl', 'miami-oh', 'michigan-state', 'michigan', 'middle-tennessee', 'milwaukee', 'minnesota', 'mississippi', 'mississippi-state', 'mississippi-valley-state', 'missouri-state', 'missouri']
-# teams = ['missouri-kansas-city', 'monmouth', 'montana', 'montana-state', 'morehead-state', 'morgan-state', 'mount-st-marys', 'murray-state', 'navy', 'nebraska', 'nebraska-omaha', 'nevada', 'nevada-las-vegas', 'new-hampshire', 'new-mexico', 'new-mexico-state', 'new-orleans', 'niagara', 'nicholls-state']
-# teams = ['njit', 'norfolk-state', 'north-carolina-at', 'north-carolina-central', 'north-carolina-state', 'north-carolina', 'north-carolina-asheville', 'north-carolina-greensboro', 'north-carolina-wilmington', 'north-dakota-state', 'north-dakota', 'north-florida', 'north-texas', 'northeastern']
-# teams = ['northern-arizona', 'northern-colorado', 'northern-illinois', 'northern-iowa', 'northern-kentucky', 'northwestern-state', 'northwestern', 'notre-dame', 'oakland', 'ohio', 'ohio-state', 'oklahoma', 'oklahoma-state', 'old-dominion', 'oral-roberts', 'oregon', 'oregon-state', 'pacific', 'penn-state']
-# teams = ['pennsylvania', 'pepperdine', 'pittsburgh', 'portland', 'portland-state', 'prairie-view', 'presbyterian', 'princeton', 'providence', 'purdue', 'quinnipiac', 'radford', 'rhode-island', 'rice', 'richmond', 'rider']
-# teams = ['robert-morris', 'rutgers', 'sacramento-state', 'sacred-heart', 'saint-francis-pa', 'saint-josephs', 'saint-louis', 'saint-marys-ca', 'saint-peters', 'sam-houston-state', 'samford', 'san-diego-state']
-# teams = ['san-diego', 'san-francisco', 'san-jose-state', 'santa-clara', 'savannah-state', 'seattle', 'seton-hall', 'siena', 'south-alabama', 'south-carolina', 'south-carolina-state', 'south-carolina-upstate', 'south-dakota', 'south-dakota-state', 'south-florida']
-# teams = ['southeast-missouri-state', 'southeastern-louisiana', 'southern-california', 'southern-illinois', 'southern-illinois-edwardsville', 'southern', 'southern-methodist', 'southern-mississippi', 'southern-utah']
-# teams = ['st-bonaventure', 'st-francis-ny', 'st-johns-ny', 'stanford', 'stephen-f-austin', 'stetson', 'stony-brook', 'syracuse', 'temple', 'tennessee-state', 'tennessee-tech', 'tennessee', 'tennessee-martin']
-# teams = ['texas-am', 'texas-am-corpus-christi', 'texas-christian', 'texas']
-# teams = ['texas-southern', 'texas-state', 'texas-tech', 'texas-arlington']
-# teams = ['texas-el-paso']
-# teams = ['texas-pan-american']
-# teams = ['texas-san-antonio', 'toledo']
-# teams = ['towson', 'troy', 'tulane', 'tulsa', 'california-davis']
-# teams = ['california-irvine', 'california-riverside', 'california-santa-barbara', 'ucla', 'california', 'utah-state', 'utah', 'utah-valley', 'valparaiso']
-# teams = ['vanderbilt', 'vermont', 'villanova', 'virginia', 'virginia-commonwealth', 'virginia-military-institute', 'virginia-tech', 'wagner', 'wake-forest', 'washington', 'washington-state', 'weber-state', 'west-virginia']
-# teams = ['western-carolina', 'western-illinois', 'western-kentucky', 'western-michigan', 'wichita-state', 'william-mary', 'winthrop', 'wisconsin', 'wofford', 'wright-state', 'wyoming', 'xavier', 'yale', 'youngstown-state']
-
-
 
 team_names_sos_filepath = 'team_list/sos_team_list_2018_final.csv'
 
@@ -119,12 +76,6 @@ def df_creator(teams, season):
         df.columns = newcols
 
         '''reformat Opp column strings'''
-        # df['Opp'] = df['Opp'].str.lower()
-        # df['Opp'] = df['Opp'].str.replace("'",'')
-        # df['Opp'] = df['Opp'].str.replace(".",'')
-        # df['Opp'] = df['Opp'].str.replace("(",'')
-        # df['Opp'] = df['Opp'].str.replace(")",'')
-        # df['Opp'] = df['Opp'].str.replace(" ",'-')
         df['Opp'] = df['Opp'].map(teams_dict(team_names_sos_filepath))
 
         '''Only take the first charcter in W field then map to 0's and 1's'''
@@ -206,13 +157,17 @@ def everybody_merge(df):
 
     return df
 
+def save_to_csv(df, year):
+    df.to_csv('games_{}.csv'.format(year))
 
-
+def save_to_pkl(df, year):
+    df.to_pickle('games_{}.pkl'.format(year))
 
 if __name__ == '__main__':
-    # print(df_creator(teams, 2018))
     filepath = 'team_list/sos_team_list_2018_final.csv'
+    year = 2018
     teams = team_list(filepath)
-    games = df_creator(teams, 2018)
+    games = df_creator(teams, year)
     games = games.apply(get_unique_id, axis=1)
     games = everybody_merge(games)
+    save_to_pkl(games, year)

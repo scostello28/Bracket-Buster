@@ -1,13 +1,18 @@
 # capstone_1
 
-Options:
-1. pick a winner
+Goal:
+Pick a winner
 
-process:
-- get team data downloaded and cleaned
-  - use Date, Tm, and Opp concatenated as Unique ID to remove duplicates
-- make team list
-  - put all teams from east in a list then take unique team names and adda ll those to the list... there are 341 teams total...
+Data Cleaning:
+- Download game data for all teams
+- Feature Engineering:
+ - Create win percentage and rolling average Features
+ - Points per game, points against per game, field goal percentage, free throw percentage, three-point percentage, rebounds per game, offensive rebounds per game, assist per game, blocks per game, steals per game, turn overs per game and personal fouls per game
+- generate a unique id with name mapping
+- combine data to one row for each match!
+
+
+
 - set up function to loop through teams
 - connect opponents rows for
 - test on 2017 season
@@ -18,6 +23,8 @@ process:
 - Implement on 2018
   - fill out bracket
 
+create dfs with all tourney teams final stats for 
+
 - Run on each rounds matchups
 - Use to fill out bracket!
 
@@ -26,22 +33,6 @@ Data:
 - opponents gamelog data
 
 
-format names:
-dictionary from sos table for name mapping
-Op
-sos
-
-team list
-tm
-
-delta pts
-sos
-
-connect tm w/ opponents
-
-train
-
-make functionality to test games
 
 
 
