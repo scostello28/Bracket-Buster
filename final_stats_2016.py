@@ -113,61 +113,16 @@ def df_creator(teams, season):
         df['sos'] = df['Tm'].map(sos_dict(team_names_sos_filepath))
 
         '''Add df to games_df'''
-        games_df = games_df.append(df, ignore_index=True)
+        games_df = games_df.append(df.iloc[-1], ignore_index=True)
 
     return games_df
 
-def get_unique_id(row):
-    '''
-    Create matchup and ID rows
-    '''
-    row['matchup'] = ",".join(sorted([row['Tm'], row['Opp']]))
-    row['ID'] = '{},{}'.format(row['matchup'], row['Date'])
-    return row
-
-def everybody_merge(df):
-    '''
-    INPUT: DataFrame
-    OUTPUT: DataFrame with matching IDs merged to same row
-    '''
-
-    '''Add cumulative conditional count column'''
-    df['count'] = df.groupby('ID').cumcount() + 1
-
-    '''Create separate dataframes for 1st and 2nd instances of games'''
-    df1 = df[df['count'] == 1]
-    df2 = df[df['count'] == 2]
-
-    '''Select needed columns from 2nd instance DataFrame and
-    rename te prepare for pending left merge'''
-    df2_stats = df2.iloc[:, 5:19]
-    df2_id = df2['ID']
-    g2cols = df2_stats.columns.tolist()
-    OPcols = ['OP{}'.format(col) for col in g2cols]
-    df2_stats.columns = OPcols
-    df2 = pd.concat([df2_stats, df2_id], axis=1)
-
-    '''Merge games instance DataFrames'''
-    df = pd.merge(df1, df2, how='left', on='ID')
-
-    '''Drop redundant Opp column and any games where there is no data
-    for oppenent'''
-    df = df.drop(['Opp'], axis=1)
-    df = df.dropna()
-
-    return df
-
-def save_to_csv(df, year):
-    df.to_csv('games_{}.csv'.format(year))
-
 def save_to_pkl(df, year):
-    df.to_pickle('games_{}.pkl'.format(year))
+    df.to_pickle('finalstats_{}.pkl'.format(year))
 
 if __name__ == '__main__':
     filepath = 'team_list/sos_team_list_2018_final.csv'
-    year = 2012
+    year = 2016
     teams = team_list(filepath)
     games = df_creator(teams, year)
-    games = games.apply(get_unique_id, axis=1)
-    games = everybody_merge(games)
     save_to_pkl(games, year)
