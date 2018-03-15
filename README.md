@@ -17,6 +17,8 @@
 - I can create a model to predict winners that can build a better bracket than Obama
 
 ## Dataset
+Gamelogs for each team from the past 5 years. Retrieved from www.sports-reference.com.
+
 ![Team gamelog pic](pictures/gamelog.png)
 
 ### Pre-processing
