@@ -13,7 +13,7 @@
     * [2017 Bracket](#2017-Bracket)
 
 
-## Hypothesis:
+## Hypothesis
 - I can create a model to predict winners that can build a better bracket than Obama
 
 ## Dataset
@@ -47,7 +47,7 @@ Data Cleaning:
   - generate a unique id by mapping names with formatted names
   - combine data to one row for each match!
 
-## Modeling:
+## Modeling
 **Basic Logistic Regression**
 
 * Trained and tested on data from games form 2013 to 2017
