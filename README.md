@@ -5,7 +5,7 @@
 
 ## Table of Contents
 1. [Dataset](#dataset)
-  * [Pre-Processing](#pre-processing)
+    * [Pre-Processing](#pre-processing)
 3. [Modeling](#Modeling)
 4. [Convolutional Neural Networks](#convolutional-neural-networks)
     * [Model Architecture](#model-architecture)
@@ -28,7 +28,8 @@
 [code_link](game_df_creator.py)
 
 Data Cleaning:
-![Cleaned table pic](pictures/cleaneddate.png)
+
+![Cleaned table pic](pictures/cleaneddata.png)
 
   - Downloaded game data for all teams from 2013 to 2016 (over 4886 games)
   - Feature Engineering:
@@ -60,12 +61,11 @@ Precision: 0.78 (predicted positives % correct)
 Recall: 0.77 (% of positives predicted correctly)
 ```
 
-
 - cross validation and C optimization
 
 C optimization plots
 
-ROC curve and threshold optimizaiton
+ROC curve and threshold optimization
 profit curve optimization
 
 Accuracy: 0.79 (% predicted correctly)
