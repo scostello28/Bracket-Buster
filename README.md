@@ -37,7 +37,14 @@ Data:
 - team gamelog data
 - opponents gamelog data
 
+![NEO](https://media.giphy.com/media/uvoECTG2uCTrG/giphy.gif)
 
+Jokes:
+- scatter matrix and correlation matrix
+  - What am I supposed to make form these?
+  - I am supposed to pick my own features?
+  - I came here to teach robots to learn.
+  - So when the singularity comes they will call me master
 
 
 
