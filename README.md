@@ -5,12 +5,12 @@
 
 ## Table of Contents
 1. [Dataset](#dataset)
-    * [Pre-Processing](#pre-processing)
+    * [Pre-Processing](#Pre-processing)
 3. [Modeling](#Modeling)
-4. [Pick a winner](# Pick a winner feature)
+4. [Pick a winner](#Pick-a-winner-feature)
 5. [Brackets](#Brackets)
-    * [2016 Bracket](#2016 Bracket)
-    * [2017 Bracket](#2017 Bracket)
+    * [2016 Bracket](#2016-Bracket)
+    * [2017 Bracket](#2017-Bracket)
 
 
 ## Hypothesis:
@@ -74,7 +74,7 @@ To Do:
 
 - ROC curve and threshold optimization
 
-## Pick a winner feature
+## Pick-a-winner-feature
 
 - Use optimized model to predict matches!
 - create a function to take two teams and pit them against each other
@@ -96,7 +96,7 @@ For Tourney:
 - Round 5 (Final Four): 16
 - Round 6 (Championship): 32
 
-### 2016 Bracket
+### 2016-Bracket
 
 ![2016 Bracket](pictures/obama2016bracket.jpg)
 
@@ -105,7 +105,7 @@ Update with my predictions and calculated scores
 - ‎sean: points
 - ‎obama: points
 
-### 2017 Bracket
+### 2017-Bracket
 
 ![2017 Bracket](pictures/obama2017bracket.png)
 
