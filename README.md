@@ -56,6 +56,7 @@ Data Cleaning:
 Accuracy: 0.79 (% predicted correctly)
 Precision: 0.78 (predicted positives % correct)
 Recall: 0.79 (% of positives predicted correctly)
+f1 Score: 0.79 (weighted average of Precision and Recall)
 ```
 
 * Trained on data from games form 2013 to 2017
@@ -65,6 +66,7 @@ Recall: 0.79 (% of positives predicted correctly)
 Accuracy: 0.78 (% predicted correctly)
 Precision: 0.78 (predicted positives % correct)
 Recall: 0.77 (% of positives predicted correctly)
+f1 Score: 0.78 (weighted average of Precision and Recall)
 ```
 
 To Do:
