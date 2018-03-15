@@ -7,14 +7,10 @@
 1. [Dataset](#dataset)
     * [Pre-Processing](#pre-processing)
 3. [Modeling](#Modeling)
-4. [Convolutional Neural Networks](#convolutional-neural-networks)
-    * [Model Architecture](#model-architecture)
-    * [Training the Model](#training-the-model)  
-    * [Patch Selection](#patch-selection)
-    * [Results](#results)
-5. [Future Directions](#future-directions)
-
-
+4. [Pick a winner](# Pick a winner feature)
+5. [Brackets](#Brackets)
+    * [2016 Bracket](#2016 Bracket)
+    * [2017 Bracket](#2017 Bracket)
 
 
 ## Hypothesis:
@@ -78,7 +74,7 @@ To Do:
 
 - ROC curve and threshold optimization
 
-## Pick a winner feature.
+## Pick a winner feature
 
 - Use optimized model to predict matches!
 - create a function to take two teams and pit them against each other
@@ -90,9 +86,9 @@ For Tourney:
 - create function to pit two teams against each other and predict
 - team 1 wins or loses when against team 2
 
-## Bracket Illustration
+## Brackets
 
-Bracket point system:
+**Bracket point system:**
 - Round 1 (64 teams): 1 point per pick
 - Round 2 (32 teams): 2
 - Round 3 (16 teams): 4
@@ -109,9 +105,11 @@ Update with my predictions and calculated scores
 - ‎sean: points
 - ‎obama: points
 
-### 2017 bracket
+### 2017 Bracket
 
 ![2017 Bracket](pictures/obama2017bracket.png)
+
+
 
 
 ## Learned-
