@@ -49,6 +49,10 @@ Data Cleaning:
 
 ![CorreationMatrix](pictures/corrmatrix.png)
 
+Hard to tell which features are most important based on visual inspection.  So I wanted to use regularization to help pick.  
+
+Turns out logistic regression uses Ridge regularization by default.  
+
 ## Modeling
 **Basic Logistic Regression**
 
