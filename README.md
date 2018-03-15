@@ -11,6 +11,11 @@ Data Cleaning:
 - generate a unique id with name mapping
 - combine data to one row for each match!
 
+For Tourney:
+- get each teams final game in dataframe
+- create function to pit two teams against each other and predict
+- team 1 wins or loses when against team 2
+
 
 
 - set up function to loop through teams
@@ -23,7 +28,7 @@ Data Cleaning:
 - Implement on 2018
   - fill out bracket
 
-create dfs with all tourney teams final stats for 
+create dfs with all tourney teams final stats for
 
 - Run on each rounds matchups
 - Use to fill out bracket!
