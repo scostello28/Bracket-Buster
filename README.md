@@ -33,11 +33,21 @@ Data Cleaning:
 
   - Downloaded game data for all teams from 2013 to 2016 (over 4886 games)
   - Feature Engineering:
-   - Create win percentage and rolling average Features
-   - Points per game, points against per game, field goal percentage,
-     free throw percentage, three-point percentage, rebounds per game,
-     offensive rebounds per game, assist per game, blocks per game,
-     steals per game, turn overs per game and personal fouls per game
+   - Current win percentage
+   - Rolling average Features:
+    - Points per game,
+    - Points against per game,
+    - Field goal percentage,
+    - free throw percentage,
+    - three-point percentage,
+    - rebounds per game,
+    - offensive rebounds per game,
+    - assist per game,
+    - blocks per game,
+    - steals per game,
+    - turn overs per game
+    - personal fouls per game
+  - Also added Strength of Schedule (only 2018 season...)
   - generate a unique id by mapping names with formatted names
   - combine data to one row for each match!
 
@@ -61,30 +71,19 @@ Precision: 0.78 (predicted positives % correct)
 Recall: 0.77 (% of positives predicted correctly)
 ```
 
-- cross validation and C optimization
+To Do:
+- cross-validation and C optimization
 
-C optimization plots
+- C optimization plots
 
-ROC curve and threshold optimization
-profit curve optimization
-
-Accuracy: 0.79 (% predicted correctly)
-Precision: 0.78 (predicted positives % correct)
-Recall: 0.79 (% of positives predicted correctly)
-
+- ROC curve and threshold optimization
 
 ## Pick a winner feature.
 
+- Use optimized model to predict matches!
+- create a function to take two teams and pit them against each other
+- fill out a bracket for the 2016 tournament and see if I can beat Obama
 
-
-notes:
-interesting about data
-what model did i choose
-how did i decide on complexity
-
-
-Train on multiple years
-test against just 1 year
 
 For Tourney:
 - get each teams final game in dataframe
@@ -102,14 +101,17 @@ Bracket point system:
 - Round 6 (Championship): 32
 
 ### 2016 Bracket
-- 2016 with my picks and Obama's picks
-- ‎results by cum points
+
+![2016 Bracket](pictures/obama2016bracket.jpg)
+
+Update with my predictions and calculated scores
+
 - ‎sean: points
 - ‎obama: points
 
 ### 2017 bracket
 
-
+![2017 Bracket](pictures/obama2017bracket.jpg)
 
 
 ## Learned-
@@ -118,6 +120,15 @@ Bracket point system:
  - ‎def function(row): df.apply( thanks michael
  - ‎mapping with dictionaries
  - worked through ‎a lot of problems
+
+
+
+
+
+ notes:
+ interesting about data
+ what model did i choose
+ how did i decide on complexity
 
 
 - test on 2017 season
