@@ -111,7 +111,7 @@ Update with my predictions and calculated scores
 
 ### 2017 bracket
 
-![2017 Bracket](pictures/obama2017bracket.jpg)
+![2017 Bracket](pictures/obama2017bracket.png)
 
 
 ## Learned-
