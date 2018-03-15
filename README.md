@@ -33,20 +33,20 @@ Data Cleaning:
 
   - Downloaded game data for all teams from 2013 to 2016 (over 4886 games)
   - Feature Engineering:
-   - Current win percentage
-   - Rolling average Features:
-    - Points per game,
-    - Points against per game,
-    - Field goal percentage,
-    - free throw percentage,
-    - three-point percentage,
-    - rebounds per game,
-    - offensive rebounds per game,
-    - assist per game,
-    - blocks per game,
-    - steals per game,
-    - turn overs per game
-    - personal fouls per game
+    - Current win percentage
+     - Rolling average Features:
+      - Points per game,
+      - Points against per game,
+      - Field goal percentage,
+      - free throw percentage,
+      - three-point percentage,
+      - rebounds per game,
+      - offensive rebounds per game,
+      - assist per game,
+      - blocks per game,
+      - steals per game,
+      - turn overs per game
+      - personal fouls per game
   - Also added Strength of Schedule (only 2018 season...)
   - generate a unique id by mapping names with formatted names
   - combine data to one row for each match!
