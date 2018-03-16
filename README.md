@@ -1,6 +1,6 @@
 # Bracket Buster
 
-<!-- ![NCAA or Bust](https://media.giphy.com/media/3o84U3i3nkhYoJOm3K/giphy.gif) -->
+![NCAA or Bust](https://media.giphy.com/media/3o84U3i3nkhYoJOm3K/giphy.gif)
 
 
 ## Table of Contents
@@ -155,22 +155,24 @@ north-carolina has 44% chance to win.
 
 ![Actual 2016 Bracket](pictures/ncaa-march-madness-results-2016.jpg)
 
-- ‎sean: points
-- ‎obama: points
+- ‎sean: 77 points
+- ‎obama: 67 points
 
 ![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
 
-![Happy Obama](https://media.giphy.com/media/dpYkMt1b9BNmw/giphy.gif)
-
 
 ### 2017-Bracket
+
+There is always this year!
+
+![Happy Obama](https://media.giphy.com/media/dpYkMt1b9BNmw/giphy.gif)
 
 ![2017 Bracket](pictures/obama2017bracket.png)
 
 
 
 
-## Learned-
+## Learned
 - Pandas, Pandas, Pandas
  - .rolling, .cumsum
  - ‎conditional row logic (hanks Michael!)
@@ -190,7 +192,6 @@ north-carolina has 44% chance to win.
 Future:
 - Clean up my code!
 - Implement for 2017 bracket
-- update stats after each round
 - ‎lag on rolling aves
 - ‎sos for each year and possibly rolling
 - ‎other features: pace, stats per 100 possessions, team makeup, offensive rating, defensive rating
