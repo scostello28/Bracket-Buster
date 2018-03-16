@@ -77,6 +77,11 @@ Recall: 0.77 (% of positives predicted correctly)
 f1 Score: 0.78 (weighted average of Precision and Recall)
 ```
 
+
+**Coefficients**
+
+![Coefficients](pictures/coefficients.png)
+
 To Do:
 - cross-validation and C optimization
 
