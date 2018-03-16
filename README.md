@@ -158,7 +158,8 @@ north-carolina has 44% chance to win.
 - ‎sean: points
 - ‎obama: points
 
-![Sad Obama(https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
+![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
+
 ![Happy Obama](https://media.giphy.com/media/dpYkMt1b9BNmw/giphy.gif)
 
 
