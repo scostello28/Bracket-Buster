@@ -82,12 +82,6 @@ f1 Score: 0.78 (weighted average of Precision and Recall)
 
 ![Coefficients](pictures/Features.png)
 
-To Do:
-- cross-validation and C optimization
-
-- C optimization plots
-
-- ROC curve and threshold optimization
 
 ## Pick-a-winner-feature
 
