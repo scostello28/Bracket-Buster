@@ -6,6 +6,12 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 
+import sys
+import warnings
+
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+
 games = pd.read_pickle('game_data/games_four_years.pkl')
 finalgames = pd.read_pickle('game_data/finalstats_2016.pkl')
 
@@ -51,8 +57,8 @@ def merge(df, team1, team2):
 
     return dfout  #.as_matrix()
 
-team1 = 'iowa'   #'colorado'
-team2 = 'iona' #'connecticut'
+team1 = str(input('team1: ')) #'kansas'   #'colorado'
+team2 = str(input('team2: ')) #'north-carolina' #'connecticut'
 matchup = merge(finalgames, team1, team2)
 # print(len(matchup.columns.tolist()))
 # print(len(Xy_train.columns.tolist()))
@@ -61,11 +67,16 @@ matchup = merge(finalgames, team1, team2)
 lg = LogisticRegression()  # penalty='l2' as default which is Ridge
 lg.fit(X_train, y_train)
 lg_predict = lg.predict(matchup)
+lg_prob = lg.predict_proba(matchup)
 
 if lg_predict[0] == 0:
     print('{} loses and {} wins!'.format(team1, team2))
+    print('{} has {}% chance to win.'.format(team1, int(lg_prob[0][1]*100)))
+    print('{} has {}% chance to win.'.format(team2, int(lg_prob[0][0]*100)))
 else:
     print('{} wins and {} loses!'.format(team1, team2))
+    print('{} has {:.0f}% chance to win.'.format(team1, lg_prob[0][1]*100))
+    print('{} has {:.0f}% chance to win.'.format(team2, lg_prob[0][0]*100))
 
 
 '''

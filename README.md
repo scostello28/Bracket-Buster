@@ -56,10 +56,16 @@ Hard to tell which features are most important based on visual inspection.  So I
 Turns out logistic regression uses Ridge regularization by default.  
 
 ## Modeling
-**Basic Logistic Regression**
+
+**Logistic Regression**
+
+* Turns out LogisticRegression uses Ridge regularization by default and can be switched to Lasso with an argument.  In this case there was not a significant difference between the two.
+  * penalty='l2'  -->   Ridge
+  * penalty='l1'  -->   Lasso
 
 * Trained and tested on data from games form 2013 to 2017
-  * using basic train test split on randomized data
+  * using 5-fold cross validation on shuffled data
+
 ```
 Accuracy: 0.79 (% predicted correctly)
 Precision: 0.78 (predicted positives % correct)
@@ -68,7 +74,8 @@ f1 Score: 0.79 (weighted average of Precision and Recall)
 ```
 
 * Trained on data from games form 2013 to 2017
-* Tested on 2018 games
+  * Tested on 2018 games
+  * I guessed 80% of the games right?!
 
 ```
 Accuracy: 0.78 (% predicted correctly)
@@ -77,23 +84,58 @@ Recall: 0.77 (% of positives predicted correctly)
 f1 Score: 0.78 (weighted average of Precision and Recall)
 ```
 
-
 **Coefficients**
 
 ![Coefficients](pictures/Features.png)
 
+**C-optimization**
+
+![Coptimization](pictures/coptimization.png)
+
+~~~python
+model = LogisticRegression(penalty='l2', C=1)
+~~~
+
+sklearn documentation:
+
+C : float, default: 1.0
+Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.
+
+~~~python
+Cs = list(np.linspace(0.1, 3, 100))
+grid_search_results = GridSearchCV(model, param_grid={'C':Cs}, scoring='accuracy', cv=5)
+grid_search_results.fit(X_train, y_train)
+grid_search_results.best_params_
+> {'C': 0.9494}
+~~~
+
+* hovered around 1
 
 ## Pick-a-winner-feature
 
-- Use optimized model to predict matches!
-- create a function to take two teams and pit them against each other
-- fill out a bracket for the 2016 tournament and see if I can beat Obama
+- Using final stats for each team trained for 2016 bracket
+
+[Code Link](win_or_lose.py)
+
+A clear winner:
+~~~
+team1: kansas
+team2: iona
+kansas wins and iona loses!
+kansas has 83% chance to win.
+iona has 17% chance to win.
+~~~
 
 
-For Tourney:
-- get each teams final game in dataframe
-- create function to pit two teams against each other and predict
-- team 1 wins or loses when against team 2
+A close match:
+~~~
+team1: kansas
+team2: north-carolina
+kansas wins and north-carolina loses!
+kansas has 56% chance to win.
+north-carolina has 44% chance to win.
+~~~
+
 
 ## Brackets
 
