@@ -149,9 +149,11 @@ north-carolina has 44% chance to win.
 
 ### 2016-Bracket
 
-![2016 Bracket](pictures/obama2016bracket.jpg)
+![Obama's 2016 Bracket](pictures/obama2016bracket.jpg)
 
-Update with my predictions and calculated scores
+![Model's 2016 Bracket](pictures/model-bracket.png)
+
+![Actual 2016 Bracket](pictures/ncaa-march-madness-results-2016)
 
 - ‎sean: points
 - ‎obama: points
@@ -181,8 +183,11 @@ Update with my predictions and calculated scores
 
 
 Future:
+- Clean up my code!
 - Implement for 2017 bracket
+- update stats after each round
 - ‎lag on rolling aves
 - ‎sos for each year and possibly rolling
 - ‎other features: pace, stats per 100 possessions, team makeup, offensive rating, defensive rating
 - ‎map all team names back to common formatting
+- bootstrap outcomes for each matchup
