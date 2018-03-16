@@ -166,50 +166,23 @@ Update with my predictions and calculated scores
 ## Learned-
 - Pandas, Pandas, Pandas
  - .rolling, .cumsum
- - ‎def function(row): df.apply( thanks michael
+ - ‎conditional row logic
+~~~python
+ def function(row):
+    do someting
+    return row
+
+    df.apply(function, axis=1)
+~~~
+    - thanks Michael!
  - ‎mapping with dictionaries
- - worked through ‎a lot of problems
-
-
-
-
-
- notes:
- interesting about data
- what model did i choose
- how did i decide on complexity
-
-
-- test on 2017 season
-  - set up test train split on season data
-    - using tournament as test set
-  - Use KFolds to train model with LogisticRegression
-  - How does it do?
-- Implement on 2018
-  - fill out bracket
-
-create dfs with all tourney teams final stats for
-
-- Run on each rounds matchups
-- Use to fill out bracket!
-
-
-
-
-
-Jokes:
-- any sports fans out there? No... Well I'm gonna do this anyway
-- scatter matrix and correlation matrix
-  - What am I supposed to make form these?
-  - I am supposed to pick my own features?
-  - I came here to teach robots to learn.
-  - So when the singularity comes they will call me master
-
-<!-- ![NEO](https://media.giphy.com/media/uvoECTG2uCTrG/giphy.gif) -->
-
+ - LogisticRegression
+ - Hyperparameter optimization
+ - How to work through ‎problems
 
 
 Future:
+- Implement for 2017 bracket
 - ‎lag on rolling aves
 - ‎sos for each year and possibly rolling
 - ‎other features: pace, stats per 100 possessions, team makeup, offensive rating, defensive rating
