@@ -174,7 +174,7 @@ Update with my predictions and calculated scores
 
     df.apply(function, axis=1)
 ~~~
-    - thanks Michael!
+  - thanks Michael!
  - ‎mapping with dictionaries
  - LogisticRegression
  - Hyperparameter optimization
