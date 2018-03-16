@@ -166,7 +166,7 @@ Update with my predictions and calculated scores
 ## Learned-
 - Pandas, Pandas, Pandas
  - .rolling, .cumsum
- - ‎conditional row logic
+ - ‎conditional row logic (hanks Michael!)
 ~~~python
  def function(row):
     do someting
@@ -174,7 +174,6 @@ Update with my predictions and calculated scores
 
     df.apply(function, axis=1)
 ~~~
-  - thanks Michael!
  - ‎mapping with dictionaries
  - LogisticRegression
  - Hyperparameter optimization
