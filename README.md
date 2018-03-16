@@ -80,7 +80,7 @@ f1 Score: 0.78 (weighted average of Precision and Recall)
 
 **Coefficients**
 
-![Coefficients](pictures/coefficients.png)
+![Coefficients](pictures/Features.png)
 
 To Do:
 - cross-validation and C optimization
