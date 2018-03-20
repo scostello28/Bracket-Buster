@@ -2,8 +2,6 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# teamsurl = 'https://www.sports-reference.com/cbb/schools/michigan-state/2018-gamelogs.html#sgl-basic::none'
-
 team_names_sos_filepath = 'team_list/sos_team_list_2018_final.csv'
 
 def team_list(filepath):
@@ -29,7 +27,7 @@ def teams_dict(filepath):
 
 def sos_dict(filepath):
     '''
-    Create dictionary of school names and strengthof schedule for mapping
+    Create dictionary of school names and strength of schedule for mapping
     '''
     team_sos = pd.read_csv(filepath)
     team_sos = team_sos[['School_format', 'SOS']]
@@ -41,7 +39,7 @@ def sos_dict(filepath):
     return sos_dict
 
 
-def df_creator(teams, season):
+def stat_transform(teams, season):
     '''
     INPUTs:
         teams = list of teams (formatted as in url)
@@ -64,10 +62,11 @@ def df_creator(teams, season):
         '''Remove divider rows'''
         df = df.drop(df.index[[20,21]])
 
-        '''Remove Double Row headers'''
+        '''Remove Double Column headers'''
         dubcols = df.columns.tolist()
         cols = [col[1] for col in dubcols]
         df.columns = cols
+
 
         '''Rename Columns'''
         newcols = ['G', 'Date', 'Blank', 'Opp', 'W', 'Pts', 'PtsA', 'FG', 'FGA',
@@ -75,10 +74,11 @@ def df_creator(teams, season):
                    'AST', 'STL', 'BLK', 'TO', 'PF']
         df.columns = newcols
 
-        '''reformat Opp column strings'''
+        '''reformat Opponent team name column strings'''
         df['Opp'] = df['Opp'].map(teams_dict(team_names_sos_filepath))
 
-        '''Only take the first charcter in W field then map to 0's and 1's'''
+        '''Only take the first charcter in W field then map to 0's and 1's.
+        (Ties and overtime have excess characters)'''
         df['W'] = df['W'].astype(str).str[0]
         df['W'] = df['W'].map({'W': 1, 'L': 0})
 
@@ -117,7 +117,7 @@ def df_creator(teams, season):
 
     return games_df
 
-def get_unique_id(row):
+def gen_unique_id(row):
     '''
     Create matchup and ID rows
     '''
@@ -140,12 +140,12 @@ def everybody_merge(df):
 
     '''Select needed columns from 2nd instance DataFrame and
     rename te prepare for pending left merge'''
-    df2_stats = df2.iloc[:, 5:19]
-    df2_id = df2['ID']
-    g2cols = df2_stats.columns.tolist()
-    OPcols = ['OP{}'.format(col) for col in g2cols]
-    df2_stats.columns = OPcols
-    df2 = pd.concat([df2_stats, df2_id], axis=1)
+    df2 = df2.iloc[:, 3:20]
+    # df2_id = df2['ID']
+    g2cols = df2.columns.tolist()
+    OPcols = ['OP{}'.format(col) if col != 'ID' else col for col in g2cols]
+    df2.columns = OPcols
+    # df2 = pd.concat([df2_stats, df2_id], axis=1)
 
     '''Merge games instance DataFrames'''
     df = pd.merge(df1, df2, how='left', on='ID')
@@ -165,9 +165,18 @@ def save_to_pkl(df, year):
 
 if __name__ == '__main__':
     filepath = 'team_list/sos_team_list_2018_final.csv'
-    year = 2012
+    years = [2013, 2014, 2015, 2016, 2017]
+    for year in years:
+
     teams = team_list(filepath)
-    games = df_creator(teams, year)
-    games = games.apply(get_unique_id, axis=1)
+    games = stat_transform(teams, year)
+    games = games.apply(gen_unique_id, axis=1)
     games = everybody_merge(games)
     save_to_pkl(games, year)
+
+    # filepath = 'team_list/sos_team_list_2018_final.csv'
+    # year = 2017
+    # teams = team_list(filepath)
+    # games = df_creator(teams, year)
+    # games = games.apply(gen_unique_id, axis=1)
+    # save_to_pkl(games, year)
