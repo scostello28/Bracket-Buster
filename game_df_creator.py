@@ -4,9 +4,8 @@ from datetime import datetime
 from datetime import date
 import pickle
 
+'''Created using Excel because logic could only get so far when formatting team names from table format to url format'''
 team_names_sos_filepath = 'team_list/sos_team_list_2018_final.csv'
-
-seasons = [2014]   #[2014, 2015, 2016, 2017, 2018]
 
 season2013start = date(2012,4,1)
 season2013end = date(2013,3,18)
@@ -72,6 +71,52 @@ def sos_dict(filepath):
         sos_dict[school] = sos
     return sos_dict
 
+def add_game_type(row):
+    '''
+    Create Column for tourney games
+    '''
+
+    if row['just_date'] >= tourney2013start and row['just_date'] <= tourney2013end:
+        row['GameType'] = 'tourney2013'
+
+    elif row['just_date'] >= season2013start and row['just_date'] <= season2013end:
+        row['GameType'] = 'season2013'
+
+    elif row['just_date'] >= tourney2014start and row['just_date'] <= tourney2014end:
+        row['GameType'] = 'tourney2014'
+
+    elif row['just_date'] >= season2014start and row['just_date'] <= season2014end:
+        row['GameType'] = 'season2014'
+
+    elif row['just_date'] >= tourney2015start and row['just_date'] <= tourney2015end:
+        row['GameType'] = 'tourney2015'
+
+    elif row['just_date'] >= season2015start and row['just_date'] <= season2015end:
+        row['GameType'] = 'season2015'
+
+    elif row['just_date'] >= tourney2016start and row['just_date'] <= tourney2016end:
+        row['GameType'] = 'tourney2016'
+
+    elif row['just_date'] >= season2016start and row['just_date'] <= season2016end:
+        row['GameType'] = 'season2016'
+
+    elif row['just_date'] >= tourney2017start and row['just_date'] <= tourney2017end:
+        row['GameType'] = 'tourney2017'
+
+    elif row['just_date'] >= season2017start and row['just_date'] <= season2017end:
+        row['GameType'] = 'season2017'
+
+    elif row['just_date'] >= tourney2018start and row['just_date'] <= tourney2018end:
+        row['GameType'] = 'tourney2018'
+
+    elif row['just_date'] >= season2018start and row['just_date'] <= season2018end:
+        row['GameType'] = 'season2018'
+
+    else:
+        row['GameType'] = 'season'
+
+    return row
+
 def df_creator(teams, seasons):
     '''
     INPUTs:
@@ -99,6 +144,24 @@ def df_creator(teams, seasons):
 
     return games_df
 
+def season_final_stats(teams, season):
+
+    season_final_stats = pd.DataFrame()
+
+    for team in teams:
+
+        url = 'https://www.sports-reference.com/cbb/schools/{}/{}-gamelogs.html#sgl-basic::none'.format(team, season)
+
+        '''Read team gamelog'''
+        df = pd.read_html(url)[0]
+
+        df = stat_transform(df, team)
+
+    cond = (df['GameType'] == 'season{}'.format(season))
+
+    season_final_stats = season_final_stats.append(df[cond][-1], ignore_index=True)
+
+    return season_final_stats
 
 def stat_transform(df, team):
     '''
@@ -167,66 +230,9 @@ def stat_transform(df, team):
     '''Add datetime formatted date without time of day (i.e. just the date)'''
     df['just_date'] = pd.to_datetime(df['Date']).dt.date
 
+    df = df.apply(add_game_type, axis=1)
+
     return df
-
-def tourney_game_label(row):
-    '''
-    Create Column for tourney games
-    '''
-
-    if row['just_date'] >= tourney2013start and row['just_date'] <= tourney2013end:
-
-        row['GameType'] = 'tourney2013'
-
-    elif row['just_date'] >= season2013start and row['just_date'] <= season2013end:
-
-        row['GameType'] = 'season2013'
-
-    elif row['just_date'] >= tourney2014start and row['just_date'] <= tourney2014end:
-
-        row['GameType'] = 'tourney2014'
-
-    elif row['just_date'] >= season2014start and row['just_date'] <= season2014end:
-
-        row['GameType'] = 'season2014'
-
-    elif row['just_date'] >= tourney2015start and row['just_date'] <= tourney2015end:
-
-        row['GameType'] = 'tourney2015'
-
-    elif row['just_date'] >= season2015start and row['just_date'] <= season2015end:
-
-        row['GameType'] = 'season2015'
-
-    elif row['just_date'] >= tourney2016start and row['just_date'] <= tourney2016end:
-
-        row['GameType'] = 'tourney2016'
-
-    elif row['just_date'] >= season2016start and row['just_date'] <= season2016end:
-
-        row['GameType'] = 'season2016'
-
-    elif row['just_date'] >= tourney2017start and row['just_date'] <= tourney2017end:
-
-        row['GameType'] = 'tourney2017'
-
-    elif row['just_date'] >= season2017start and row['just_date'] <= season2017end:
-
-        row['GameType'] = 'season2017'
-
-    elif row['just_date'] >= tourney2018start and row['just_date'] <= tourney2018end:
-
-        row['GameType'] = 'tourney2018'
-
-    elif row['just_date'] >= season2018start and row['just_date'] <= season2018end:
-
-        row['GameType'] = 'season2018'
-
-    else:
-
-        row['GameType'] = 'season'
-
-    return row
 
 def gen_unique_id(row):
     '''
@@ -239,7 +245,7 @@ def gen_unique_id(row):
 def everybody_merge(df):
     '''
     INPUT: DataFrame
-    OUTPUT: DataFrame with matching IDs merged to same row
+    OUTPUT: DataFrame with matching IDs merged to same row (1 game per row!)
     '''
 
     '''Add cumulative conditional count column'''
@@ -249,24 +255,44 @@ def everybody_merge(df):
     df1 = df[df['count'] == 1]
     df2 = df[df['count'] == 2]
 
-    '''Select needed columns from 2nd instance DataFrame and
+    '''Drop unneeded columns from 2nd game instance DataFrame and
     rename te prepare for pending left merge'''
-    df2 = df2.iloc[:, 3:20]
-    # df2_id = df2['ID']
+    df2 = df2.iloc[:, 4:23]
+    games2 = games2.drop(['GameType', 'matchup', 'just_date'], axis=1)
     g2cols = df2.columns.tolist()
     OPcols = ['OP{}'.format(col) if col != 'ID' else col for col in g2cols]
     df2.columns = OPcols
-    # df2 = pd.concat([df2_stats, df2_id], axis=1)
 
     '''Merge games instance DataFrames'''
     df = pd.merge(df1, df2, how='left', on='ID')
 
     '''Drop redundant Opp column and any games where there is no data
     for oppenent'''
-    df = df.drop(['Opp'], axis=1)
+    df = df.drop(['Date', 'Ws', 'just_date', 'Opp', 'count', 'ID', 'matchup'], axis=1)
     df = df.dropna()
 
     return df
+
+'''up to 2017 tourney'''
+def games_up_to_2017_tourney(df):
+    notourney2018 = (df['GameType'] != 'tourney2018')
+    noseason2018 = (df['GameType'] != 'season2018')
+    notourney2017 = (df['GameType'] != 'tourney2017')
+    games_up_to_2017_tourney = df[notourney2018 & noseason2018 & notourney2017]
+    return games_up_to_2017_tourney
+
+'''up to 2018 season'''
+def games_up_to_2018_season(df):
+    notourney2018 = (df['GameType'] != 'tourney2018')
+    noseason2018 = (df['GameType'] != 'season2018')
+    games_up_to_2018_season = df[notourney2018 & noseason2018]
+    return games_up_to_2018_season
+
+'''up to 2018 tourney'''
+def games_up_to_2018_tourney(df):
+    notourney2018 = (df['GameType'] != 'tourney2018')
+    games_up_to_2018_tourney = df[notourney2018]
+    return games_up_to_2018_tourney
 
 def save_to_csv(df, year):
     df.to_csv('games_{}.csv'.format(year))
@@ -275,18 +301,33 @@ def save_to_pkl(df, year):
     df.to_pickle('games_{}.pkl'.format(year))
 
 if __name__ == '__main__':
-    # # filepath = 'team_list/sos_team_list_2018_final.csv'
-    # teams = team_list(filepath)
-    # games = df_creator(teams, seasons)
-    # games = games.apply(tourney_game_label, axis=1)
-    # games = games.apply(gen_unique_id, axis=1)
-    # games = everybody_merge(games)
-    # save_to_pkl(games, year)
-
 
     teams = team_list(team_names_sos_filepath)
+    seasons = [2017]   #[2014, 2015, 2016, 2017, 2018]
+
+    '''All games'''
     games = df_creator(teams, seasons)
-    games = games.apply(tourney_game_label, axis=1)
+    games = games.apply(add_game_type, axis=1)
     games = games.apply(gen_unique_id, axis=1)
     # games = everybody_merge(games)
-    save_to_pkl(games, year='all_years')
+    save_to_pkl(games, year='all_games')
+
+    '''Games up to 2017 tourney'''
+    games_up_to_2017_tourney = games_up_to_2017_tourney(games)
+    save_to_pkl(games, year='up_to_2017_tourney')
+
+    '''2017 season final stats'''
+    season2017_final_stats = season_final_stats(teams, 2017)
+    save_to_pkl(season2017_final_stats, year='2017_final_stats')
+
+    '''Games up to 2018 season'''
+    games_up_to_2018_season = games_up_to_2018_season(games)
+    save_to_pkl(games, year='up_to_2018_season')
+
+    '''2018 season final stats'''
+    season2018_final_stats = season_final_stats(teams, 2018)
+    save_to_pkl(season2018_final_stats, year='all_games')
+
+    '''up to 2018 tourney'''
+    games_up_to_2018_tourney = games_up_to_2018_tourney(games)
+    save_to_pkl(games, year='up_to_2018_tourney')
