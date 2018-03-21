@@ -157,9 +157,9 @@ def season_final_stats(teams, season):
 
         df = stat_transform(df, team)
 
-    cond = (df['GameType'] == 'season{}'.format(season))
+        cond = (df['GameType'] == 'season{}'.format(season))
 
-    season_final_stats = season_final_stats.append(df[cond][-1], ignore_index=True)
+        season_final_stats = season_final_stats.append(df[cond].iloc[-1], ignore_index=True)
 
     return season_final_stats
 
@@ -258,7 +258,7 @@ def everybody_merge(df):
     '''Drop unneeded columns from 2nd game instance DataFrame and
     rename te prepare for pending left merge'''
     df2 = df2.iloc[:, 4:23]
-    games2 = games2.drop(['GameType', 'matchup', 'just_date'], axis=1)
+    df2 = df2.drop(['GameType', 'matchup', 'just_date'], axis=1)
     g2cols = df2.columns.tolist()
     OPcols = ['OP{}'.format(col) if col != 'ID' else col for col in g2cols]
     df2.columns = OPcols
@@ -303,18 +303,18 @@ def save_to_pkl(df, year):
 if __name__ == '__main__':
 
     teams = team_list(team_names_sos_filepath)
-    seasons = [2017]   #[2014, 2015, 2016, 2017, 2018]
+    seasons = [2014, 2015, 2016, 2017, 2018]
 
     '''All games'''
     games = df_creator(teams, seasons)
     games = games.apply(add_game_type, axis=1)
     games = games.apply(gen_unique_id, axis=1)
-    # games = everybody_merge(games)
+    games = everybody_merge(games)
     save_to_pkl(games, year='all_games')
 
     '''Games up to 2017 tourney'''
     games_up_to_2017_tourney = games_up_to_2017_tourney(games)
-    save_to_pkl(games, year='up_to_2017_tourney')
+    save_to_pkl(games_up_to_2017_tourney, year='up_to_2017_tourney')
 
     '''2017 season final stats'''
     season2017_final_stats = season_final_stats(teams, 2017)
@@ -322,12 +322,12 @@ if __name__ == '__main__':
 
     '''Games up to 2018 season'''
     games_up_to_2018_season = games_up_to_2018_season(games)
-    save_to_pkl(games, year='up_to_2018_season')
+    save_to_pkl(games_up_to_2018_season, year='up_to_2018_season')
 
     '''2018 season final stats'''
     season2018_final_stats = season_final_stats(teams, 2018)
-    save_to_pkl(season2018_final_stats, year='all_games')
+    save_to_pkl(season2018_final_stats, year='2018_final_stats')
 
     '''up to 2018 tourney'''
     games_up_to_2018_tourney = games_up_to_2018_tourney(games)
-    save_to_pkl(games, year='up_to_2018_tourney')
+    save_to_pkl(games_up_to_2018_tourney, year='up_to_2018_tourney')
