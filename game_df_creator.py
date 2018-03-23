@@ -2,40 +2,11 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 from datetime import date
+import time
 import pickle
 
 '''Created using Excel because logic could only get so far when formatting team names from table format to url format'''
 team_names_sos_filepath = 'team_list/sos_team_list_2018_final.csv'
-
-season2013start = date(2012,4,1)
-season2013end = date(2013,3,18)
-tourney2013start = date(2013,3,19)
-tourney2013end = date(2013,4,8)
-
-season2014start = date(2013,4,9)
-season2014end = date(2014,3,17)
-tourney2014start = date(2014,3,18)
-tourney2014end = date(2014,4,7)
-
-season2015start = date(2014,4,8)
-season2015end = date(2015,3,16)
-tourney2015start = date(2015,3,17)
-tourney2015end = date(2015,4,6)
-
-season2016start = date(2015,4,7)
-season2016end = date(2016,3,14)
-tourney2016start = date(2016,3,15)
-tourney2016end = date(2016,4,4)
-
-season2017start = date(2016,4,5)
-season2017end = date(2017,3,13)
-tourney2017start = date(2017,3,14)
-tourney2017end = date(2017,4,3)
-
-season2018start = date(2017,4,4)
-season2018end = date(2018,3,12)
-tourney2018start = date(2018,3,13)
-tourney2018end = date(2018,4,2)
 
 def team_list(filepath):
     '''
@@ -44,6 +15,7 @@ def team_list(filepath):
     team_names = pd.read_csv(filepath)
     school_list = team_names['School_format'].tolist()
     return school_list
+
 
 def teams_dict(filepath):
     '''
@@ -58,6 +30,7 @@ def teams_dict(filepath):
         team_dict[school] = schform
     return team_dict
 
+
 def sos_dict(filepath):
     '''
     Create dictionary of school names and strength of schedule for mapping
@@ -71,18 +44,13 @@ def sos_dict(filepath):
         sos_dict[school] = sos
     return sos_dict
 
+
 def add_game_type(row):
     '''
     Create Column for tourney games
     '''
 
-    if row['just_date'] >= tourney2013start and row['just_date'] <= tourney2013end:
-        row['GameType'] = 'tourney2013'
-
-    elif row['just_date'] >= season2013start and row['just_date'] <= season2013end:
-        row['GameType'] = 'season2013'
-
-    elif row['just_date'] >= tourney2014start and row['just_date'] <= tourney2014end:
+    if row['just_date'] >= tourney2014start and row['just_date'] <= tourney2014end:
         row['GameType'] = 'tourney2014'
 
     elif row['just_date'] >= season2014start and row['just_date'] <= season2014end:
@@ -117,53 +85,24 @@ def add_game_type(row):
 
     return row
 
-def df_creator(teams, seasons):
+
+def lag_columns(df, cols_to_shift):
     '''
-    INPUTs:
-        team = team (formatted as in url)
-        season = season year
-
-    OUTPUT: DataFrame of all games
+    Input: DataFrame
+    Output: DataFrame with stats lagged so matchup stats included in matchup stats rolling average
     '''
+    for col in cols_to_shift:
+        new_col = '{}_shifted'.format(col)
+        df[new_col] = df[col].shift(1)
+    df = df.drop(cols_to_shift, axis=1)
+    column_names = df.columns.tolist()
+    new_column_names = [col.replace('_shifted', '') for col in column_names]
+    df.columns = new_column_names
+    df = df.dropna()
+    return df
 
-    games_df = pd.DataFrame()
 
-    for season in seasons:
-
-        for team in teams:
-
-            url = 'https://www.sports-reference.com/cbb/schools/{}/{}-gamelogs.html#sgl-basic::none'.format(team, season)
-
-            '''Read team gamelog'''
-            df = pd.read_html(url)[0]
-
-            df = stat_transform(df, team)
-
-            '''Add df to games_df'''
-            games_df = games_df.append(df, ignore_index=True)
-
-    return games_df
-
-def season_final_stats(teams, season):
-
-    season_final_stats = pd.DataFrame()
-
-    for team in teams:
-
-        url = 'https://www.sports-reference.com/cbb/schools/{}/{}-gamelogs.html#sgl-basic::none'.format(team, season)
-
-        '''Read team gamelog'''
-        df = pd.read_html(url)[0]
-
-        df = stat_transform(df, team)
-
-        cond = (df['GameType'] == 'season{}'.format(season))
-
-        season_final_stats = season_final_stats.append(df[cond].iloc[-1], ignore_index=True)
-
-    return season_final_stats
-
-def stat_transform(df, team):
+def stat_transform(df, team, window=5, lag=True):
     '''
     INPUTs:
         df = dataframe created from html pull
@@ -200,18 +139,18 @@ def stat_transform(df, team):
     '''Create win precentage and rolling average Features'''
     df['Ws'] = df['W'].cumsum(axis=0)
     df['Wp'] = df['Ws'].astype(int) / df['G'].astype(int)
-    df['ppg'] = df['Pts'].rolling(window=5,center=False).mean()
-    df['pApg'] = df['PtsA'].rolling(window=5,center=False).mean()
-    df['FGp'] = df['FG%'].rolling(window=5,center=False).mean()
-    df['3Pp'] = df['3P%'].rolling(window=5,center=False).mean()
-    df['FTp'] = df['FT%'].rolling(window=5,center=False).mean()
-    df['ORBpg'] = df['ORB'].rolling(window=5,center=False).mean()
-    df['RBpg'] = df['RB'].rolling(window=5,center=False).mean()
-    df['ASTpg'] = df['AST'].rolling(window=5,center=False).mean()
-    df['STLpg'] = df['STL'].rolling(window=5,center=False).mean()
-    df['BLKpg'] = df['BLK'].rolling(window=5,center=False).mean()
-    df['TOpg'] = df['TO'].rolling(window=5,center=False).mean()
-    df['PFpg'] = df['PF'].rolling(window=5,center=False).mean()
+    df['ppg'] = df['Pts'].rolling(window=window,center=False).mean()
+    df['pApg'] = df['PtsA'].rolling(window=window,center=False).mean()
+    df['FGp'] = df['FG%'].rolling(window=window,center=False).mean()
+    df['3Pp'] = df['3P%'].rolling(window=window,center=False).mean()
+    df['FTp'] = df['FT%'].rolling(window=window,center=False).mean()
+    df['ORBpg'] = df['ORB'].rolling(window=window,center=False).mean()
+    df['RBpg'] = df['RB'].rolling(window=window,center=False).mean()
+    df['ASTpg'] = df['AST'].rolling(window=window,center=False).mean()
+    df['STLpg'] = df['STL'].rolling(window=window,center=False).mean()
+    df['BLKpg'] = df['BLK'].rolling(window=window,center=False).mean()
+    df['TOpg'] = df['TO'].rolling(window=window,center=False).mean()
+    df['PFpg'] = df['PF'].rolling(window=window,center=False).mean()
 
     '''Remove columns after rolling ave calcs'''
     df = df.drop(['G', 'Blank', 'Pts', 'PtsA', 'FG', 'FGA', 'FG%',
@@ -232,7 +171,18 @@ def stat_transform(df, team):
 
     df = df.apply(add_game_type, axis=1)
 
+    df = df.drop(['just_date'], axis=1)
+
+    cols_to_shift = ['Ws', 'Wp', 'ppg', 'pApg', 'FGp', '3Pp', 'FTp',
+       'ORBpg', 'RBpg', 'ASTpg', 'STLpg', 'BLKpg', 'TOpg', 'PFpg', 'Tm', 'sos']
+
+    if lag:
+        df = lag_columns(df, cols_to_shift)
+    else:
+        pass
+
     return df
+
 
 def gen_unique_id(row):
     '''
@@ -241,6 +191,7 @@ def gen_unique_id(row):
     row['matchup'] = ",".join(sorted([row['Tm'], row['Opp']]))
     row['ID'] = '{},{}'.format(row['matchup'], row['Date'])
     return row
+
 
 def everybody_merge(df):
     '''
@@ -257,8 +208,7 @@ def everybody_merge(df):
 
     '''Drop unneeded columns from 2nd game instance DataFrame and
     rename te prepare for pending left merge'''
-    df2 = df2.iloc[:, 4:23]
-    df2 = df2.drop(['GameType', 'matchup', 'just_date'], axis=1)
+    df2 = df2.drop(['Date', 'Opp', 'W', 'GameType', 'Ws', 'matchup', 'count'], axis=1)
     g2cols = df2.columns.tolist()
     OPcols = ['OP{}'.format(col) if col != 'ID' else col for col in g2cols]
     df2.columns = OPcols
@@ -268,66 +218,173 @@ def everybody_merge(df):
 
     '''Drop redundant Opp column and any games where there is no data
     for oppenent'''
-    df = df.drop(['Date', 'Ws', 'just_date', 'Opp', 'count', 'ID', 'matchup'], axis=1)
+    df = df.drop(['Date', 'Ws', 'Opp', 'count', 'ID', 'matchup', 'count', 'Tm', 'OPTm'], axis=1) #'just_date',
     df = df.dropna()
 
     return df
 
-'''up to 2017 tourney'''
-def games_up_to_2017_tourney(df):
+
+def games_df_creator(teams, seasons, window=5, lag=True):
+    '''
+    Inputs:
+        team = team (formatted as in url)
+        season = season year
+
+    Output: DataFrame of all games
+    '''
+
+    games_df = pd.DataFrame()
+
+    for season in seasons:
+
+        for team in teams:
+
+            url = 'https://www.sports-reference.com/cbb/schools/{}/{}-gamelogs.html#sgl-basic::none'.format(team, season)
+
+            '''Read team gamelog'''
+            df = pd.read_html(url)[0]
+
+            df = stat_transform(df, team, window, lag)
+
+            '''Add df to games_df'''
+            games_df = games_df.append(df, ignore_index=True)
+
+        time.sleep(15)
+
+    return games_df
+
+
+def season_final_stats(teams, season, window=5, lag=False):
+    '''
+    Inputs:
+        team = team (formatted as in url)
+        season = season year
+
+    Output: DataFrame of final stats for each team before tourney
+    '''
+
+    season_final_stats = pd.DataFrame()
+
+    for team in teams:
+
+        url = 'https://www.sports-reference.com/cbb/schools/{}/{}-gamelogs.html#sgl-basic::none'.format(team, season)
+
+        '''Read team gamelog'''
+        df = pd.read_html(url)[0]
+
+        df = stat_transform(df, team, window, lag)
+
+        cond = (df['GameType'] == 'season{}'.format(season))
+
+        season_final_stats = season_final_stats.append(df[cond].iloc[-1], ignore_index=True)
+
+    season_final_stats.to_pickle('game_data/season{}_final_stats'.format(season))
+
+
+# def save_to_csv(df, year):
+#     df.to_csv('games_{}.csv'.format(year))
+#
+#
+# def save_to_pkl(df, year):
+#     df.to_pickle('games_{}.pkl'.format(year))
+
+
+def season_games(seasons, teams):
+    '''
+    Creates DataFrame for full season and tourney for given year
+    Input: Season
+    Output: DataFrame of all games in given year
+    '''
+    games = games_df_creator(teams, seasons, window=5, lag=True)
+    games = games.apply(gen_unique_id, axis=1)
+    games = everybody_merge(games)
+    games.to_pickle('game_data/all_games.pkl')
+    # games.to_pickle('game_data/games_{}.pkl'.format(season))
+    return games
+
+
+# def combine_years(game_logs):
+#     games_all_years = pd.DataFrame()
+#     for game_log in game_logs:
+#         games = pd.read_pickle(game_log)
+#         games_all_years = games_all_years.append(games, ignore_index=True)
+#     games_all_years.to_pickle('games_five_years.pkl')
+
+
+def games_up_to_2017_tourney_filter(df):
+    '''Filter for all games up to 2017 tourney'''
     notourney2018 = (df['GameType'] != 'tourney2018')
     noseason2018 = (df['GameType'] != 'season2018')
     notourney2017 = (df['GameType'] != 'tourney2017')
     games_up_to_2017_tourney = df[notourney2018 & noseason2018 & notourney2017]
-    return games_up_to_2017_tourney
+    games_up_to_2017_tourney.to_pickle('game_data/games_up_to_2017_tourney.pkl')
 
-'''up to 2018 season'''
-def games_up_to_2018_season(df):
+
+def games_up_to_2018_season_filter(df):
+    '''Filter for games up to 2018 season'''
     notourney2018 = (df['GameType'] != 'tourney2018')
     noseason2018 = (df['GameType'] != 'season2018')
     games_up_to_2018_season = df[notourney2018 & noseason2018]
-    return games_up_to_2018_season
+    games_up_to_2018_season.to_pickle('game_data/games_up_to_2018_season.pkl')
 
-'''up to 2018 tourney'''
-def games_up_to_2018_tourney(df):
+
+def games_up_to_2018_tourney_filter(df):
+    '''Filter for games up to 2018 tourney'''
     notourney2018 = (df['GameType'] != 'tourney2018')
     games_up_to_2018_tourney = df[notourney2018]
-    return games_up_to_2018_tourney
+    games_up_to_2018_tourney.to_pickle('game_data/games_up_to_2018_tourney.pkl')
 
-def save_to_csv(df, year):
-    df.to_csv('games_{}.csv'.format(year))
-
-def save_to_pkl(df, year):
-    df.to_pickle('games_{}.pkl'.format(year))
 
 if __name__ == '__main__':
-
     teams = team_list(team_names_sos_filepath)
+
+    season2013start = date(2012,4,1)
+    season2013end = date(2013,3,18)
+    tourney2013start = date(2013,3,19)
+    tourney2013end = date(2013,4,8)
+
+    season2014start = date(2013,4,9)
+    season2014end = date(2014,3,17)
+    tourney2014start = date(2014,3,18)
+    tourney2014end = date(2014,4,7)
+
+    season2015start = date(2014,4,8)
+    season2015end = date(2015,3,16)
+    tourney2015start = date(2015,3,17)
+    tourney2015end = date(2015,4,6)
+
+    season2016start = date(2015,4,7)
+    season2016end = date(2016,3,14)
+    tourney2016start = date(2016,3,15)
+    tourney2016end = date(2016,4,4)
+
+    season2017start = date(2016,4,5)
+    season2017end = date(2017,3,13)
+    tourney2017start = date(2017,3,14)
+    tourney2017end = date(2017,4,3)
+
+    season2018start = date(2017,4,4)
+    season2018end = date(2018,3,12)
+    tourney2018start = date(2018,3,13)
+    tourney2018end = date(2018,4,2)
+
     seasons = [2014, 2015, 2016, 2017, 2018]
 
-    '''All games'''
-    games = df_creator(teams, seasons)
-    games = games.apply(add_game_type, axis=1)
-    games = games.apply(gen_unique_id, axis=1)
-    games = everybody_merge(games)
-    save_to_pkl(games, year='all_games')
-
+    '''Get game date for all seasons'''
+    # games = season_games(seasons, teams)
+    #
     '''Games up to 2017 tourney'''
-    games_up_to_2017_tourney = games_up_to_2017_tourney(games)
-    save_to_pkl(games_up_to_2017_tourney, year='up_to_2017_tourney')
+    # games_up_to_2017_tourney = games_up_to_2017_tourney_filter(games)
+    #
+    '''Games up to 2018 season'''
+    # games_up_to_2018_season = games_up_to_2018_season_filter(games)
+    #
+    '''up to 2018 tourney'''
+    # games_up_to_2018_tourney = games_up_to_2018_tourney_filter(games)
+
 
     '''2017 season final stats'''
-    season2017_final_stats = season_final_stats(teams, 2017)
-    save_to_pkl(season2017_final_stats, year='2017_final_stats')
+    # season_final_stats(teams, 2017, window=5, lag=False)
 
-    '''Games up to 2018 season'''
-    games_up_to_2018_season = games_up_to_2018_season(games)
-    save_to_pkl(games_up_to_2018_season, year='up_to_2018_season')
-
-    '''2018 season final stats'''
-    season2018_final_stats = season_final_stats(teams, 2018)
-    save_to_pkl(season2018_final_stats, year='2018_final_stats')
-
-    '''up to 2018 tourney'''
-    games_up_to_2018_tourney = games_up_to_2018_tourney(games)
-    save_to_pkl(games_up_to_2018_tourney, year='up_to_2018_tourney')
+    # '''2018 season final stats'''
+    season_final_stats(teams, 2018, window=5, lag=False)
