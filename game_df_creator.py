@@ -278,7 +278,7 @@ def season_final_stats(teams, season, window=5, lag=False):
 
         season_final_stats = season_final_stats.append(df[cond].iloc[-1], ignore_index=True)
 
-    season_final_stats.to_pickle('game_data/season{}_final_stats'.format(season))
+    season_final_stats.to_pickle('game_data/season{}_final_stats.pkl'.format(season))
 
 
 # def save_to_csv(df, year):
@@ -310,7 +310,7 @@ def season_games(seasons, teams):
 #         games_all_years = games_all_years.append(games, ignore_index=True)
 #     games_all_years.to_pickle('games_five_years.pkl')
 
-
+'''put in new modeling script'''
 def games_up_to_2017_tourney_filter(df):
     '''Filter for all games up to 2017 tourney'''
     notourney2018 = (df['GameType'] != 'tourney2018')
