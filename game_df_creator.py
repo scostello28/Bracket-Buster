@@ -281,14 +281,6 @@ def season_final_stats(teams, season, window=5, lag=False):
     season_final_stats.to_pickle('game_data/season{}_final_stats.pkl'.format(season))
 
 
-# def save_to_csv(df, year):
-#     df.to_csv('games_{}.csv'.format(year))
-#
-#
-# def save_to_pkl(df, year):
-#     df.to_pickle('games_{}.pkl'.format(year))
-
-
 def season_games(seasons, teams):
     '''
     Creates DataFrame for full season and tourney for given year
@@ -301,38 +293,6 @@ def season_games(seasons, teams):
     games.to_pickle('game_data/all_games.pkl')
     # games.to_pickle('game_data/games_{}.pkl'.format(season))
     return games
-
-
-# def combine_years(game_logs):
-#     games_all_years = pd.DataFrame()
-#     for game_log in game_logs:
-#         games = pd.read_pickle(game_log)
-#         games_all_years = games_all_years.append(games, ignore_index=True)
-#     games_all_years.to_pickle('games_five_years.pkl')
-
-'''put in new modeling script'''
-def games_up_to_2017_tourney_filter(df):
-    '''Filter for all games up to 2017 tourney'''
-    notourney2018 = (df['GameType'] != 'tourney2018')
-    noseason2018 = (df['GameType'] != 'season2018')
-    notourney2017 = (df['GameType'] != 'tourney2017')
-    games_up_to_2017_tourney = df[notourney2018 & noseason2018 & notourney2017]
-    games_up_to_2017_tourney.to_pickle('game_data/games_up_to_2017_tourney.pkl')
-
-
-def games_up_to_2018_season_filter(df):
-    '''Filter for games up to 2018 season'''
-    notourney2018 = (df['GameType'] != 'tourney2018')
-    noseason2018 = (df['GameType'] != 'season2018')
-    games_up_to_2018_season = df[notourney2018 & noseason2018]
-    games_up_to_2018_season.to_pickle('game_data/games_up_to_2018_season.pkl')
-
-
-def games_up_to_2018_tourney_filter(df):
-    '''Filter for games up to 2018 tourney'''
-    notourney2018 = (df['GameType'] != 'tourney2018')
-    games_up_to_2018_tourney = df[notourney2018]
-    games_up_to_2018_tourney.to_pickle('game_data/games_up_to_2018_tourney.pkl')
 
 
 if __name__ == '__main__':

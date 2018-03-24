@@ -20,6 +20,12 @@ def games_up_to_2017_tourney_filter(df):
     games_up_to_2017_tourney = df[notourney2018 & noseason2018 & notourney2017]
     return games_up_to_2017_tourney
 
+def games_up_to_2018_tourney_filter(df):
+    '''Filter for games up to 2018 tourney'''
+    notourney2018 = (df['GameType'] != 'tourney2018')
+    games_up_to_2018_tourney = df[notourney2018]
+    return games_up_to_2018_tourney
+
 def set_up_train_set(df):
         '''Shuffle DataFrames'''
         df = df.sample(frac=1).reset_index(drop=True)
@@ -30,7 +36,7 @@ def set_up_train_set(df):
                           'OPORBpg', 'OPRBpg', 'OPASTpg', 'OPSTLpg', 'OPBLKpg',
                           'OPTOpg', 'OPPFpg', 'OPsos']]
 
-        # Set up features and targets
+        '''Set up features and targets'''
         X_train = Xy_train.iloc[:, 1:].as_matrix()
         y_train = Xy_train.iloc[:, 0].as_matrix()
 
@@ -56,11 +62,14 @@ def merge(df, team1, team2):
     OPcols = ['OP{}'.format(col) for col in df2cols]
     df2.columns = OPcols
 
-    '''Merge games instance DataFrames'''
+    '''Force unique ID to merge on'''
     df1['game'] = 'game'
     df2['game'] = 'game'
 
+    '''Merge games instance DataFrames'''
     dfout = pd.merge(df1, df2, how='left', on='game')
+
+    '''Drop uneeded columns'''
     dfout = dfout.drop(['game', 'Tm', 'OPTm'], axis=1)
 
     return dfout
@@ -69,9 +78,12 @@ def game_predict(matchup, X_train, y_train):
     '''Fit model on training data'''
     lg = LogisticRegression()  # penalty='l2' as default which is Ridge
     lg.fit(X_train, y_train)
+
+    '''Predict on matchup'''
     lg_predict = lg.predict(matchup)
     lg_prob = lg.predict_proba(matchup)
 
+    '''Print results'''
     if lg_predict[0] == 0:
         print('{} loses and {} wins!'.format(team1, team2))
         print('{} has {}% chance to win.'.format(team1, int(lg_prob[0][1]*100)))
@@ -84,6 +96,7 @@ def game_predict(matchup, X_train, y_train):
 if __name__ == '__main__':
     games = pd.read_pickle('game_data/all_games.pkl')
     games = games_up_to_2017_tourney_filter(games)
+    # games = games_up_to_2018_tourney_filter(games)
     finalgames = pd.read_pickle('game_data/season2017_final_stats.pkl')
     X_train, y_train = set_up_train_set(games)
     team1 = str(input('team1: '))
