@@ -11,10 +11,11 @@
 5. [Brackets](#Brackets)
     * [2016 Bracket](#2016-Bracket)
     * [2017 Bracket](#2017-Bracket)
+6. [Future Update](#Future Updates)
 
 
 ## Hypothesis
-- Using logistic regression I can create a model to predict winners that can build a better bracket than Obama
+- Using logistic regression I can create a model to predict winners that can build a better bracket than Obama.
 
 ## Dataset
 Gamelogs for each team from the past 5 years. Retrieved from www.sports-reference.com.
@@ -29,91 +30,76 @@ Data Cleaning:
 
 ![Cleaned table pic](pictures/cleaneddata.png)
 
-  - Downloaded game data for all teams from 2013 to 2016 (over 4886 games)
-  - Feature Engineering:
-    - Current win percentage
-     - Rolling average Features:
-        - Points per game,
-        - Points against per game,
-        - Field goal percentage,
-        - free throw percentage,
-        - three-point percentage,
-        - rebounds per game,
-        - offensive rebounds per game,
-        - assist per game,
-        - blocks per game,
-        - steals per game,
-        - turn overs per game
-        - personal fouls per game
-  - Also added Strength of Schedule (only 2018 season...)
-  - generate a unique id by mapping names with formatted names
-  - combine data to one row for each match!
+  - Pulled gamelog data for all teams from 2014 to 2018
+  - The gamelog data was adapted to get a sense for how teams have been playing up to the matchup. The following features were created for predictions:
 
-![CorreationMatrix](pictures/corrmatrix.png)
+![Features](pictures/features.png)
 
-Hard to tell which features are most important based on visual inspection.  So I wanted to use regularization to help pick.  
+Additional features were utilized to work with the data.
+  - game type column to filter by season and tournament games.
+  - unique matchup id by mapping names with formatted names to combine data to one row for each match!
 
-Turns out logistic regression uses Ridge regularization by default.  
+![CorrelationMatrix](pictures/corrmatrix.png)
+
+Hard to tell which features are most important based on visual inspection.  So regularization was utilized to determine most useful features for prediction.    
 
 ## Modeling
 
 **Logistic Regression**
 
-* Turns out LogisticRegression uses Ridge regularization by default and can be switched to Lasso with an argument.  In this case there was not a significant difference between the two.
-  * penalty='l2'  -->   Ridge
+* LogisticRegression uses Ridge regularization by default and can be switched to Lasso with an argument.  In this case there was not a significant difference between the two.
+  * penalty='l2'  -->   Ridge (default)
   * penalty='l1'  -->   Lasso
 
-* Trained and tested on data from games form 2013 to 2017
-  * using 5-fold cross validation on shuffled data
+* Model was trained and tested, using 5-fold cross validation, on data from games from 2014 through 2017 seasons.
 
 ```
-Accuracy: 0.79 (% predicted correctly)
-Precision: 0.78 (predicted positives % correct)
-Recall: 0.79 (% of positives predicted correctly)
-f1 Score: 0.79 (weighted average of Precision and Recall)
+Accuracy: 0.68 (% predicted correctly)
+Precision: 0.67 (predicted positives % correct)
+Recall: 0.66 (% of positives predicted correctly)
+f1 Score: 0.66 (weighted average of Precision and Recall)
 ```
 
-* Trained on data from games form 2013 to 2017
-  * Tested on 2018 games
-  * I guessed 80% of the games right?!
+* Model was then tested in the games from the 2018 season (hold out set)
 
 ```
-Accuracy: 0.78 (% predicted correctly)
-Precision: 0.78 (predicted positives % correct)
-Recall: 0.77 (% of positives predicted correctly)
-f1 Score: 0.78 (weighted average of Precision and Recall)
+Accuracy: 0.67 (% predicted correctly)
+Precision: 0.66 (predicted positives % correct)
+Recall: 0.66 (% of positives predicted correctly)
+f1 Score: 0.66 (weighted average of Precision and Recall)
 ```
 
 **Coefficients**
 
-![Coefficients](pictures/Features.png)
+Ridge and Lasso error rate was identical and looking at the feature coefficients it is not hard to see why.  It is interesting to see that Lasso did not remove any features.  
+
+![Coefficients](pictures/feature_coefficients.png)
 
 **C-optimization**
 
-![Coptimization](pictures/coptimization.png)
+In logistic regression the regularization parameter is `C` and is the inverse of regularization strength (`alpha = 1 / C`).  Therefore, C must be positive with lower values resulting in stronger regularization.
 
 ~~~python
-model = LogisticRegression(penalty='l2', C=1)
+model = LogisticRegression(C=1)
 ~~~
 
-sklearn documentation:
+![Coptimization](pictures/coptimization.png)
 
-C : float, default: 1.0
-Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.
+It is strange that with varying regularization that model accuracy did not change.  Without a perceptible change in accuracy with various regularization parameters it was optimized using `GridSearchCV` from sklearn's model selection library.  This showed an optimal regularization parameter of 1 which is the default and results in no regularization.
 
 ~~~python
 Cs = list(np.linspace(0.1, 3, 100))
 grid_search_results = GridSearchCV(model, param_grid={'C':Cs}, scoring='accuracy', cv=5)
 grid_search_results.fit(X_train, y_train)
 grid_search_results.best_params_
-> {'C': 0.9494}
+> {'C': 1.0000}
 ~~~
-
-* hovered around 1
 
 ## Pick-a-winner-feature
 
-- Using final stats for each team trained for 2016 bracket
+An interactive function was created to pit two teams against on another to see the modeled outcome.  A threshold of .5 was used to distinguish a winner from a loser.  
+
+- Using final 2017 season stats for each team the model was trained on games from the previous four years to predict the 2017 bracket.
 
 [Code Link](win_or_lose.py)
 
@@ -147,7 +133,7 @@ north-carolina has 44% chance to win.
 - Round 5 (Final Four): 16
 - Round 6 (Championship): 32
 
-### 2016-Bracket
+### 2017-Bracket
 
 ![Obama's 2016 Bracket](pictures/obama2016bracket.jpg)
 
@@ -161,7 +147,7 @@ north-carolina has 44% chance to win.
 ![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
 
 
-### 2017-Bracket
+### 2018-Bracket
 
 There is always this year!
 
@@ -170,30 +156,8 @@ There is always this year!
 ![2017 Bracket](pictures/obama2017bracket.png)
 
 
-
-
-## Learned
-- Pandas, Pandas, Pandas
- - .rolling, .cumsum
- - ‎conditional row logic (hanks Michael!)
-~~~python
- def function(row):
-    do someting
-    return row
-
-    df.apply(function, axis=1)
-~~~
- - ‎mapping with dictionaries
- - LogisticRegression
- - Hyperparameter optimization
- - How to work through ‎problems
-
-
-Future:
-- Clean up my code!
-- Implement for 2017 bracket
-- ‎lag on rolling aves
-- ‎sos for each year and possibly rolling
-- ‎other features: pace, stats per 100 possessions, team makeup, offensive rating, defensive rating
+## Future Updates
+- Additional Features:
+  - ‎pace, stats per 100 possessions, team makeup, offensive rating, defensive rating, and home or away
 - ‎map all team names back to common formatting
-- bootstrap outcomes for each matchup
+- test model with various rolling average windows
