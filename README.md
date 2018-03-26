@@ -108,8 +108,8 @@ A clear winner:
 team1: kansas
 team2: iona
 kansas wins and iona loses!
-kansas has 83% chance to win.
-iona has 17% chance to win.
+kansas has 84% chance to win.
+iona has 16% chance to win.
 ~~~
 
 
@@ -118,8 +118,8 @@ A close match:
 team1: kansas
 team2: north-carolina
 kansas wins and north-carolina loses!
-kansas has 56% chance to win.
-north-carolina has 44% chance to win.
+kansas has 61% chance to win.
+north-carolina has 39% chance to win.
 ~~~
 
 
@@ -135,14 +135,14 @@ north-carolina has 44% chance to win.
 
 ### 2017-Bracket
 
-![Obama's 2016 Bracket](pictures/obama2016bracket.jpg)
+![Obama's 2017 Bracket](pictures/obama2017bracket.jpg)
 
-![Model's 2016 Bracket](pictures/model-bracket.png)
+![Modeled 2017 Bracket](pictures/model-bracket-2017.png)
 
-![Actual 2016 Bracket](pictures/ncaa-march-madness-results-2016.jpg)
+![Actual 2017 Bracket](pictures/ncaa-march-madness-results-2017.jpg)
 
-- ‎sean: 77 points
-- ‎obama: 67 points
+- ‎sean: 77 points UPDATE!!!
+- ‎obama: 67 points UPDATE!!!
 
 ![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
 
@@ -153,7 +153,7 @@ There is always this year!
 
 ![Happy Obama](https://media.giphy.com/media/dpYkMt1b9BNmw/giphy.gif)
 
-![2017 Bracket](pictures/obama2017bracket.png)
+![2018 Bracket](pictures/obama2018bracket.png)
 
 
 ## Future Updates
