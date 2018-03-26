@@ -153,7 +153,9 @@ There is always this year!
 
 ![Happy Obama](https://media.giphy.com/media/dpYkMt1b9BNmw/giphy.gif)
 
-![2018 Bracket](pictures/obama2018bracket.png)
+![Obama's 2018 Bracket](pictures/obama2018bracket.png)
+
+![Modeled 2018 Bracket](pictures/model2018bracket.png)
 
 
 ## Future Updates
