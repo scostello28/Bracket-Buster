@@ -33,8 +33,7 @@ Data Cleaning:
   - Pulled gamelog data for all teams from 2014 to 2018
   - The gamelog data was adapted to get a sense for how teams have been playing up to the matchup. The following features were created for predictions:
 
-![Features](pictures/features.png)
-
+![Features](pictures/Features.png)
 
 Additional features were utilized to work with the data.
   - game type column to filter by season and tournament games.
