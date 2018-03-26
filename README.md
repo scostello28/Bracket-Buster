@@ -11,7 +11,7 @@
 5. [Brackets](#Brackets)
     * [2016 Bracket](#2016-Bracket)
     * [2017 Bracket](#2017-Bracket)
-6. [Future Update](#Future Updates)
+6. [Future Update](#Future-Updates)
 
 
 ## Hypothesis
@@ -34,6 +34,7 @@ Data Cleaning:
   - The gamelog data was adapted to get a sense for how teams have been playing up to the matchup. The following features were created for predictions:
 
 ![Features](pictures/features.png)
+
 
 Additional features were utilized to work with the data.
   - game type column to filter by season and tournament games.
@@ -158,7 +159,7 @@ There is always this year!
 ![Modeled 2018 Bracket](pictures/model2018bracket.png)
 
 
-## Future Updates
+## Future-Updates
 - Additional Features:
   - ‎pace, stats per 100 possessions, team makeup, offensive rating, defensive rating, and home or away
 - ‎map all team names back to common formatting
