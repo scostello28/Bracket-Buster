@@ -9,13 +9,12 @@
 3. [Modeling](#Modeling)
 4. [Pick a winner](#Pick-a-winner-feature)
 5. [Brackets](#Brackets)
-    * [2016 Bracket](#2016-Bracket)
-    * [2017 Bracket](#2017-Bracket)
+    * [2018 Bracket](#2017-Bracket)
 6. [Future Update](#Future-Updates)
 
 
 ## Hypothesis
-- Using logistic regression I can create a model to predict winners that can build a better bracket than Obama.
+- I can create a model to predict winners that can build a better bracket than Obama.
 
 ## Dataset
 Gamelogs for each team from the past 5 years. Retrieved from www.sports-reference.com.
@@ -133,33 +132,24 @@ north-carolina has 39% chance to win.
 - Round 5 (Final Four): 16
 - Round 6 (Championship): 32
 
-### 2017-Bracket
-
-![Obama's 2017 Bracket](pictures/obama2017bracket.jpg)
-
-![Modeled 2017 Bracket](pictures/model-bracket-2017.png)
-
-![Actual 2017 Bracket](pictures/ncaa-march-madness-results-2017.jpg)
-
-- ‎sean: 77 points UPDATE!!!
-- ‎obama: 67 points UPDATE!!!
-
-![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
-
 
 ### 2018-Bracket
-
-There is always this year!
-
-![Happy Obama](https://media.giphy.com/media/dpYkMt1b9BNmw/giphy.gif)
 
 ![Obama's 2018 Bracket](pictures/obama2018bracket.png)
 
 ![Modeled 2018 Bracket](pictures/model2018bracket.png)
 
+- ‎Model: 65 points and counting!
+- ‎Obama: 56 points
+
+![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
 
 ## Future-Updates
 - Additional Features:
-  - ‎pace, stats per 100 possessions, team makeup, offensive rating, defensive rating, and home or away
+  - ‎pace, stats per 100 possessions, team makeup, offensive rating, defensive
+  rating, strength of schedule for each year, and home or away
 - ‎map all team names back to common formatting
 - test model with various rolling average windows
+- test different models after I learn them
+  - Random Forests
+  - Gradient Decent Boosting
