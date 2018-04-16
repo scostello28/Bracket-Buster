@@ -74,24 +74,35 @@ def merge(df, team1, team2):
 
     return dfout
 
-def game_predict(matchup, X_train, y_train):
+def logistic_game_predict(matchup, matchup_reversed, X_train, y_train):
     '''Fit model on training data'''
     lg = LogisticRegression()  # penalty='l2' as default which is Ridge
     lg.fit(X_train, y_train)
 
     '''Predict on matchup'''
-    lg_predict = lg.predict(matchup)
+    # lg_predict = lg.predict(matchup)
+    # lg_predict_reversed = lg.predict(matchup_reversed)
     lg_prob = lg.predict_proba(matchup)
+    lg_prob_reversed = lg.predict_proba(matchup_reversed)
+    team1_prob = (lg_prob[0][1] + lg_prob_reversed[0][0]) / 2 * 100
+    team2_prob = (lg_prob[0][0] + lg_prob_reversed[0][1]) / 2 * 100
 
     '''Print results'''
-    if lg_predict[0] == 0:
-        print('{} loses and {} wins!'.format(team1, team2))
-        print('{} has {}% chance to win.'.format(team1, int(lg_prob[0][1]*100)))
-        print('{} has {}% chance to win.'.format(team2, int(lg_prob[0][0]*100)))
+    if team1_prob < team2_prob:
+        print('{} wins and {} loses!'.format(team2, team1))
+        print('{} has {}% chance to win.'.format(team1, int(round(team1_prob))))
+        print('{} has {}% chance to win.'.format(team2, int(round(team2_prob))))
     else:
         print('{} wins and {} loses!'.format(team1, team2))
-        print('{} has {:.0f}% chance to win.'.format(team1, lg_prob[0][1]*100))
-        print('{} has {:.0f}% chance to win.'.format(team2, lg_prob[0][0]*100))
+        print('{} has {}% chance to win.'.format(team1, int(round(team1_prob))))
+        print('{} has {}% chance to win.'.format(team2, int(round(team2_prob))))
+    # print('{} prob: {}, {} prob: {}'.format(team1, team1_prob, team2, team2_prob))
+
+def randomforest_game_predict(matchup, matchup_reversed, X_train, y_train):
+    pass
+
+def boosting_game_predict(matchup, matchup_reversed, X_train, y_train):
+    pass
 
 if __name__ == '__main__':
     games = pd.read_pickle('game_data/all_games.pkl')
@@ -104,4 +115,5 @@ if __name__ == '__main__':
     team2 = str(input('team2: '))
     # matchup = merge(finalgames2017, team1, team2)
     matchup = merge(finalgames2018, team1, team2)
-    game_predict(matchup, X_train, y_train)
+    matchup_reversed = merge(finalgames2018, team2, team1)
+    logistic_game_predict(matchup, matchup_reversed, X_train, y_train)
