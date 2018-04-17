@@ -4,16 +4,18 @@ from datetime import datetime
 from datetime import date
 import time
 import pickle
+import pdb
 
 '''Created using Excel because logic could only get so far when formatting team names from table format to url format'''
-team_names_sos_filepath = 'team_list/sos_team_list_2018_final.csv'
+team_names_filepath = 'sos/sos_list2018.csv'
+sos_filepath = 'sos/sos_list'
 
 def team_list(filepath):
     '''
     Create dictionary of school names and formatted school names for mapping
     '''
     team_names = pd.read_csv(filepath)
-    school_list = team_names['School_format'].tolist()
+    school_list = team_names['school-format'].tolist()
     return school_list
 
 
@@ -22,24 +24,25 @@ def teams_dict(filepath):
     Create dictionary of school names and formatted school names for mapping
     '''
     team_names = pd.read_csv(filepath)
-    team_names = team_names[['School', 'School_format']]
+    team_names = team_names[['school', 'school-format']]
     team_dict = {}
-    schools = team_names['School'].tolist()
-    schools_format = team_names['School_format'].tolist()
+    schools = team_names['school'].tolist()
+    schools_format = team_names['school-format'].tolist()
     for school, schform in zip(schools, schools_format):
         team_dict[school] = schform
     return team_dict
 
 
-def sos_dict(filepath):
+def sos_dict_creator(filepath, season):
     '''
     Create dictionary of school names and strength of schedule for mapping
     '''
+    filepath = filepath + str(season) + '.csv'
     team_sos = pd.read_csv(filepath)
-    team_sos = team_sos[['School_format', 'SOS']]
+    team_sos = team_sos[['school-format', 'sos']]
     sos_dict = {}
-    schools = team_sos['School_format'].tolist()
-    sos = team_sos['SOS'].tolist()
+    schools = team_sos['school-format'].tolist()
+    sos = team_sos['sos'].tolist()
     for school, sos in zip(schools, sos):
         sos_dict[school] = sos
     return sos_dict
@@ -102,7 +105,7 @@ def lag_columns(df, cols_to_shift):
     return df
 
 
-def stat_transform(df, team, window=5, lag=True):
+def stat_transform(df, team, sos_source, window=5, lag=True):
     '''
     INPUTs:
         df = dataframe created from html pull
@@ -114,8 +117,6 @@ def stat_transform(df, team, window=5, lag=True):
     '''remove oppenent columns'''
     df = df.iloc[:, 0:23]
 
-    '''Remove divider rows'''
-    df = df.drop(df.index[[20,21]])
 
     '''Remove Double Column headers'''
     dubcols = df.columns.tolist()
@@ -128,8 +129,12 @@ def stat_transform(df, team, window=5, lag=True):
                'AST', 'STL', 'BLK', 'TO', 'PF']
     df.columns = newcols
 
+    '''Remove divider rows'''
+    df = df[(df['Date'] != 'School') & (df['Date'] != 'Date')]
+
     '''reformat Opponent team name column strings'''
-    df['Opp'] = df['Opp'].map(teams_dict(team_names_sos_filepath))
+    df['Opp'] = df['Opp'].map(teams_dict(team_names_filepath))
+    # df['Opp'] = df['Opp'].apply(school_name_transform)
 
     '''Only take the first charcter in W field then map to 0's and 1's.
     (Ties and overtime have excess characters)'''
@@ -137,8 +142,9 @@ def stat_transform(df, team, window=5, lag=True):
     df['W'] = df['W'].map({'W': 1, 'L': 0})
 
     '''Create win precentage and rolling average Features'''
+    # pdb.set_trace()
     df['Ws'] = df['W'].cumsum(axis=0)
-    df['Wp'] = df['Ws'].astype(int) / df['G'].astype(int)
+    df['Wp'] =  df['Ws'].astype(int) / df['G'].astype(int)
     df['ppg'] = df['Pts'].rolling(window=window,center=False).mean()
     df['pApg'] = df['PtsA'].rolling(window=window,center=False).mean()
     df['FGp'] = df['FG%'].rolling(window=window,center=False).mean()
@@ -164,7 +170,7 @@ def stat_transform(df, team, window=5, lag=True):
     df['Tm'] = team
 
     '''Add SOS columns'''
-    df['sos'] = df['Tm'].map(sos_dict(team_names_sos_filepath))
+    df['sos'] = df['Tm'].map(sos_source)
 
     '''Add datetime formatted date without time of day (i.e. just the date)'''
     df['just_date'] = pd.to_datetime(df['Date']).dt.date
@@ -173,8 +179,8 @@ def stat_transform(df, team, window=5, lag=True):
 
     df = df.drop(['just_date'], axis=1)
 
-    cols_to_shift = ['Ws', 'Wp', 'ppg', 'pApg', 'FGp', '3Pp', 'FTp',
-       'ORBpg', 'RBpg', 'ASTpg', 'STLpg', 'BLKpg', 'TOpg', 'PFpg', 'Tm', 'sos']
+    cols_to_shift = ['Ws', 'Wp','ppg', 'pApg', 'FGp', '3Pp', 'FTp',
+       'ORBpg', 'RBpg', 'ASTpg', 'STLpg', 'BLKpg', 'TOpg', 'PFpg', 'Tm']
 
     if lag:
         df = lag_columns(df, cols_to_shift)
@@ -237,19 +243,25 @@ def games_df_creator(teams, seasons, window=5, lag=True):
 
     for season in seasons:
 
-        for team in teams:
+        sos_dict = sos_dict_creator(sos_filepath, season)
 
+        for team in teams:
+            print(team, season)
             url = 'https://www.sports-reference.com/cbb/schools/{}/{}-gamelogs.html#sgl-basic::none'.format(team, season)
 
             '''Read team gamelog'''
             df = pd.read_html(url)[0]
 
-            df = stat_transform(df, team, window, lag)
+            df = stat_transform(df, team, sos_dict, window, lag)
 
             '''Add df to games_df'''
             games_df = games_df.append(df, ignore_index=True)
 
-        time.sleep(15)
+            # time.sleep(5)
+        # '''Add SOS columns'''
+        # df['sos'] = df['Tm'].map(sos_dict)
+
+        time.sleep(40)
 
     return games_df
 
@@ -264,6 +276,7 @@ def season_final_stats(teams, season, window=5, lag=False):
     '''
 
     season_final_stats = pd.DataFrame()
+    sos_dict = sos_dict_creator(sos_filepath, season)
 
     for team in teams:
 
@@ -272,11 +285,15 @@ def season_final_stats(teams, season, window=5, lag=False):
         '''Read team gamelog'''
         df = pd.read_html(url)[0]
 
-        df = stat_transform(df, team, window, lag)
+        df = stat_transform(df, team, sos_dict, window, lag)
 
         cond = (df['GameType'] == 'season{}'.format(season))
 
         season_final_stats = season_final_stats.append(df[cond].iloc[-1], ignore_index=True)
+
+        # time.sleep(5)
+    # '''Add SOS columns'''
+    # df['sos'] = df['Tm'].map(sos_dict)
 
     season_final_stats.to_pickle('game_data/season{}_final_stats.pkl'.format(season))
 
@@ -296,7 +313,7 @@ def season_games(seasons, teams):
 
 
 if __name__ == '__main__':
-    teams = team_list(team_names_sos_filepath)
+    teams = team_list(team_names_filepath)
 
     season2013start = date(2012,4,1)
     season2013end = date(2013,3,18)
@@ -331,20 +348,20 @@ if __name__ == '__main__':
     seasons = [2014, 2015, 2016, 2017, 2018]
 
     '''Get game date for all seasons'''
-    # games = season_games(seasons, teams)
-    #
-    '''Games up to 2017 tourney'''
+    games = season_games(seasons, teams)
+
+    '''Remove these filters'''
+    # '''Games up to 2017 tourney'''
     # games_up_to_2017_tourney = games_up_to_2017_tourney_filter(games)
     #
-    '''Games up to 2018 season'''
+    # '''Games up to 2018 season'''
     # games_up_to_2018_season = games_up_to_2018_season_filter(games)
     #
-    '''up to 2018 tourney'''
+    # '''up to 2018 tourney'''
     # games_up_to_2018_tourney = games_up_to_2018_tourney_filter(games)
 
-
     '''2017 season final stats'''
-    # season_final_stats(teams, 2017, window=5, lag=False)
+    season_final_stats(teams, 2017, window=5, lag=False)
 
-    # '''2018 season final stats'''
+    '''2018 season final stats'''
     season_final_stats(teams, 2018, window=5, lag=False)
