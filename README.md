@@ -175,52 +175,113 @@ Rosters and player stats per 100 possessions, in addition to game logs, for each
 ### Updates
 
 1. SOS per year
-2. Team Experience Level (% upper classmen)
-3. Team Composition Clusters
+2. RandomForests
+3. Gradient Descent Boosting
 
 ## Clustering
 
 Utilized KMeans Clustering to discover player archetypes based on stats. Visualized with tSNE dimensionality reduction.
 
-Center Archetypes:
-Cluster 1: Defensive Center - Rebounding and Blocking
-Cluster 2: Offensive Center - Strong in the paint
-Cluster 3: Shooting Center - Shoots 3's
+![kmeans](https://media.giphy.com/media/12vVAGkaqHUqCQ/giphy.gif)
 
-Cluster 1 rep:
-Cluster 2 rep:
-Cluster 3 rep:
+hyperparameters:
+- kmeans++ - Choose random observations as initial centroids
+- n_init = 20 - Number of iterations
+  - Remember KMeans is *not deterministic* so we need to run the algorithm multiple times to avoid falling into local minima.
+
+
+Choosing K with Silhouette Score:
+![silhouette](pictures/silhouette.png)
+<!-- ![silform](pictures/silform.png) -->
+
+The Silhouette score is calculated by comparing the mean distance between points in a cluster (intra-cluster distance) to the mean distance to the nearest cluster (inter-cluster distance)
+
+$$\frac{(b-a)}{max(a,b)}$$
+
+a = intra-cluster distance
+b = inter-cluster distance
+
+Values range from -1 to 1 with 1 being the best and -1 being the worst.
+A value of 1 will be compact clusters that are far apart from each other.
+
+Features included for each position:
+centers:
+'2P', '3P', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PTS', 'Height'
+
+forwards:
+'2P', '2PA', '3P', '3PA', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PTS'
+
+guards:
+'3P', 'AST', 'STL', 'TOV', 'PTS', 'TRB'
+
+Center Archetypes:
+Cluster 0: All Team Center - Strong across the board
+Cluster 1: B Team Centers - Weak across the board
+Cluster 2: Shooting Center - Score from range
+
+Cluster 0 rep: Jock Landale
+Cluster 1 rep: JD Wallace
+Cluster 2 rep: Thomas Welsh
+
+![Center Cluster Table](pictures/centerclustertable.png)
+![Center Clusters](pictures/center2dtsne.png)
+![Center Clusters](pictures/centers3dtsne.png)
 
 Forward Archetypes:
-Cluster 1: Deep Forwards - Drops 3's and feeds
-Cluster 2: Versatile Forwards - Defends and Shoots
-Cluster 3: Supporting Forwards - Short range game and passing
+Cluster 0: Deep Forwards - Drops 3's and feeds
+Cluster 1: Versatile Forwards - Defend and Shoot
+Cluster 2: Supporting Forwards - Short range game and passing
 
-Cluster 1 rep:
-Cluster 2 rep:
-Cluster 3 rep:
+Cluster 0 rep: Oshae Brissett
+Cluster 1 rep: Justin Johnson
+Cluster 2 rep: Steffon Mitchell
+
+![Forwards Cluster Table](pictures/forwardsclustertable.png)
+![Forwards Clusters](pictures/forwards2dtsne.png)
+![Forwards Clusters](pictures/forwards3dtsne.png)
 
 Guard Archetypes:
-Cluster 1: Downtown Rebounder - Scrappy 3 point shooter
-Cluster 2: Supporting Guard - Strong passer and rebounder
-Cluster 3: Combo Guard - Shoots and feeds
-Cluster 4: Ball Handler - Feeds and breaks knees
+Cluster 0: All Team Guards - Strong All Around
+Cluster 1: Supporting Guards - Set up Team mates
+Cluster 2: Utility 3 Point Shooter - Hits Threes Given Opportunity
+Cluster 3: B Team Guards - Weak performing starters
+Cluster 4: Rebounding Guard - Steals, Rebounds and Shoots Threes
+Cluster 5: Utility Thief - Steals and Scores Given Opportunity
+Cluster 6: Benchwarmer - Don't take advantage of playtime
 
-Cluster 1 rep:
-Cluster 2 rep:
-Cluster 3 rep:
-Cluster 3 rep:
+Cluster 0 rep: Tyus Battle
+Cluster 1 rep: Franklin Howard
+Cluster 2 rep: Marquis Godwin
+Cluster 3 rep: Jonah Radebaugh
+Cluster 4 rep: Jordan Caroline
+Cluster 5 rep: L.J. Thorpe
+Cluster 6 rep: Leighton Schrand
 
-* Reps are players most mins in cluster
+![Guards Cluster Table](pictures/guardclustertable.png)
+![Guards Clusters](pictures/guard2dtsne.png)
+![Guards Clusters](pictures/guard3dtsne.png)
 
-* Team composition by cluster
-pivot table by team and year with player label clusters as columns
+## Team Compostition:
 
-Show NCAA champion for last 3 years
+![Final Four](pictures/finalfour.png)
+![Upset](pictures/umbcvirginia.png)
+
+## Packages
+
+![numpy](pictures/numpy.jpeg)
+![pandas](pictures/pandas.png)
+![sklearn](pictures/sklearn.png)
+![BeautifulSoup](pictures/beautifulsoup.png)
+![matplotlib](pictures/matplotlib.png)
+
 
 ## Future-Updates
+- Team Experience Level (% upper classmen)
+- Team Composition Clusters
+  - improve clustering
 - Additional Features:
   - ‎pace of play, Other stats that my help with clustering.
 - test model with various rolling average windows
-- test different models after I learn them
+- Adapt model to predict point spread
+- test different models
   - MLP Neural Net
