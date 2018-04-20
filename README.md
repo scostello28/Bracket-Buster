@@ -6,19 +6,18 @@
 ## Table of Contents
 1. [Hypotheses](#Hypotheses)
 2. [Dataset](#dataset)
-3. [Capstone 1](#Capstone 1)
+3. [Capstone 1](#Capstone_1)
 4. [Pre-Processing](#Pre-processing)
 5. [Modeling](#Modeling)
 6. [Pick a winner](#Pick-a-winner-feature)
 7. [Brackets](#Brackets)
-  * [2018 Bracket](#2017-Bracket)
-8. [Capstone 2](#Capstone 2)
-  * [Updates](#Updates)
-9. [Clustering](#Clustering)
-10. [New Team Composition Features](#New Team Composition Features)
-10. [Modeling with Team Composition](#Modeling with Team Composition)
-11. [Bracket with Team Composition](#Bracket with Team Composition)
-6. [Future Update](#Future-Updates)
+8. [Capstone 2](#Capstone_2)
+9. [Updates](#Updates)
+10. [Additional Data](#Additional_Data)
+11. [Clustering](#Clustering)
+12. [Team Composition](#Team_Composition)
+13. [Packages](#Packages)
+14. [Future Update](#Future-Updates)
 
 
 ## Hypotheses
@@ -36,7 +35,7 @@ Gamelogs, Rosters and player stats per 100 possessions for each team from the pa
 ![Team gamelog pic](pictures/gamelog.png)
 
 
-## Capstone 1:
+## Capstone_1:
 
 ## Pre-processing
 
@@ -162,9 +161,9 @@ north-carolina has 39% chance to win.
 ![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
 
 
-## Capstone 2:
+## Capstone_2:
 
-### Additional Data
+### Additional_Data
 
 Rosters and player stats per 100 possessions, in addition to game logs, for each team from the past 5 years. Retrieved from www.sports-reference.com.
 
@@ -180,7 +179,7 @@ Rosters and player stats per 100 possessions, in addition to game logs, for each
 
 ## Clustering
 
-Utilized KMeans Clustering to discover player archetypes based on stats. Visualized with tSNE dimensionality reduction.
+Utilized KMeans Clustering to discover player archetypes based on stats.
 
 ![kmeans](https://media.giphy.com/media/12vVAGkaqHUqCQ/giphy.gif)
 
@@ -190,7 +189,7 @@ hyperparameters:
   - Remember KMeans is *not deterministic* so we need to run the algorithm multiple times to avoid falling into local minima.
 
 
-Choosing K with Silhouette Score:
+**Choosing K with Silhouette Score:**
 ![silhouette](pictures/silhouette.png)
 <!-- ![silform](pictures/silform.png) -->
 
@@ -204,21 +203,25 @@ b = inter-cluster distance
 Values range from -1 to 1 with 1 being the best and -1 being the worst.
 A value of 1 will be compact clusters that are far apart from each other.
 
+Positions Clustered separately with specific features for maximum cluster variance reduction and separation.
+
 Features included for each position:
-centers:
+
+**Centers:**
 '2P', '3P', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PTS', 'Height'
 
-forwards:
+**Forwards:**
 '2P', '2PA', '3P', '3PA', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PTS'
 
-guards:
+**Guards:**
 '3P', 'AST', 'STL', 'TOV', 'PTS', 'TRB'
 
-Center Archetypes:
+**Center Archetypes:**
 Cluster 0: All Team Center - Strong across the board
 Cluster 1: B Team Centers - Weak across the board
 Cluster 2: Shooting Center - Score from range
 
+**Center Cluster Representatives:**
 Cluster 0 rep: Jock Landale
 Cluster 1 rep: JD Wallace
 Cluster 2 rep: Thomas Welsh
@@ -227,11 +230,12 @@ Cluster 2 rep: Thomas Welsh
 ![Center Clusters](pictures/center2dtsne.png)
 ![Center Clusters](pictures/centers3dtsne.png)
 
-Forward Archetypes:
+**Forward Archetypes:**
 Cluster 0: Deep Forwards - Drops 3's and feeds
 Cluster 1: Versatile Forwards - Defend and Shoot
 Cluster 2: Supporting Forwards - Short range game and passing
 
+**Forward Cluster Representatives:**
 Cluster 0 rep: Oshae Brissett
 Cluster 1 rep: Justin Johnson
 Cluster 2 rep: Steffon Mitchell
@@ -240,7 +244,7 @@ Cluster 2 rep: Steffon Mitchell
 ![Forwards Clusters](pictures/forwards2dtsne.png)
 ![Forwards Clusters](pictures/forwards3dtsne.png)
 
-Guard Archetypes:
+**Guard Archetypes:**
 Cluster 0: All Team Guards - Strong All Around
 Cluster 1: Supporting Guards - Set up Team mates
 Cluster 2: Utility 3 Point Shooter - Hits Threes Given Opportunity
@@ -261,10 +265,10 @@ Cluster 6 rep: Leighton Schrand
 ![Guards Clusters](pictures/guard2dtsne.png)
 ![Guards Clusters](pictures/guard3dtsne.png)
 
-## Team Compostition:
+## Team_Compostition:
 
-![Final Four](pictures/finalfour.png)
-![Upset](pictures/umbcvirginia.png)
+![Final Four](pictures/finalfourteams.png)
+![Upset](pictures/virginiaumbc.png)
 
 ## Packages
 
@@ -276,7 +280,8 @@ Cluster 6 rep: Leighton Schrand
 
 
 ## Future-Updates
-- Team Experience Level (% upper classmen)
+- Add Team Composition features into predictive Model!
+- Team Experience Level (% upper class men)
 - Team Composition Clusters
   - improve clustering
 - Additional Features:
