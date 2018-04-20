@@ -149,9 +149,9 @@ def player_roster_merger(player_pkl, roster_pkl):
     '''Drop ID column'''
     df = df.drop(['ID'], axis=1)
 
-    '''Drop NaN rows and reserve players'''
-    df = df.dropna(axis=0, how='any')
-    df = df[df['MP'] > np.percentile(df['MP'], 25)]
+    # '''Drop NaN rows and reserve players'''
+    # df = df.dropna(axis=0, how='any')
+    # df = df[df['MP'] > np.percentile(df['MP'], 25)]
 
     df.to_pickle('players/player_stats.pkl')
 
@@ -176,7 +176,7 @@ if __name__ == '__main__':
     # player_stats_scraper(teams, seasons)
 
     '''Output pkl file with rosters for all teams for each year'''
-    # roster_df_creator(teams, seasons)
+    roster_df_creator(teams, seasons)
 
     '''Merge player_stats_scraper and roster_df_creator outputs'''
     player_roster_merger('players/player_per100.pkl', 'players/rosters.pkl')

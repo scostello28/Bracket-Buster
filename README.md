@@ -4,24 +4,41 @@
 
 
 ## Table of Contents
-1. [Dataset](#dataset)
-    * [Pre-Processing](#Pre-processing)
-3. [Modeling](#Modeling)
-4. [Pick a winner](#Pick-a-winner-feature)
-5. [Brackets](#Brackets)
-    * [2018 Bracket](#2017-Bracket)
+1. [Hypotheses](#Hypotheses)
+2. [Dataset](#dataset)
+3. [Capstone 1](#Capstone 1)
+4. [Pre-Processing](#Pre-processing)
+5. [Modeling](#Modeling)
+6. [Pick a winner](#Pick-a-winner-feature)
+7. [Brackets](#Brackets)
+  * [2018 Bracket](#2017-Bracket)
+8. [Capstone 2](#Capstone 2)
+  * [Updates](#Updates)
+9. [Clustering](#Clustering)
+10. [New Team Composition Features](#New Team Composition Features)
+10. [Modeling with Team Composition](#Modeling with Team Composition)
+11. [Bracket with Team Composition](#Bracket with Team Composition)
 6. [Future Update](#Future-Updates)
 
 
-## Hypothesis
-- I can create a model to predict winners that can build a better bracket than Obama.
+## Hypotheses
+Capstone 1: I can create a model to predict winners that can build a better bracket than Obama.
+
+Result: Yes I can! Logistic Regression outperformed RandomForests and Gradient Decent Boosting.
+
+Capstone 2: Can I improve the predictive capabilities of my model by adding team composition features--using player archetype clustering.
+
+Result: I don't know yet????
 
 ## Dataset
-Gamelogs for each team from the past 5 years. Retrieved from www.sports-reference.com.
+Gamelogs, Rosters and player stats per 100 possessions for each team from the past 5 years. Retrieved from www.sports-reference.com.
 
 ![Team gamelog pic](pictures/gamelog.png)
 
-### Pre-processing
+
+## Capstone 1:
+
+## Pre-processing
 
 [code_link](game_df_creator.py)
 
@@ -82,16 +99,16 @@ In logistic regression the regularization parameter is `C` and is the inverse of
 model = LogisticRegression(C=1)
 ~~~
 
-![Coptimization](pictures/coptimization.png)
+![Coptimization](pictures/coptimization.png)  ** Update PIC **
 
-It is strange that with varying regularization that model accuracy did not change.  Without a perceptible change in accuracy with various regularization parameters it was optimized using `GridSearchCV` from sklearn's model selection library.  This showed an optimal regularization parameter of 1 which is the default and results in no regularization.
+Model hyperparameters were optimized using `GridSearchCV` from sklearn's *model selection* library.  This showed an optimal regularization parameter very close to 1--which is the default and results in no regularization.
 
 ~~~python
 Cs = list(np.linspace(0.1, 3, 100))
 grid_search_results = GridSearchCV(model, param_grid={'C':Cs}, scoring='accuracy', cv=5)
 grid_search_results.fit(X_train, y_train)
 grid_search_results.best_params_
-> {'C': 1.0000}
+> {'C': 1.17}
 ~~~
 
 ## Pick-a-winner-feature
@@ -139,17 +156,71 @@ north-carolina has 39% chance to win.
 
 ![Modeled 2018 Bracket](pictures/model2018bracket.png)
 
-- ‎Model: 65 points and counting!
+- ‎Model: 81 points
 - ‎Obama: 56 points
 
 ![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
 
+
+## Capstone 2:
+
+### Additional Data
+
+Rosters and player stats per 100 possessions, in addition to game logs, for each team from the past 5 years. Retrieved from www.sports-reference.com.
+
+![Roster pic](pictures/roster.png)
+
+![stats per 100 possessions pic](pictures/perposs.png)
+
+### Updates
+
+1. SOS per year
+2. Team Experience Level (% upper classmen)
+3. Team Composition Clusters
+
+## Clustering
+
+Utilized KMeans Clustering to discover player archetypes based on stats. Visualized with tSNE dimensionality reduction.
+
+Center Archetypes:
+Cluster 1: Defensive Center - Rebounding and Blocking
+Cluster 2: Offensive Center - Strong in the paint
+Cluster 3: Shooting Center - Shoots 3's
+
+Cluster 1 rep:
+Cluster 2 rep:
+Cluster 3 rep:
+
+Forward Archetypes:
+Cluster 1: Deep Forwards - Drops 3's and feeds
+Cluster 2: Versatile Forwards - Defends and Shoots
+Cluster 3: Supporting Forwards - Short range game and passing
+
+Cluster 1 rep:
+Cluster 2 rep:
+Cluster 3 rep:
+
+Guard Archetypes:
+Cluster 1: Downtown Rebounder - Scrappy 3 point shooter
+Cluster 2: Supporting Guard - Strong passer and rebounder
+Cluster 3: Combo Guard - Shoots and feeds
+Cluster 4: Ball Handler - Feeds and breaks knees
+
+Cluster 1 rep:
+Cluster 2 rep:
+Cluster 3 rep:
+Cluster 3 rep:
+
+* Reps are players most mins in cluster
+
+* Team composition by cluster
+pivot table by team and year with player label clusters as columns
+
+Show NCAA champion for last 3 years
+
 ## Future-Updates
 - Additional Features:
-  - ‎pace, stats per 100 possessions, team makeup, offensive rating, defensive
-  rating, strength of schedule for each year, and home or away
-- ‎map all team names back to common formatting
+  - ‎pace of play, Other stats that my help with clustering.
 - test model with various rolling average windows
 - test different models after I learn them
-  - Random Forests
-  - Gradient Decent Boosting
+  - MLP Neural Net
