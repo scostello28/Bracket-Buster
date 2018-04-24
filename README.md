@@ -153,7 +153,7 @@ north-carolina has 39% chance to win.
 
 ![Obama's 2018 Bracket](pictures/obama2018bracket.png)
 
-![Modeled 2018 Bracket](pictures/model2018bracket.png)
+![Modeled 2018 Bracket](pictures/lgmodel2018bracket.png)
 
 - ‎Model: 81 points
 - ‎Obama: 56 points
