@@ -6,7 +6,7 @@ import time
 import pickle
 import pdb
 
-'''Created using Excel because logic could only get so far when formatting team names from table format to url format'''
+'''sos_getter needs to be run if this file does not exist'''
 team_names_filepath = 'sos/sos_list2018.csv'
 sos_filepath = 'sos/sos_list'
 
