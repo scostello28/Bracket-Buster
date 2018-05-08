@@ -216,7 +216,3 @@ if __name__ == '__main__':
     '''Create Team Experience Level DataFrame'''
     team_experience_df = team_and_season_mp_by_class(df)
     team_experience_df.to_pickle('data/team_experience.pkl')
-
-    # '''Merge Normalized Clusters and Team Experience DataFrames and ave to pickle'''
-    # final_df = merge_dfs(team_clusters_df, team_experience_df)
-    # final_df.to_pickle('data/team_clusters_and_exerience.pkl')
