@@ -7,16 +7,19 @@
 Data:
 1. SOS per year (done)
 2. player data (done)
+3. Spread/odds data
 
 Refactoring To Do:
 1. Update Scraping script to save data to pickle files throughout process (done)
 2. Clustering Transformation script
-    - streamline transformation to add to gamelog data
-3. Create script to transform and combine data for modeling
+    - streamline transformation to add to gamelog data (done)
+3. Create script to transform and combine data for modeling (done)
     - dir for transformed data
       - add team age feature
       - Data with each rolling ave window with clusters and without
-4. Test with various rolling ave windows
+4. Test with various rolling ave windows (done)
+
+
 5. MLP Neural Net
 6. Compare model with 9 celebs/analysts
 7. README / Presentation
