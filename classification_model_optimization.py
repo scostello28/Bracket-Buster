@@ -52,10 +52,10 @@ def logistic_regression_grid_search(data):
 
 def random_forest_grid_search(data):
 	'''Random Forest Gridsearch'''
-	rf_n_estimators = list(range(500, 600, 10))
+	rf_n_estimators = list(range(400, 600, 10))
 	rf_max_depth = [None]
 	rf_min_samples_split = [3]
-	rf_min_samples_leaf = [1, 2, 3, 4, 5]
+	rf_min_samples_leaf = [2, 3, 4, 5]
 	rf_min_weight_fraction_leaf = [0.0]
 	rf_max_features = ['sqrt']
 	rf_max_leaf_nodes = [None]
@@ -87,13 +87,13 @@ def random_forest_grid_search(data):
 def gradient_boosting_grid_search(data):
 	'''Gradient Boosting Gridsearch'''
 	gb_loss = ['deviance', 'exponential']
-	gb_learning_rate = [0.1, 0.25, 0.5]
-	gb_n_estimators = [100, 250, 500]
+	gb_learning_rate = [0.05, 0.075, 0.1]
+	gb_n_estimators = [50, 100, 200]
 	gb_subsample = [0.5, 1.0]
-	gb_min_samples_split = [2, 3, 4]
-	gb_min_samples_leaf = [1, 2, 3]
-	gb_max_depth = [2, 3, 4, 5]
-	gb_max_features = [None, 'sqrt', 'log2']
+	gb_min_samples_split = [2]
+	gb_min_samples_leaf = [2]
+	gb_max_depth = [2]
+	gb_max_features = [None]
 
 	gbparams = {'loss': gb_loss,
 	          	'learning_rate': gb_learning_rate,
@@ -127,7 +127,7 @@ def SVC_grid_search(data):
 	          	'kernel': svc_kernel,
 	            'degree': svc_degree}
 
-	abgs = gridsearch(SVC, svcparams, data)
+	svcgs = gridsearch(SVC, svcparams, data)
 
 	best_params = svcgs.best_params_
 

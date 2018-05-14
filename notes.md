@@ -1,7 +1,17 @@
+Questions:
 1. How many games could I predict if I just picked favorites?
 2. Alter to point spread predictor (Classification to regression)
 3. Compare model to 9 celebs (including Obama) and rank
 
+ToDo:
+1. MLP Neural Net
+2. odds data (impute missing values)
+3. if it helps predictions use for 1st round
+4. how many would you pick based on pregame odds?
+5. is my model better?
+6. Fill out new bracket
+7. Fill out other brackets
+8. save trained models
 
 
 Data:
@@ -24,9 +34,7 @@ Refactoring To Do:
 6. Compare model with 9 celebs/analysts
 7. README / Presentation
 
-MVP+
-1. SVMs
+MVP+++
+1. Regression (point Spread)
 2. Auto bracket filling functionality
-3. Update to predict point spreads
-4. How much money could have been made if I bet on games in the tourney
-5. GMM
+3. GMM (Fuzzy Clustering)
