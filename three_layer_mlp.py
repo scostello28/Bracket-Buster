@@ -27,7 +27,11 @@ def load_model_data(pickle_filepath):
     # pdb.set_trace()
     return X_train, y_train, X_test, y_test #, y_train_ohe
 
-def define_nn_mlp_model(X_train, y_train, hl1_neurons, hl2_neurons, learning_rate, momentum):
+def define_nn_mlp_model(hl1_neurons, hl1_init, hl1_act, hl1_dropout_rate,
+                        hl2_neurons, hl2_init, hl2_act, hl2_dropout_rate,
+                        hl3_neurons, hl3_init, hl3_act, hl3_dropout_rate,
+                        hl4_init, learning_rate, momentum):
+
     ''' defines multi-layer-perceptron neural network '''
 
     '''initialize model'''
@@ -36,7 +40,8 @@ def define_nn_mlp_model(X_train, y_train, hl1_neurons, hl2_neurons, learning_rat
     '''Network Layer Architecture'''
     num_neurons_in_layer_1 = hl1_neurons
     num_neurons_in_layer_2 = hl2_neurons
-    num_inputs = X_train.shape[1] # number of features (50)
+    num_neurons_in_layer_3 = hl3_neurons
+    num_inputs = 50 # number of features (50)
     num_classes = 1
 
     # pdb.set_trace()
@@ -44,17 +49,22 @@ def define_nn_mlp_model(X_train, y_train, hl1_neurons, hl2_neurons, learning_rat
     '''Layers'''
     model.add(Dense(units=num_neurons_in_layer_1,
                     input_dim=num_inputs,
-                    kernel_initializer='normal',
-                    activation='relu'))
-
+                    kernel_initializer=hl1_init,
+                    activation=hl1_act))
+    model.add(Dropout(hl1_dropout_rate))
     model.add(Dense(units=num_neurons_in_layer_2,
                     input_dim=num_neurons_in_layer_1,
-                    kernel_initializer='normal',
-                    activation='relu'))
-
-    model.add(Dense(units=num_classes,
+                    kernel_initializer=hl2_init,
+                    activation=hl2_act))
+    model.add(Dropout(hl2_dropout_rate))
+    model.add(Dense(units=num_neurons_in_layer_3,
                     input_dim=num_neurons_in_layer_2,
-                    kernel_initializer='normal',
+                    kernel_initializer=hl3_init,
+                    activation=hl3_act))
+    model.add(Dropout(hl3_dropout_rate))
+    model.add(Dense(units=num_classes,
+                    input_dim=num_neurons_in_layer_3,
+                    kernel_initializer=hl4_init,
                     activation='sigmoid'))
 
     '''Set optimizer as stachastic gradient descent'''
@@ -97,31 +107,41 @@ if __name__ == '__main__':
     '''Grid Search'''
     model = KerasClassifier(build_fn=define_nn_mlp_model, verbose=0)
 
-    batch_size = [10, 30, 75, 100]
-    epochs = [10, 50, 100]
+    batch_size = [5, 10, 20]
+    epochs = [5, 10, 20]
     # optimizer = ['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam']
-    hl1_neurons = [10, 20 , 30]
-    hl2_neurons = [10, 20 , 30]
-    learning_rate = [.001, .005 , .007]
-    momentum = [.7, .9]
+    hl1_neurons = [10, 20, 30]
+    hl1_initializer = ['normal']
+    hl1_activation = ['relu', 'sigmoid']
+    hl1_dropout_rate = [0, .25, .5]
+    hl2_neurons = [30, 40]
+    hl2_initializer = ['normal']
+    hl2_activation = ['relu', 'sigmoid']
+    hl2_dropout_rate = [0, .25, .5]
+    hl3_neurons = [30, 40]
+    hl3_initializer = ['normal']
+    hl3_activation = ['relu', 'sigmoid']
+    hl3_dropout_rate = [0, .25, .5]
+    hl4_initializer = ['normal']
+    learning_rate = [.001]
+    momentum = [.8, .9]
 
-    outer_param_grid = dict(batch_size=batch_size, epochs=epochs,
-                            hl1_neurons=hl1_neurons, hl2_neurons= hl2_neurons,
-                            learning_rate=learning_rate, momentum=momentum)
+    param_grid = dict(batch_size=batch_size, epochs=epochs,
+        hl1_neurons=hl1_neurons, hl1_init=hl1_initializer,
+        hl1_act=hl1_activation, hl1_dropout_rate=hl1_dropout_rate,
+        hl2_neurons=hl2_neurons, hl2_init=hl2_initializer,
+        hl2_act=hl2_activation, hl2_dropout_rate=hl2_dropout_rate,
+        hl3_neurons=hl3_neurons, hl3_init=hl3_initializer,
+        hl3_act=hl3_activation, hl3_dropout_rate=hl3_dropout_rate,
+        hl4_init=hl4_initializer, learning_rate=learning_rate, momentum=momentum)
 
-    grid = GridSearchCV(estimator=model, param_grid=outer_param_grid, scoring='accuracy', n_jobs=-1, cv=5)
+    grid = GridSearchCV(estimator=model, param_grid=outer_param_grid,
+                        scoring='accuracy', n_jobs=-1, cv=5, verbose=1)
     grid_result = grid.fit(X_train, y_train)
-    print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
+
+    print("Best CV score: {:.2f}}".format(grid_result.best_score_))
+    print("Best params: {}}".format(grid_result.best_params_))
 
     '''Predict'''
-    # print_output(model, y_train, y_test, rng_seed)
-
-    '''TODO: Finish GridSearch!!!!!!'''
-
-    '''Best results before Grid Search'''
-    epochs = 100
-    batches = 1000
-    val_split = .2
-    activation = 'relu'
-    layer_1_width = 50
-    layer_2_width = 60
+    y_test_pred = grid_result.predict_classes(X_test, verbose=0)
+    print('Test Accuracy: {:.2f}'.format(metrics.accuracy_score(y_test, y_test_pred)))

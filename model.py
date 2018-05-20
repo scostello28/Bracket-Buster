@@ -6,6 +6,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn import metrics
+from sklearn.model_selection import cross_val_score as cvs
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -100,10 +101,12 @@ def lr_model(X_train, y_train, X_test, y_test):
 
     lr_model.fit(X_train, y_train)
 
+    cv_score = np.mean(cvs(lr_model, X_train, y_train, scoring='accuracy', cv=5, n_jobs=-1))
     y_hat = lr_model.predict(X_test)
     score = metrics.accuracy_score(y_test, y_hat)
 
-    print('LR Accuracy: {:.2f}'.format(score))
+    print('LR CV Accuracy: {:.2f}'.format(cv_score))
+    print('LR Test Accuracy: {:.2f}'.format(score))
     # return score
 
 def rf_model(X_train, y_train, X_test, y_test):
@@ -112,15 +115,17 @@ def rf_model(X_train, y_train, X_test, y_test):
     Input: train and test matricies
     Output: model predictions and accuracy
     '''
-    rf_model = RandomForestClassifier(n_estimators=530, min_samples_leaf=4,
+    rf_model = RandomForestClassifier(n_estimators=500, min_samples_leaf=4,
     min_samples_split=3, max_features='sqrt')
 
     rf_model.fit(X_train, y_train)
 
+    cv_score = np.mean(cvs(rf_model, X_train, y_train, scoring='accuracy', cv=5, n_jobs=-1))
     y_hat = rf_model.predict(X_test)
     score = metrics.accuracy_score(y_test, y_hat)
 
-    print('RF Accuracy: {:.2f}'.format(score))
+    print('RF CV Accuracy: {:.2f}'.format(cv_score))
+    print('RF Test Accuracy: {:.2f}'.format(score))
 
 def gb_model(X_train, y_train, X_test, y_test):
     '''
@@ -132,10 +137,12 @@ def gb_model(X_train, y_train, X_test, y_test):
 
     gb_model.fit(X_train, y_train)
 
+    cv_score = np.mean(cvs(gb_model, X_train, y_train, scoring='accuracy', cv=5, n_jobs=-1))
     y_hat = gb_model.predict(X_test)
     score = metrics.accuracy_score(y_test, y_hat)
 
-    print('GB Accuracy: {:.2f}'.format(score))
+    print('GB CV Accuracy: {:.2f}'.format(cv_score))
+    print('GB Test Accuracy: {:.2f}'.format(score))
 
 if __name__ == '__main__':
 
