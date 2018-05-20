@@ -1,25 +1,8 @@
 import pandas as pd
 import numpy as np
 from fancyimpute import KNN
-
-
-''' Read in Data'''
-
-odds2018 = 'odds_data/ncaa_basketball_2017-18.xlsx'
-odds2017 = 'odds_data/ncaa_basketball_2016-17.xlsx'
-odds2016 = 'odds_data/ncaa_basketball_2015-16.xlsx'
-odds2015 = 'odds_data/ncaa_basketball_2014-15.xlsx'
-odds2014 = 'odds_data/ncaa_basketball_2013-14.xlsx'
-odds2013 = 'odds_data/ncaa_basketball_2012-13.xlsx'
-
-odds2018_df = pd.read_excel(odds2018, header=0)
-odds2017_df = pd.read_excel(odds2017, header=0)
-odds2016_df = pd.read_excel(odds2016, header=0)
-odds2015_df = pd.read_excel(odds2015, header=0)
-odds2014_df = pd.read_excel(odds2014, header=0)
-odds2013_df = pd.read_excel(odds2013, header=0)
-
-
+from sklearn import metrics
+import csv
 
 
 def create_odds_team_name_csv(df):
@@ -45,10 +28,21 @@ def update_team_names(df):
     df['Team'] = df['Team'].map(odds_teams_dict(odds_teams_lookup_filepath))
     return df
 
+def date(row):
+    '''Updates date format to prepare for unique ID generation'''
+    row['Date'] = str(row['Date'])
+    if len(row['Date']) == 3:
+        row['month'] = '0' + row['Date'][:1]
+    else:
+        row['month'] = row['Date'][:2]
+    row['day'] = row['Date'][-2:]
+    row['Date'] = '{}-{}-{}'.format(str(row['season']), str(row['month']), str(row['day']))
+    return row
+
 def string_split(df):
     '''Used in impute data function to split string data into separate df'''
-    string_df = df[['VH', 'Team']]
-    df = df.drop(['VH', 'Team'], axis=1)
+    string_df = df[['VH', 'Team', 'Date']]
+    df = df.drop(['VH', 'Team', 'Date'], axis=1)
     return string_df, df
 
 def string_to_nan(row):
@@ -88,10 +82,12 @@ def prob(row):
     return row
 
 def spread(row):
-    if row['p'] <= .5:
+    if row['p'] <= .52:
         row['spread'] = int(25 * row['p'] + -12)
-    else:
+    elif row['p'] >= .48:
         row['spread'] = int(-25 * row['p'] + 13)
+    else:
+        row['spread'] = 0
     return row
 
 def outcome(row):
@@ -101,7 +97,7 @@ def outcome(row):
     else:
         row['vegas'] = 0
 
-    row['actual_spread'] = row['Final'] - row['Final_OP']
+    row['actual_spread'] = row['Final'] - row['Final_v']
 
     if row['actual_spread'] > 0:
         row['W_odds'] = 1
@@ -110,20 +106,8 @@ def outcome(row):
 
     return row
 
-def date(row):
-    '''Updates date format to prepare for unique ID generation'''
-    row['Date'] = str(int(row['Date']))
-    row['month'] = int(row['Date'][:2])
-    row['day'] = int(row['Date'][-2:])
-    row['Date'] = '{}-{}-{}'.format(str(row['Season']), str(row['day']), str(row['month']))
-    return row
 
-def matchups(df, season):
-
-    '''
-    Input: DataFrame and season
-    Output: Home and visiting teams matched up in rows with features added
-    '''
+def matchups(df):
 
     # Drop uneeded columns
     df = df.drop(['1st', '2H', '2nd'], axis=1)
@@ -143,14 +127,15 @@ def matchups(df, season):
 
     # update column names for visitors df
     v_cols = df_v.columns.tolist()
-    v_cols = ['{}_OP'.format(col) if col != 'count' else col for col in v_cols]
+    v_cols = ['{}_v'.format(col) if col != 'count' else col for col in v_cols]
     df_v.columns = v_cols
 
     # Merge on count
     df = pd.merge(df_h, df_v, how='left', on='count')
 
-    # Add Season
-    df['Season'] = season
+    # Drop uneeded columns
+    df = df.drop(['Rot', 'VH', 'VH_v', 'Date_v', 'Rot_v', 'Open', 'Close',
+                  'Open_v', 'Close_v', 'season_v'], axis=1)
 
     # Add outcome
     df = df.apply(outcome, axis=1)
@@ -158,30 +143,37 @@ def matchups(df, season):
     # spread
     df = df.apply(spread, axis=1)
 
-    # Update date format
-    df = df.apply(date, axis=1)
-
-    # Drop uneeded columns
-    df = df.drop(['Rot', 'VH', 'VH_OP', 'Date_OP', 'Rot_OP', 'Open', 'Close',
-                  'Open_OP', 'Close_OP', 'month', 'day', 'count'], axis=1)
-
-
     return df
 
 
 
-def set_up_odds_data(df_list, season_list=[2018, 2017, 2016, 2015, 2014]):
+def set_up_odds_data(df_list, seasons_list):
     odds_df = pd.DataFrame()
-    for df in df_list:
+    for df, season in zip(df_list, seasons_list):
         df = update_team_names(df)
+        df['season'] = season
+        df = df.apply(date, axis=1)
+        df = df.drop(['month', 'day'], axis=1)
         df = impute_data(df)
-        df = matchups(df, 2018)
-        df = df.apply(outcome, axis=1)
+        df = matchups(df)
+        df = df.dropna()
         odds_df = odds_df.append(df, ignore_index=True)
-        odds_df.dropna(inplace=True)
     odds_df.to_pickle('data/odds_data.pkl')
 
 if __name__ == '__main__':
+
+    ''' Read in Data'''
+    odds2018 = 'odds_data/ncaa_basketball_2017-18.xlsx'
+    odds2017 = 'odds_data/ncaa_basketball_2016-17.xlsx'
+    odds2016 = 'odds_data/ncaa_basketball_2015-16.xlsx'
+    odds2015 = 'odds_data/ncaa_basketball_2014-15.xlsx'
+    odds2014 = 'odds_data/ncaa_basketball_2013-14.xlsx'
+
+    odds2018_df = pd.read_excel(odds2018, header=0)
+    odds2017_df = pd.read_excel(odds2017, header=0)
+    odds2016_df = pd.read_excel(odds2016, header=0)
+    odds2015_df = pd.read_excel(odds2015, header=0)
+    odds2014_df = pd.read_excel(odds2014, header=0)
 
     # '''Create Team Name csv'''
     # create_odds_team_name_csv(df)
@@ -190,5 +182,6 @@ if __name__ == '__main__':
     odds_teams_lookup_filepath = 'odds_teams_lookup.csv'
 
     odds_dfs = [odds2018_df, odds2017_df, odds2016_df, odds2015_df, odds2014_df]
+    seasons = [2018, 2017, 2016, 2015, 2014]
 
-    set_up_odds_data(odds_dfs)
+    set_up_odds_data(odds_dfs, seasons)

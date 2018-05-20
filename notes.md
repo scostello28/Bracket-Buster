@@ -4,10 +4,8 @@ Questions:
 3. Compare model to 9 celebs (including Obama) and rank
 
 ToDo:
-1. MLP Neural Net
-2. odds data (impute missing values)
+1. Optimize MLP Neural Net
 3. if it helps predictions use for 1st round
-4. how many would you pick based on pregame odds?
 5. is my model better?
 6. Fill out new bracket
 7. Fill out other brackets
@@ -17,7 +15,7 @@ ToDo:
 Data:
 1. SOS per year (done)
 2. player data (done)
-3. Spread/odds data
+3. Spread/odds data (done)
 
 Refactoring To Do:
 1. Update Scraping script to save data to pickle files throughout process (done)

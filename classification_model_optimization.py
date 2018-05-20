@@ -11,7 +11,7 @@ from sklearn.svm import SVC
 
 from sklearn.externals import joblib
 
-from model import data_for_model
+from model import games_up_to_2018_season_filter, season2018_filter, data_for_model, set_up_data
 
 
 
@@ -143,10 +143,11 @@ if __name__ == '__main__':
 
 	'''Read in model data.'''
 	data_df = pd.read_pickle('model_data/gamelog_5_exp_clust.pkl')
-	X_train, y_train, X_test, y_test = data_for_model(data_df)
+	train_df, test_df = data_for_model(data_df, odds=False)
+	X_train, y_train, X_test, y_test = set_up_data(train_df, test_df)
 	data = (X_train, y_train, X_test, y_test)
 
 	logistic_regression_grid_search(data)
 	random_forest_grid_search(data)
-	gradient_boosting_grid_search(data)
-	SVC_grid_search(data)
+	# gradient_boosting_grid_search(data)
+	# SVC_grid_search(data)
