@@ -25,7 +25,7 @@ def tourney2018_filter(df):
     tourney2018 = df[tourney2018cond]
     return tourney2018
 
-def data_for_model(df, odds=False):
+def data_for_model(df, clusters=True, odds=False):
     '''
     Inputs: Model DataFrame
     Outputs: Vectors for model
@@ -33,7 +33,7 @@ def data_for_model(df, odds=False):
 
     games_up_to_2018_tourney = games_up_to_2018_tourney_filter(df)
 
-    if odds:
+    if clusters and odds:
         Xy = games_up_to_2018_tourney[['W', 'Wp', 'ppg', 'pApg', 'FGp',
             '3Pp', 'FTp', 'ORBpg', 'RBpg', 'ASTpg', 'STLpg', 'BLKpg', 'TOpg',
             'PFpg', 'sos', 'exp_factor', 'C0', 'C1', 'C2', 'F0', 'F1', 'F2',
@@ -42,7 +42,7 @@ def data_for_model(df, odds=False):
             'OPTOpg', 'OPPFpg', 'OPsos', 'OPexp_factor', 'OPC0', 'OPC1', 'OPC2',
             'OPF0', 'OPF1', 'OPF2', 'OPG0', 'OPG1', 'OPG2', 'OPG3', 'final_p']]
 
-    else:
+    elif clusters and not odds:
         Xy = games_up_to_2018_tourney[['W', 'Wp', 'ppg', 'pApg', 'FGp',
             '3Pp', 'FTp', 'ORBpg', 'RBpg', 'ASTpg', 'STLpg', 'BLKpg', 'TOpg',
             'PFpg', 'sos', 'exp_factor', 'C0', 'C1', 'C2', 'F0', 'F1', 'F2',
@@ -50,6 +50,12 @@ def data_for_model(df, odds=False):
             'OPFTp', 'OPORBpg', 'OPRBpg', 'OPASTpg', 'OPSTLpg', 'OPBLKpg',
             'OPTOpg', 'OPPFpg', 'OPsos', 'OPexp_factor', 'OPC0', 'OPC1', 'OPC2',
             'OPF0', 'OPF1', 'OPF2', 'OPG0', 'OPG1', 'OPG2', 'OPG3']]
+    else:
+        Xy = games_up_to_2018_tourney[['W', 'Wp', 'ppg', 'pApg', 'FGp',
+            '3Pp', 'FTp', 'ORBpg', 'RBpg', 'ASTpg', 'STLpg', 'BLKpg', 'TOpg',
+            'PFpg', 'sos', 'OPWp', 'OPppg', 'OPpApg', 'OPFGp', 'OP3Pp',
+            'OPFTp', 'OPORBpg', 'OPRBpg', 'OPASTpg', 'OPSTLpg', 'OPBLKpg',
+            'OPTOpg', 'OPPFpg', 'OPsos']]
 
     return Xy
 
@@ -75,7 +81,7 @@ def lr_model(X, y):
 
     lr_pipeline.fit(X, y)
 
-    filename = "fit_models/lr_fit_model_odds.pkl"
+    filename = "fit_models/lr_fit_model_no_clust.pkl"
     with open(filename, 'wb') as f:
         # Write the model to a file.
         pickle.dump(lr_pipeline, f)
@@ -93,7 +99,7 @@ def rf_model(X, y):
 
     rf_pipeline.fit(X, y)
 
-    filename = "fit_models/rf_fit_model_odds.pkl"
+    filename = "fit_models/rf_fit_model_no_clust.pkl"
     with open(filename, 'wb') as f:
         # Write the model to a file.
         pickle.dump(rf_pipeline, f)
@@ -112,7 +118,7 @@ def gb_model(X, y):
 
     gb_pipeline.fit(X, y)
 
-    filename = "fit_models/gb_fit_model_odds.pkl"
+    filename = "fit_models/gb_fit_model_no_clust.pkl"
     with open(filename, 'wb') as f:
         # Write the model to a file.
         pickle.dump(gb_pipeline, f)
@@ -121,20 +127,29 @@ def gb_model(X, y):
 if __name__ == '__main__':
 
     data = pd.read_pickle('final_model_data/gamelog_exp_clust.pkl')
+    no_clust_data = pd.read_pickle('final_model_data/gamelog_exp_clust.pkl')
     odds_data = pd.read_pickle('final_model_data/gamelog_exp_clust_odds.pkl')
 
-    Xy_data = data_for_model(data, odds=False)
-    Xy_data_odds = data_for_model(odds_data, odds=True)
+    Xy_data = data_for_model(data, clusters=True, odds=False)
+    Xy_data_no_clust = data_for_model(no_clust_data, clusters=False, odds=False)
+    Xy_data_odds = data_for_model(odds_data, clusters=True, odds=True)
+
 
     X, y = set_up_data(Xy_data)
+    X_no_clust, y_no_clust = set_up_data(Xy_data_no_clust)
     X_odds, y_odds = set_up_data(Xy_data_odds)
 
-    # print('No Odds')
+    # print('Data with No Odds')
     # lr_model(X, y)
     # rf_model(X, y)
     # gb_model(X, y)
 
-    print('With Odds')
-    lr_model(X_odds, y_odds)
-    rf_model(X_odds, y_odds)
-    gb_model(X_odds, y_odds)
+    # print('No Clusters or odds')
+    # lr_model(X_no_clust, y_no_clust)
+    # rf_model(X_no_clust, y_no_clust)
+    # gb_model(X_no_clust, y_no_clust)
+
+    # print('With Odds')
+    # lr_model(X_odds, y_odds)
+    # rf_model(X_odds, y_odds)
+    # gb_model(X_odds, y_odds)

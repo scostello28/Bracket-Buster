@@ -12,35 +12,36 @@ import warnings
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
 
-def games_up_to_2017_tourney_filter(df):
-    '''Filter for all games up to 2017 tourney'''
-    notourney2018 = (df['GameType'] != 'tourney2018')
-    noseason2018 = (df['GameType'] != 'season2018')
-    notourney2017 = (df['GameType'] != 'tourney2017')
-    games_up_to_2017_tourney = df[notourney2018 & noseason2018 & notourney2017]
-    return games_up_to_2017_tourney
-
-def games_up_to_2018_tourney_filter(df):
-    '''Filter for games up to 2018 tourney'''
-    notourney2018 = (df['GameType'] != 'tourney2018')
-    games_up_to_2018_tourney = df[notourney2018]
-    return games_up_to_2018_tourney
-
-def set_up_train_set(df):
-        '''Shuffle DataFrames'''
-        df = df.sample(frac=1).reset_index(drop=True)
-
-        Xy_train = df[['W', 'Wp', 'ppg', 'pApg', 'FGp', '3Pp', 'FTp', 'ORBpg',
-                          'RBpg', 'ASTpg', 'STLpg', 'BLKpg', 'TOpg', 'PFpg', 'sos',
-                          'OPWp', 'OPppg', 'OPpApg', 'OPFGp', 'OP3Pp', 'OPFTp',
-                          'OPORBpg', 'OPRBpg', 'OPASTpg', 'OPSTLpg', 'OPBLKpg',
-                          'OPTOpg', 'OPPFpg', 'OPsos']]
-
-        '''Set up features and targets'''
-        X_train = Xy_train.iloc[:, 1:].as_matrix()
-        y_train = Xy_train.iloc[:, 0].as_matrix()
-
-        return X_train, y_train
+# wont need these now that models will be read in fit
+# def games_up_to_2017_tourney_filter(df):
+#     '''Filter for all games up to 2017 tourney'''
+#     notourney2018 = (df['GameType'] != 'tourney2018')
+#     noseason2018 = (df['GameType'] != 'season2018')
+#     notourney2017 = (df['GameType'] != 'tourney2017')
+#     games_up_to_2017_tourney = df[notourney2018 & noseason2018 & notourney2017]
+#     return games_up_to_2017_tourney
+#
+# def games_up_to_2018_tourney_filter(df):
+#     '''Filter for games up to 2018 tourney'''
+#     notourney2018 = (df['GameType'] != 'tourney2018')
+#     games_up_to_2018_tourney = df[notourney2018]
+#     return games_up_to_2018_tourney
+#
+# def set_up_train_set(df):
+#         '''Shuffle DataFrames'''
+#         df = df.sample(frac=1).reset_index(drop=True)
+#
+#         Xy_train = df[['W', 'Wp', 'ppg', 'pApg', 'FGp', '3Pp', 'FTp', 'ORBpg',
+#                           'RBpg', 'ASTpg', 'STLpg', 'BLKpg', 'TOpg', 'PFpg', 'sos',
+#                           'OPWp', 'OPppg', 'OPpApg', 'OPFGp', 'OP3Pp', 'OPFTp',
+#                           'OPORBpg', 'OPRBpg', 'OPASTpg', 'OPSTLpg', 'OPBLKpg',
+#                           'OPTOpg', 'OPPFpg', 'OPsos']]
+#
+#         '''Set up features and targets'''
+#         X_train = Xy_train.iloc[:, 1:].as_matrix()
+#         y_train = Xy_train.iloc[:, 0].as_matrix()
+#
+#         return X_train, y_train
 
 def merge(df, team1, team2):
     '''
@@ -74,18 +75,16 @@ def merge(df, team1, team2):
 
     return dfout
 
-def logistic_game_predict(matchup, matchup_reversed, X_train, y_train):
+def logistic_game_predict(fit_model, matchup, matchup_reversed, X_train, y_train, cluster=True):
     '''Fit model on training data'''
     lg = LogisticRegression()  # penalty='l2' as default which is Ridge
     lg.fit(X_train, y_train)
 
     '''Predict on matchup'''
-    # lg_predict = lg.predict(matchup)
-    # lg_predict_reversed = lg.predict(matchup_reversed)
-    lg_prob = lg.predict_proba(matchup)
-    lg_prob_reversed = lg.predict_proba(matchup_reversed)
-    team1_prob = (lg_prob[0][1] + lg_prob_reversed[0][0]) / 2 * 100
-    team2_prob = (lg_prob[0][0] + lg_prob_reversed[0][1]) / 2 * 100
+    prob = model.predict_proba(matchup)
+    prob_reversed = model.predict_proba(matchup_reversed)
+    team1_prob = (prob[0][1] + prob_reversed[0][0]) / 2 * 100
+    team2_prob = (prob[0][0] + prob_reversed[0][1]) / 2 * 100
 
     '''Print results'''
     if team1_prob < team2_prob:

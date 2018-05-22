@@ -5,13 +5,16 @@ import pdb
 '''
 Read in gamelog data with all rolling average windows, team experience data, and cluster data.
 '''
-
+# 5 game rolling average gave best results
 # gamelog_roll2_df = pd.read_pickle('data/gamelog_data_2_game_rolling.pkl')
 # gamelog_roll3_df = pd.read_pickle('data/gamelog_data_3_game_rolling.pkl')
 # gamelog_roll4_df = pd.read_pickle('data/gamelog_data_4_game_rolling.pkl')
-gamelog_roll5_df = pd.read_pickle('data/gamelog_data_5_game_rolling.pkl')
+# gamelog_roll5_df = pd.read_pickle('data/gamelog_data_5_game_rolling.pkl')
 # gamelog_roll6_df = pd.read_pickle('data/gamelog_data_6_game_rolling.pkl')
 # gamelog_roll7_df = pd.read_pickle('data/gamelog_data_7_game_rolling.pkl')
+
+final_stats_2018_season = pd.read_pickle('data/season2018_final_stats_5_game_rolling.pkl')
+gamelog_roll5_df = pd.read_pickle('data/gamelog_data_5_game_rolling.pkl')
 team_experience_df = pd.read_pickle('data/team_experience.pkl')
 team_clusters_df = pd.read_pickle('data/team_clusters.pkl')
 odds_df = pd.read_pickle('data/odds_data.pkl')
@@ -147,7 +150,28 @@ def gamelog_experience_cluster_merge(gamelog_df, experience_df, cluster_df, wind
     print(final_filepath)
     df.to_pickle(final_filepath)
 
+def final_stats_experience_cluster_merge(gamelog_df, experience_df, cluster_df):
+    '''
+    INPUT: Gamelog DataFrame and experience DataFrame
+    OUTPUT: DataFrame with matching IDs merged to same row (1 game per row!)
+    '''
 
+    '''Generate ID for merge'''
+    gamelog_df = gamelog_df.apply(gamelog_ID, axis=1)
+    experience_df = experience_df.apply(ID, axis=1)
+    cluster_df = cluster_df.apply(ID, axis=1)
+
+    '''Drop Season columns generated with ID creation'''
+    gamelog_df.drop(['Season'], axis=1, inplace=True)
+    experience_df.drop(['Season', 'Team'], axis=1, inplace=True)
+    cluster_df.drop(['Season', 'Team'], axis=1, inplace=True)
+
+    '''merge experience DataFrame into gamelog DataFrame'''
+    df = gamelog_df.merge(experience_df, on='ID', how='left').merge(cluster_df, on='ID', how='left')
+
+    final_filepath = 'final_model_data/season2018_final_stats.pkl'
+    print(final_filepath)
+    df.to_pickle(final_filepath)
 
 def matchup_unique_id(row):
     '''
@@ -205,6 +229,10 @@ if __name__ == '__main__':
     # gamelog_experience_cluster_merge(gamelog_roll2_df, team_experience_df, team_clusters_df, window=2)
     # gamelog_experience_cluster_merge(gamelog_roll3_df, team_experience_df, team_clusters_df, window=3)
     # gamelog_experience_cluster_merge(gamelog_roll4_df, team_experience_df, team_clusters_df, window=4)
-    gamelog_experience_cluster_merge(gamelog_roll5_df, team_experience_df, team_clusters_df, window=5)
+    # gamelog_experience_cluster_merge(gamelog_roll5_df, team_experience_df, team_clusters_df, window=5)
     # gamelog_experience_cluster_merge(gamelog_roll6_df, team_experience_df, team_clusters_df, window=6)
     # gamelog_experience_cluster_merge(gamelog_roll7_df, team_experience_df, team_clusters_df, window=7)
+
+    '''5 game rolling ave gave best stats'''
+    # gamelog_experience_cluster_merge(gamelog_roll5_df, team_experience_df, team_clusters_df, window=5)
+    final_stats_experience_cluster_merge(final_stats_2018_season, team_experience_df, team_clusters_df)
