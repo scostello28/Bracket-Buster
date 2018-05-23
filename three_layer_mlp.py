@@ -23,7 +23,7 @@ def load_model_data(pickle_filepath):
 
     X_train = X_train.astype(theano.config.floatX)
     X_test = X_test.astype(theano.config.floatX)
-    y_train_ohe = np_utils.to_categorical(y_train) # all ready OHE
+    # y_train_ohe = np_utils.to_categorical(y_train) # all ready OHE
     # pdb.set_trace()
     return X_train, y_train, X_test, y_test #, y_train_ohe
 
@@ -97,87 +97,89 @@ if __name__ == '__main__':
     # np.random.seed(rng_seed)
 
     '''Model params'''
-    # batch_size = 10
-    # epochs = 70
-    # # optimizer = ['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam']
-    # hl1_neurons = 25
-    # hl1_initializer = 'normal'
-    # hl1_activation = 'relu'
-    # hl1_dropout_rate = 0
-    # hl2_neurons = 15
-    # hl2_initializer = 'normal'
-    # hl2_activation = 'relu'
-    # hl2_dropout_rate = 0
-    # hl3_neurons = 15
-    # hl3_initializer = 'normal'
-    # hl3_activation = 'relu' #'sigmoid'
-    # hl3_dropout_rate = 0
-    # hl4_initializer = 'normal'
-    # learning_rate = .001
-    # momentum = 0.9
-    #
-    # '''Initialize model'''
-    # model = define_nn_mlp_model(hl1_neurons=hl1_neurons, hl1_init=hl1_initializer,
-    #     hl1_act=hl1_activation, hl1_dropout_rate=hl1_dropout_rate,
-    #     hl2_neurons=hl2_neurons, hl2_init=hl2_initializer,
-    #     hl2_act=hl2_activation, hl2_dropout_rate=hl2_dropout_rate,
-    #     hl3_neurons=hl3_neurons, hl3_init=hl3_initializer,
-    #     hl3_act=hl3_activation, hl3_dropout_rate=hl3_dropout_rate,
-    #     hl4_init=hl4_initializer,
-    #     learning_rate=learning_rate, momentum=momentum)
-    #
-    # '''Train model'''
-    # model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs,
-    #     verbose=1, validation_split=0.2)
-    #     # cross val to estimate test error, can monitor overfitting
-    #
-    # print_output(model, X_train, y_train, X_test, y_test)
-
-    '''GRID SEARCH'''
-    model = KerasClassifier(build_fn=define_nn_mlp_model, verbose=0)
-
-    batch_size = [10, 15, 20]
-    epochs = [50, 60, 70]
+    batch_size = 20
+    epochs = 50
     # optimizer = ['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam']
-    hl1_neurons = [25, 30, 35]
-    hl1_initializer = ['normal']
-    hl1_activation = ['relu']
-    hl1_dropout_rate = [0]
-    hl2_neurons = [15, 20, 25]
-    hl2_initializer = ['normal']
-    hl2_activation = ['relu']
-    hl2_dropout_rate = [0]
-    hl3_neurons = [15, 20, 25]
-    hl3_initializer = ['normal']
-    hl3_activation = ['relu']
-    hl3_dropout_rate = [0]
-    hl4_initializer = ['normal']
-    learning_rate = [.001]
-    momentum = [.9]
+    hl1_neurons = 25
+    hl1_initializer = 'normal'
+    hl1_activation = 'relu'
+    hl1_dropout_rate = 0
+    hl2_neurons = 20
+    hl2_initializer = 'normal'
+    hl2_activation = 'relu'
+    hl2_dropout_rate = 0
+    hl3_neurons = 15
+    hl3_initializer = 'normal'
+    hl3_activation = 'relu' #'sigmoid'
+    hl3_dropout_rate = 0
+    hl4_initializer = 'normal'
+    learning_rate = .001
+    momentum = 0.9
 
-#1st Search
-# Best params: {'batch_size': 20, 'epochs': 50, 'hl1_act': 'relu', 'hl1_dropout_rate': 0, 'hl1_init': 'normal', 'hl1_neurons': 30, 'hl2_act': 'relu', 'hl2_dropout_rate': 0, 'hl2_init': 'normal', 'hl2_neurons': 20, 'hl3_act': 'relu', 'hl3_dropout_rate': 0, 'hl3_init': 'normal', 'hl3_neurons': 20, 'hl4_init': 'normal', 'learning_rate': 0.001, 'momentum': 0.9}
-
-#2nd Search
-# Best CV score: 0.67
-# Best params: {'batch_size': 20, 'epochs': 50, 'hl1_act': 'relu', 'hl1_dropout_rate': 0, 'hl1_init': 'normal', 'hl1_neurons': 25, 'hl2_act': 'relu', 'hl2_dropout_rate': 0, 'hl2_init': 'normal', 'hl2_neurons': 20, 'hl3_act': 'relu', 'hl3_dropout_rate': 0, 'hl3_init': 'normal', 'hl3_neurons': 15, 'hl4_init': 'normal', 'learning_rate': 0.001, 'momentum': 0.9}
-
-    param_grid = dict(batch_size=batch_size, epochs=epochs,
+    '''Initialize model'''
+    model = define_nn_mlp_model(
         hl1_neurons=hl1_neurons, hl1_init=hl1_initializer,
         hl1_act=hl1_activation, hl1_dropout_rate=hl1_dropout_rate,
         hl2_neurons=hl2_neurons, hl2_init=hl2_initializer,
         hl2_act=hl2_activation, hl2_dropout_rate=hl2_dropout_rate,
         hl3_neurons=hl3_neurons, hl3_init=hl3_initializer,
         hl3_act=hl3_activation, hl3_dropout_rate=hl3_dropout_rate,
-        hl4_init=hl4_initializer, learning_rate=learning_rate, momentum=momentum)
+        hl4_init=hl4_initializer,
+        learning_rate=learning_rate, momentum=momentum
+        )
 
-    grid = GridSearchCV(estimator=model, param_grid=param_grid,
-                        scoring='accuracy', n_jobs=-1, cv=5, verbose=1)
-    grid_result = grid.fit(X_train, y_train)
+    '''Train model'''
+    model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs,
+        verbose=1, validation_split=0.2)
+        # cross val to estimate test error, can monitor overfitting
 
-    print("Best CV score: {:.2f}".format(grid_result.best_score_))
-    print("Best params: {}".format(grid_result.best_params_))
+    print_output(model, X_train, y_train, X_test, y_test)
 
-    '''Predict'''
-    y_test_pred = grid_result.predict(X_test, verbose=0)
-    print('Test Accuracy: {:.2f}'.format(metrics.accuracy_score(y_test, y_test_pred)))
+    '''GRID SEARCH'''
+#     model = KerasClassifier(build_fn=define_nn_mlp_model, verbose=0)
+#
+#     batch_size = [10, 15, 20]
+#     epochs = [50, 60, 70]
+#     # optimizer = ['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam']
+#     hl1_neurons = [25, 30, 35]
+#     hl1_initializer = ['normal']
+#     hl1_activation = ['relu']
+#     hl1_dropout_rate = [0]
+#     hl2_neurons = [15, 20, 25]
+#     hl2_initializer = ['normal']
+#     hl2_activation = ['relu']
+#     hl2_dropout_rate = [0]
+#     hl3_neurons = [15, 20, 25]
+#     hl3_initializer = ['normal']
+#     hl3_activation = ['relu']
+#     hl3_dropout_rate = [0]
+#     hl4_initializer = ['normal']
+#     learning_rate = [.001]
+#     momentum = [.9]
+#
+# #1st Search
+# # Best params: {'batch_size': 20, 'epochs': 50, 'hl1_act': 'relu', 'hl1_dropout_rate': 0, 'hl1_init': 'normal', 'hl1_neurons': 30, 'hl2_act': 'relu', 'hl2_dropout_rate': 0, 'hl2_init': 'normal', 'hl2_neurons': 20, 'hl3_act': 'relu', 'hl3_dropout_rate': 0, 'hl3_init': 'normal', 'hl3_neurons': 20, 'hl4_init': 'normal', 'learning_rate': 0.001, 'momentum': 0.9}
+#
+# #2nd Search
+# # Best CV score: 0.67
+# # Best params: {'batch_size': 20, 'epochs': 50, 'hl1_act': 'relu', 'hl1_dropout_rate': 0, 'hl1_init': 'normal', 'hl1_neurons': 25, 'hl2_act': 'relu', 'hl2_dropout_rate': 0, 'hl2_init': 'normal', 'hl2_neurons': 20, 'hl3_act': 'relu', 'hl3_dropout_rate': 0, 'hl3_init': 'normal', 'hl3_neurons': 15, 'hl4_init': 'normal', 'learning_rate': 0.001, 'momentum': 0.9}
+#
+#     param_grid = dict(batch_size=batch_size, epochs=epochs,
+#         hl1_neurons=hl1_neurons, hl1_init=hl1_initializer,
+#         hl1_act=hl1_activation, hl1_dropout_rate=hl1_dropout_rate,
+#         hl2_neurons=hl2_neurons, hl2_init=hl2_initializer,
+#         hl2_act=hl2_activation, hl2_dropout_rate=hl2_dropout_rate,
+#         hl3_neurons=hl3_neurons, hl3_init=hl3_initializer,
+#         hl3_act=hl3_activation, hl3_dropout_rate=hl3_dropout_rate,
+#         hl4_init=hl4_initializer, learning_rate=learning_rate, momentum=momentum)
+#
+#     grid = GridSearchCV(estimator=model, param_grid=param_grid,
+#                         scoring='accuracy', n_jobs=-1, cv=5, verbose=1)
+#     grid_result = grid.fit(X_train, y_train)
+#
+#     print("Best CV score: {:.2f}".format(grid_result.best_score_))
+#     print("Best params: {}".format(grid_result.best_params_))
+#
+#     '''Predict'''
+#     y_test_pred = grid_result.predict(X_test, verbose=0)
+#     print('Test Accuracy: {:.2f}'.format(metrics.accuracy_score(y_test, y_test_pred)))

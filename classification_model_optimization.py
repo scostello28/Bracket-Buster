@@ -147,7 +147,13 @@ if __name__ == '__main__':
 	X_train, y_train, X_test, y_test = set_up_data(train_df, test_df)
 	data = (X_train, y_train, X_test, y_test)
 
-	logistic_regression_grid_search(data)
-	random_forest_grid_search(data)
+	# logistic_regression_grid_search(data)
+	# random_forest_grid_search(data)
 	# gradient_boosting_grid_search(data)
 	# SVC_grid_search(data)
+
+	gb_model = gradient_boosting_grid_search(data)
+
+	gb_model_feature_imports = gb_model.feature_importances_
+
+	print(gb_model_feature_imports)

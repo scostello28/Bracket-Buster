@@ -82,8 +82,8 @@ if __name__ == '__main__':
     gb_model_no_clust = 'fit_models/gb_fit_model_no_clust.pkl'
     # mlp_model_no_clust = 'fit_models/mlp_fit_model_no_clust.pkl'
 
-    pickled_model = lr_model
-    pickled_model_no_clust = lr_model_no_clust
+    pickled_model = rf_model
+    pickled_model_no_clust = rf_model_no_clust
 
     with open(pickled_model, 'rb') as f:
         model = pickle.load(f)
@@ -94,10 +94,13 @@ if __name__ == '__main__':
     team1 = str(input('team1: '))
     team2 = str(input('team2: '))
 
+    print('\n')
+    print('With Clusters')
     matchup = merge(finalgames2018, team1, team2, cluster=True)
     matchup_reversed = merge(finalgames2018, team2, team1, cluster=True)
     game_predict(model, matchup, matchup_reversed)
-
+    print('\n')
+    print('No Clusters')
     no_clust_matchup = merge(finalgames2018, team1, team2, cluster=False)
     no_clust_matchup_reversed = merge(finalgames2018, team2, team1, cluster=False)
     game_predict(model_no_clust, no_clust_matchup, no_clust_matchup_reversed)
