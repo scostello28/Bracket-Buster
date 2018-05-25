@@ -504,7 +504,7 @@ def height_in(row):
 if __name__ == '__main__':
     teams = team_list(team_names_filepath)
     seasons = [2014, 2015, 2016, 2017, 2018]
-    windows = [2, 3, 4, 5, 6, 7]
+    windows = [5] #[2, 3, 4, 5, 6, 7]
 
     season2013start = date(2012,4,1)
     season2013end = date(2013,3,18)
@@ -544,14 +544,14 @@ if __name__ == '__main__':
     #     gamelog_scraper(teams, seasons, window=window, lag=True)
 
     '''Get gamelog data for all teams over all seasons'''
-    # for window in windows:
-    #     season_final_stats_scraper(teams, 2018, window=window, lag=False)
+    for window in windows:
+        season_final_stats_scraper(teams, 2017, window=window, lag=False)
 
     '''Get roster data for all teams over all seasons'''
-    roster_scraper(teams, seasons)
+    # roster_scraper(teams, seasons)
 
     '''Get player per100 possessions data for all teams over all seasons'''
     # player_per100_scraper(teams, seasons)
 
     '''Merge Roster data with player per 100 stats'''
-    player_roster_merger('data/player_per100_data.pkl', 'data/roster_data.pkl')
+    # player_roster_merger('data/player_per100_data.pkl', 'data/roster_data.pkl')

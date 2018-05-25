@@ -13,6 +13,7 @@ Read in gamelog data with all rolling average windows, team experience data, and
 # gamelog_roll6_df = pd.read_pickle('data/gamelog_data_6_game_rolling.pkl')
 # gamelog_roll7_df = pd.read_pickle('data/gamelog_data_7_game_rolling.pkl')
 
+final_stats_2017_season = pd.read_pickle('data/season2017_final_stats_5_game_rolling.pkl')
 final_stats_2018_season = pd.read_pickle('data/season2018_final_stats_5_game_rolling.pkl')
 gamelog_roll5_df = pd.read_pickle('data/gamelog_data_5_game_rolling.pkl')
 team_experience_df = pd.read_pickle('data/team_experience.pkl')
@@ -169,7 +170,7 @@ def final_stats_experience_cluster_merge(gamelog_df, experience_df, cluster_df):
     '''merge experience DataFrame into gamelog DataFrame'''
     df = gamelog_df.merge(experience_df, on='ID', how='left').merge(cluster_df, on='ID', how='left')
 
-    final_filepath = 'final_model_data/season2018_final_stats.pkl'
+    final_filepath = 'final_model_data/season2017_final_stats.pkl'
     print(final_filepath)
     df.to_pickle(final_filepath)
 
@@ -235,4 +236,4 @@ if __name__ == '__main__':
 
     '''5 game rolling ave gave best stats'''
     # gamelog_experience_cluster_merge(gamelog_roll5_df, team_experience_df, team_clusters_df, window=5)
-    final_stats_experience_cluster_merge(final_stats_2018_season, team_experience_df, team_clusters_df)
+    final_stats_experience_cluster_merge(final_stats_2017_season, team_experience_df, team_clusters_df)
