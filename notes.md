@@ -1,38 +1,35 @@
-Questions:
-1. How many games could I predict if I just picked favorites?
-2. Alter to point spread predictor (Classification to regression)
-3. Compare model to 9 celebs (including Obama) and rank
+Scripts:
 
-ToDo:
-1. Optimize MLP Neural Net
-3. if it helps predictions use for 1st round
-5. is my model better?
-6. Fill out new bracket
-7. Fill out other brackets
-8. save trained models
+Scraping:
+game_df_creator.py
+odds.py
+scraper.py
+  - dumps sos csv
+  - 
+
+Merging:
+matchup_merger.py
+odds_merger.py
+
+Clustering:
+position_cluster.py
+
+Modeling:
+model.py
+model_dumper.py
+model_optimization.py
+bb_mlp.py
+two_layer_mlp.py
+three_layer_mlp.py
+
+Bracket Fillers:
+win_or_lose.py
+win_or_lose_2017.py
+win_or_lose_2018.py
 
 
-Data:
-1. SOS per year (done)
-2. player data (done)
-3. Spread/odds data (done)
-
-Refactoring To Do:
-1. Update Scraping script to save data to pickle files throughout process (done)
-2. Clustering Transformation script
-    - streamline transformation to add to gamelog data (done)
-3. Create script to transform and combine data for modeling (done)
-    - dir for transformed data
-      - add team age feature
-      - Data with each rolling ave window with clusters and without
-4. Test with various rolling ave windows (done)
-
-
-5. MLP Neural Net
-6. Compare model with 9 celebs/analysts
-7. README / Presentation
-
-MVP+++
-1. Regression (point Spread)
-2. Auto bracket filling functionality
-3. GMM (Fuzzy Clustering)
+Other:
+feature_importances.py
+feat_imports_v2.py
+s3_connect.py
+model_dataset_selection.py
