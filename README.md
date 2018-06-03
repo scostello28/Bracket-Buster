@@ -1,8 +1,5 @@
 # Bracket Buster
 
-![NCAA or Bust](https://media.giphy.com/media/3o84U3i3nkhYoJOm3K/giphy.gif)
-
-
 ## Table of Contents
 1. [Hypotheses](#Hypotheses)
 2. [Dataset](#dataset)
