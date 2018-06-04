@@ -2,62 +2,240 @@
 
 ## Table of Contents
 1. [Hypotheses](#Hypotheses)
-2. [Dataset](#dataset)
-3. [Capstone 1](#Capstone_1)
-4. [Pre-Processing](#Pre-processing)
+2. [Data](#data)
+4. [Feature Engineering](#Feature_Engineering)
+8. [Team Composition Clustering](#Team_Composition_Clustering)
 5. [Modeling](#Modeling)
 6. [Pick a winner](#Pick-a-winner-feature)
 7. [Brackets](#Brackets)
-8. [Capstone 2](#Capstone_2)
-9. [Updates](#Updates)
-10. [Additional Data](#Additional_Data)
-11. [Clustering](#Clustering)
-12. [Team Composition](#Team_Composition)
-13. [Packages](#Packages)
+13. [Tech Stack](#Tech_Stack)
 14. [Future Update](#Future-Updates)
 
 
 ## Hypotheses
-Capstone 1: I can create a model to predict winners that can build a better bracket than Obama.
+Hypothesis 1: Using Gradient Boosting Classification I can create a model to predict winners that can build a better bracket than Obama.
 
-Result: Yes I can! Logistic Regression outperformed RandomForests and Gradient Decent Boosting.
+Hypothesis 2: Create team composition features--using player archetype clustering--to improve model accuracy.
 
-Capstone 2: Can I improve the predictive capabilities of my model by adding team composition features--using player archetype clustering.
+## Data
+Team game logs, rosters and player stats, per 100 possessions, from the past five seasons. Retrieved from www.sports-reference.com.
 
-Result: I don't know yet????
+[code_link](scraper.py)
 
-## Dataset
-Gamelogs, Rosters and player stats per 100 possessions for each team from the past 5 years. Retrieved from www.sports-reference.com.
+Game Logs:
 
-![Team gamelog pic](pictures/gamelog.png)
+![Team gamelog pic](pictures/gamelogs.png)
 
+Roster:
 
-## Capstone_1:
+![Roster pic](pictures/curoster.png)
 
-## Pre-processing
+Player Stats per 100 Possessions:
+
+![stats per 100 possessions pic](pictures/per100poss.png)
+
+## Feature_Engineering
 
 [code_link](game_df_creator.py)
 
-Data Cleaning:
+The game log data was adapted to get a sense for how teams have been playing up to the matchup.
 
-![Cleaned table pic](pictures/cleaneddata.png)
+The following features were created for predictions:
 
-  - Pulled gamelog data for all teams from 2014 to 2018
-  - The gamelog data was adapted to get a sense for how teams have been playing up to the matchup. The following features were created for predictions:
+![Features](pictures/model-features.png)  not updating...
 
-![Features](pictures/Features.png)
+All team stats were transformed into five-game rolling averages to represent current team performance.  Rolling average windows for team stats, from two to seven games, were tested with five-game resulting in best modeling accuracy.
 
-Additional features were utilized to work with the data.
-  - game type column to filter by season and tournament games.
-  - unique matchup id by mapping names with formatted names to combine data to one row for each match!
+[code_link](model_dataset_selection.py)
 
-![CorrelationMatrix](pictures/corrmatrix.png)
+## Team Composition Features with K-Means Clustering
 
-Hard to tell which features are most important based on visual inspection.  So regularization was utilized to determine most useful features for prediction.    
+### Player Archetype Clustering with K-Means
+
+K-means is an algorithm that is used to find natural groups in data.  Players who share the same position could have very different play styles.  For example, some centers can fly, dunk and shoot threes while others are just giant trees snatching rebounds.  I used this to find subsets of the standard positions in the hopes that certain team compositions would match up well against others and improve model predictions.  Guards, forwards and centers were broken up into 4, 3 and 3 subgroups respectively.  
+
+![kmeans](https://media.giphy.com/media/12vVAGkaqHUqCQ/giphy.gif)
+
+hyperparameters:
+- kmeans++ - Choose random observations as initial centroids
+- n_init = 20 - Number of iterations
+  - KMeans is *not deterministic* so we need to run the algorithm multiple times to avoid falling into local minima.
+
+#### Choosing K with Silhouette Score:
+
+The Silhouette score is calculated by comparing the mean distance between points in a cluster (intra-cluster distance) to the mean distance to the nearest cluster (inter-cluster distance)
+
+![silform](pictures/silform.png)
+
+- A value of 1 will be compact clusters that are far apart from each other.
+
+![silhouette](pictures/silhouette.png)
+
+- K from 2 to 9 clusters were tested for each position.  The K that resulted in maximum silhouette score was used for the number of subgroups for each position.  
+
+Players in each position clustered into subgroups with specific features for maximum cluster variance reduction and separation.  
+
+#### Position Clustering
+
+Features included for each position:
+
+| Position | Features |
+|----------|----------|
+| Centers | 2-pointers, 3-pointers, Rebounds, Assists, Steals, Blocks, Turn-overs, Points, Height |
+| Forwards | 2-pointers, 2-point attempts, 3-pointers, 3-point attempts, Rebounds, Assists, Steals, Blocks, Turn-overs, Points |
+| Guards | 3-pointers, Assists, Steals, Turn-overs, Points, Rebounds |
+
+**Center Archetypes:**
+
+| Cluster | Archetype | Description | Representative |
+|---------|-----------|-------------|----------------|
+| 0 | All Team Center | Strong across the board | Jock Landale |
+| 1 | B Team Centers | Weak across the board | JD Wallace |
+| 2 | Shooting Center | Score from range | Thomas Welsh |
+
+![Center Cluster Table](pictures/centerclustertable.png)
+<!-- ![Center Clusters](pictures/center2dtsne.png) -->
+![Center Clusters](pictures/centers3dtsne.png)
+
+**Forward Archetypes:**
+Cluster 0: Deep Forwards - Drops 3's and feeds
+Cluster 1: Versatile Forwards - Defend and Shoot
+Cluster 2: Supporting Forwards - Short range game and passing
+
+| Cluster | Archetype | Description | Representative |
+|---------|-----------|-------------|----------------|
+| 0 | Deep Forwards | Drops 3's and feeds | Oshae Brissett |
+| 1 | Versatile Forwards | Defend and Shoot | Justin Johnson |
+| 2 | Supporting Forwards | Short range game and passing | Steffon Mitchell |
+
+![Forwards Cluster Table](pictures/forwardsclustertable.png)
+<!-- ![Forwards Clusters](pictures/forwards2dtsne.png) -->
+![Forwards Clusters](pictures/forwards3dtsne.png)
+
+**Guard Archetypes:**
+
+| Cluster | Archetype | Description | Representative |
+|---------|-----------|-------------|----------------|
+| 0 | All Team Guards | Strong All Around | Tyus Battle |
+| 1 | Supporting Guards | Defend and Shoot | Franklin Howard |
+| 2 | Utility 3 Point Shooter | Hits Threes off bench | Marquis Godwin |
+| 3 | B Team Guards | Weak performing starters | Jonah Radebaugh |
+| 4 | Rebounding Guards | Steals, Rebounds and Shoots Threes | Jordan Caroline |
+| 5 | Utility Thief | Steals and Scores off bench | L.J. Thorpe |
+| 6 | Benchwarmer | Don't take advantage of playtime | Leighton Schrand |
+
+![Guards Cluster Table](pictures/guardclustertable.png)
+<!-- ![Guards Clusters](pictures/guard2dtsne.png) -->
+![Guards Clusters](pictures/guard3dtsne.png)
+
+### Team Composition Features
+
+Player archetypes were normalized by percentage of total minutes played to create a feature for each archetype.  The plots below show guard archetypes in shades of blue, forwards in shades of orange and centers in green.
+
+![team_comp_plot](pictures/team_comp_plot.png)
+
+On the left is the biggest upset of the tournament, and arguably of all time, UMBC a number 16 seed defeated Virginia a number 1 seed and tournament favorite.  UMBC relies heavily on Shooting Forwards where Virginia is all about the guards.
+
+On the right we have the teams in the final four.  We can see Loyola sticks out from the pack being the dark horse of the group.
+
+[code_link](position_cluster.py)
 
 ## Modeling
 
-**Logistic Regression**
+Two models were created using Gradient Boosting Classification--**one with and one without** the team composition features.
+
+Training data: 2014 - 2017 games (4,471 games)
+Testing data: 2018 season games (1,101 games)
+Test Accuracy:
+  - 66% (base model)
+  - 67% (model with team composition features)
+
+![Feature Importances](pictures/feature_importances_plot.png)
+
+<!-- partial dependancy plot -->
+
+## Pick-a-winner Functionality and Bracket Creation
+
+An interactive function was created to pit two teams against on another to see the modeled outcome.  The greater probability of victory distinguishes a winner from a loser.  
+
+- Using final 2018 season stats for each team the model was trained on games from the previous four years to predict the 2018 bracket.
+
+[code_link](win_or_lose_2018.py)
+
+A clear winner:
+~~~
+team1: kansas
+team2: iona
+kansas wins and iona loses!
+kansas has 84% chance to win.
+iona has 16% chance to win.
+~~~
+
+
+A close match:
+~~~
+team1: kansas
+team2: north-carolina
+kansas wins and north-carolina loses!
+kansas has 61% chance to win.
+north-carolina has 39% chance to win.
+~~~
+
+
+## Brackets
+
+**Bracket point system:**
+| Round | Teams Remaining | Points per pick |
+|-------|-----------------|-----------------|
+| 1 | 64 | 1 |
+| 2 | 32 | 2 |
+| 3 | 16 | 4 |
+| 4 | 8 | 8 |
+| 5 | 4 | 16 |
+| 6 | 2 | 32 |
+
+
+### 2018-March-Madness-Bracket-Results
+
+![bracket_buster_results](pictures/bracket-buster-results.png)
+
+![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
+
+## Tech Stack
+
+![python](pictures/tech_stack/python.png)
+![numpy](pictures/tech_stack/numpy.jpeg)
+![pandas](pictures/tech_stack/pandas.png)
+![sklearn](pictures/tech_stack/sklearn.png)
+![BeautifulSoup](pictures/tech_stack/beautifulsoup.png)
+![matplotlib](pictures/tech_stack/matplotlib.png)
+![jupyter_notebooks](pictures/tech_stack/jupyternotebook.png)
+![excel](pictures/tech_stack/excel.png)
+
+# Appendix:
+1. [Future Updates](#Future-Updates)
+2. [Modeling](#Modeling)
+3. [Brackets](#Brackets)
+
+
+## Future-Updates
+- Test on previous tournaments
+- Test with per 100 possession data instead of per game data for game logs
+- Explore clustering
+  - Alternate group numbers (k’s)
+  - Fuzzy Clustering (GMM)
+- Deep Learning
+  - MLP
+- Auto Bracket generation
+  - Produce each team’s probability of winning championship
+- Predict Point Spread (change to regression)
+- Betting algorithm
+- Web app
+- Auto Update model with Airflow
+
+
+
+### Logistic Regression
 
 * LogisticRegression uses Ridge regularization by default and can be switched to Lasso with an argument.  In this case there was not a significant difference between the two.
   * penalty='l2'  -->   Ridge (default)
@@ -107,183 +285,10 @@ grid_search_results.best_params_
 > {'C': 1.17}
 ~~~
 
-## Pick-a-winner-feature
-
-An interactive function was created to pit two teams against on another to see the modeled outcome.  A threshold of .5 was used to distinguish a winner from a loser.  
-
-- Using final 2017 season stats for each team the model was trained on games from the previous four years to predict the 2017 bracket.
-
-[Code Link](win_or_lose.py)
-
-A clear winner:
-~~~
-team1: kansas
-team2: iona
-kansas wins and iona loses!
-kansas has 84% chance to win.
-iona has 16% chance to win.
-~~~
-
-
-A close match:
-~~~
-team1: kansas
-team2: north-carolina
-kansas wins and north-carolina loses!
-kansas has 61% chance to win.
-north-carolina has 39% chance to win.
-~~~
-
-
 ## Brackets
-
-**Bracket point system:**
-- Round 1 (64 teams): 1 point per pick
-- Round 2 (32 teams): 2
-- Round 3 (16 teams): 4
-- Round 4 (8 teams): 8
-- Round 5 (Final Four): 16
-- Round 6 (Championship): 32
-
-
-### 2018-Bracket
 
 ![Obama's 2018 Bracket](pictures/obama2018bracket.png)
 
-![Modeled 2018 Bracket](pictures/lgmodel2018bracket.png)
+![Model 2018 Bracket](pictures/gbmodel2018bracket.png)
 
-- ‎Model: 81 points
-- ‎Obama: 56 points
-
-![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
-
-
-## Capstone_2:
-
-### Additional_Data
-
-Rosters and player stats per 100 possessions, in addition to game logs, for each team from the past 5 years. Retrieved from www.sports-reference.com.
-
-![Roster pic](pictures/roster.png)
-
-![stats per 100 possessions pic](pictures/perposs.png)
-
-### Updates
-
-1. SOS per year
-2. RandomForests
-3. Gradient Descent Boosting
-
-## Clustering
-
-Utilized KMeans Clustering to discover player archetypes based on stats.
-
-![kmeans](https://media.giphy.com/media/12vVAGkaqHUqCQ/giphy.gif)
-
-hyperparameters:
-- kmeans++ - Choose random observations as initial centroids
-- n_init = 20 - Number of iterations
-  - Remember KMeans is *not deterministic* so we need to run the algorithm multiple times to avoid falling into local minima.
-
-
-**Choosing K with Silhouette Score:**
-![silhouette](pictures/silhouette.png)
-<!-- ![silform](pictures/silform.png) -->
-
-The Silhouette score is calculated by comparing the mean distance between points in a cluster (intra-cluster distance) to the mean distance to the nearest cluster (inter-cluster distance)
-
-$$\frac{(b-a)}{max(a,b)}$$
-
-a = intra-cluster distance
-b = inter-cluster distance
-
-Values range from -1 to 1 with 1 being the best and -1 being the worst.
-A value of 1 will be compact clusters that are far apart from each other.
-
-Positions Clustered separately with specific features for maximum cluster variance reduction and separation.
-
-Features included for each position:
-
-**Centers:**
-'2P', '3P', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PTS', 'Height'
-
-**Forwards:**
-'2P', '2PA', '3P', '3PA', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PTS'
-
-**Guards:**
-'3P', 'AST', 'STL', 'TOV', 'PTS', 'TRB'
-
-**Center Archetypes:**
-Cluster 0: All Team Center - Strong across the board
-Cluster 1: B Team Centers - Weak across the board
-Cluster 2: Shooting Center - Score from range
-
-**Center Cluster Representatives:**
-Cluster 0 rep: Jock Landale
-Cluster 1 rep: JD Wallace
-Cluster 2 rep: Thomas Welsh
-
-![Center Cluster Table](pictures/centerclustertable.png)
-![Center Clusters](pictures/center2dtsne.png)
-![Center Clusters](pictures/centers3dtsne.png)
-
-**Forward Archetypes:**
-Cluster 0: Deep Forwards - Drops 3's and feeds
-Cluster 1: Versatile Forwards - Defend and Shoot
-Cluster 2: Supporting Forwards - Short range game and passing
-
-**Forward Cluster Representatives:**
-Cluster 0 rep: Oshae Brissett
-Cluster 1 rep: Justin Johnson
-Cluster 2 rep: Steffon Mitchell
-
-![Forwards Cluster Table](pictures/forwardsclustertable.png)
-![Forwards Clusters](pictures/forwards2dtsne.png)
-![Forwards Clusters](pictures/forwards3dtsne.png)
-
-**Guard Archetypes:**
-Cluster 0: All Team Guards - Strong All Around
-Cluster 1: Supporting Guards - Set up Team mates
-Cluster 2: Utility 3 Point Shooter - Hits Threes Given Opportunity
-Cluster 3: B Team Guards - Weak performing starters
-Cluster 4: Rebounding Guard - Steals, Rebounds and Shoots Threes
-Cluster 5: Utility Thief - Steals and Scores Given Opportunity
-Cluster 6: Benchwarmer - Don't take advantage of playtime
-
-Cluster 0 rep: Tyus Battle
-Cluster 1 rep: Franklin Howard
-Cluster 2 rep: Marquis Godwin
-Cluster 3 rep: Jonah Radebaugh
-Cluster 4 rep: Jordan Caroline
-Cluster 5 rep: L.J. Thorpe
-Cluster 6 rep: Leighton Schrand
-
-![Guards Cluster Table](pictures/guardclustertable.png)
-![Guards Clusters](pictures/guard2dtsne.png)
-![Guards Clusters](pictures/guard3dtsne.png)
-
-## Team_Compostition:
-
-![Final Four](pictures/finalfourteams.png)
-![Upset](pictures/virginiaumbc.png)
-
-## Packages
-
-![numpy](pictures/numpy.jpeg)
-![pandas](pictures/pandas.png)
-![sklearn](pictures/sklearn.png)
-![BeautifulSoup](pictures/beautifulsoup.png)
-![matplotlib](pictures/matplotlib.png)
-
-
-## Future-Updates
-- Add Team Composition features into predictive Model!
-- Team Experience Level (% upper class men)
-- Team Composition Clusters
-  - improve clustering
-- Additional Features:
-  - ‎pace of play, Other stats that my help with clustering.
-- test model with various rolling average windows
-- Adapt model to predict point spread
-- test different models
-  - MLP Neural Net
+![Model w/ TCF 2018 Bracket](pictures/gbmodel2018bracket.png)
