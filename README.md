@@ -3,14 +3,14 @@
 ## Table of Contents
 1. [Hypotheses](#Hypotheses)
 2. [Data](#data)
-4. [Feature Engineering](#Feature_Engineering)
-8. [Team Composition Clustering](#Team_Composition_Clustering)
+3. [Feature Engineering](#Feature_Engineering)
+4. [Team Composition Clustering](#Team_Composition_Clustering)
 5. [Modeling](#Modeling)
 6. [Pick a winner](#Pick-a-winner-feature)
 7. [Brackets](#Brackets)
-13. [Tech Stack](#Tech_Stack)
-14. [Future Update](#Future-Updates)
-
+8. [Tech Stack](#Tech_Stack)
+9. [Future Update](#Future-Updates)
+10. [Appendix](#Appendix)
 
 ## Hypotheses
 Hypothesis 1: Using Gradient Boosting Classification I can create a model to predict winners that can build a better bracket than Obama.
@@ -144,45 +144,25 @@ On the right we have the teams in the final four.  We can see Loyola sticks out 
 
 Two models were created using Gradient Boosting Classification--**one with and one without** the team composition features.
 
-Training data: 2014 - 2017 games (4,471 games)
-Testing data: 2018 season games (1,101 games)
-Test Accuracy:
-  - 66% (base model)
-  - 67% (model with team composition features)
+These models were optimized using games from 2014 through 2017 (4,471 games) for training and 2018 season games (1,101 games) for testing.  They had resulting test accuracies of 67% and 66%, respectively, with an improvement, albeit a slight one, from the team composition features.
+
+The feature importance plot (below) details features as the contribute to the model's predictions.
 
 ![Feature Importances](pictures/feature_importances_plot.png)
 
 <!-- partial dependancy plot -->
 
-## Pick-a-winner Functionality and Bracket Creation
+## Pick-a-Winner Functionality and Bracket Creation
 
 An interactive function was created to pit two teams against on another to see the modeled outcome.  The greater probability of victory distinguishes a winner from a loser.  
 
-- Using final 2018 season stats for each team the model was trained on games from the previous four years to predict the 2018 bracket.
+Using final 2018 season stats for each team the model was trained on games from the previous five years using optimized models to predict the 2018 bracket.
+
+![Prediction Plot](pictures/predict_plot.png)
 
 [code_link](win_or_lose_2018.py)
 
-A clear winner:
-~~~
-team1: kansas
-team2: iona
-kansas wins and iona loses!
-kansas has 84% chance to win.
-iona has 16% chance to win.
-~~~
-
-
-A close match:
-~~~
-team1: kansas
-team2: north-carolina
-kansas wins and north-carolina loses!
-kansas has 61% chance to win.
-north-carolina has 39% chance to win.
-~~~
-
-
-## Brackets
+## 2018-March-Madness-Bracket-Results
 
 **Bracket point system:**
 | Round | Teams Remaining | Points per pick |
@@ -195,11 +175,13 @@ north-carolina has 39% chance to win.
 | 6 | 2 | 32 |
 
 
-### 2018-March-Madness-Bracket-Results
+**Results**
 
 ![bracket_buster_results](pictures/bracket-buster-results.png)
 
 ![Sad Obama](https://media.giphy.com/media/wnDqiePIdJCA8/giphy.gif)
+
+The base model outperformed the model with the team composition features on this go around.  The team composition features pushed a couple close games in the wrong direction, in the final four, leading to a different champion for each model.  Picking the overall winner and having at least a couple correct teams in the final four is paramount to a high score.  It is hard to say which model is objectively *better* but each performed well showing promise in my methodology.  
 
 ## Tech Stack
 
@@ -221,7 +203,7 @@ north-carolina has 39% chance to win.
 ## Future-Updates
 - Test on previous tournaments
 - Test with per 100 possession data instead of per game data for game logs
-- Explore clustering
+- Explore clustering alternatives
   - Alternate group numbers (k’s)
   - Fuzzy Clustering (GMM)
 - Deep Learning
@@ -233,7 +215,9 @@ north-carolina has 39% chance to win.
 - Web app
 - Auto Update model with Airflow
 
+## Modeling
 
+Multiple models were tested during this process: Logistic Regression, Random Forests, Gradient Boosting, and two and three layer multilayer perceptrons.  All showed similar accuracies when tested on the 2018 season but Gradient Boosting showed the most believable probabilities for victors.  The three-layer MLP performed well too but wasn't used t0 create a bracket.  This functionality remains on the to-do list for now.
 
 ### Logistic Regression
 
@@ -263,7 +247,7 @@ f1 Score: 0.66 (weighted average of Precision and Recall)
 
 Ridge and Lasso error rate was identical and looking at the feature coefficients it is not hard to see why.  It is interesting to see that Lasso did not remove any features.  
 
-![Coefficients](pictures/feature_coefficients.png)
+<!-- ![Coefficients](pictures/feature_coefficients.png) -->
 
 **C-optimization**
 
@@ -273,7 +257,7 @@ In logistic regression the regularization parameter is `C` and is the inverse of
 model = LogisticRegression(C=1)
 ~~~
 
-![Coptimization](pictures/coptimization.png)  ** Update PIC **
+![Coptimization](pictures/c_optimization.png)
 
 Model hyperparameters were optimized using `GridSearchCV` from sklearn's *model selection* library.  This showed an optimal regularization parameter very close to 1--which is the default and results in no regularization.
 
@@ -289,6 +273,6 @@ grid_search_results.best_params_
 
 ![Obama's 2018 Bracket](pictures/obama2018bracket.png)
 
-![Model 2018 Bracket](pictures/gbmodel2018bracket.png)
+![Model 2018 Bracket](pictures/gbmodel_2018.png)
 
-![Model w/ TCF 2018 Bracket](pictures/gbmodel2018bracket.png)
+![Model w/ TCF 2018 Bracket](pictures/gbmodelTCF_2018.png)
