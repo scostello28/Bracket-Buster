@@ -140,17 +140,30 @@ On the right we have the teams in the final four.  We can see Loyola sticks out 
 
 [code_link](position_cluster.py)
 
+### Matchup Creation
+
+The final step to get the data ready for modeling is to get data merged into one row per matchup.  Here we create a unique ID for each game suing team names and date then count each instance.  There will be two since each team has an entry of that game from their perspective in their game log.  The first and second instances for each game were considered to be the entry for the team and opposing team, respectively, in the matchup and their stats up to that game were split into two dataframes.  These dataframes were then merged on the unique ID resulting in each row as a single game.  
+
+[code_link](matchup_merger.py)
+
 ## Modeling
 
 Two models were created using Gradient Boosting Classification--**one with and one without** the team composition features.
 
 These models were optimized using games from 2014 through 2017 (4,471 games) for training and 2018 season games (1,101 games) for testing.  They had resulting test accuracies of 67% and 66%, respectively, with an improvement, albeit a slight one, from the team composition features.
 
+[code_link](model_optimization.py)
+
 The feature importance plot (below) details features as the contribute to the model's predictions.
 
 ![Feature Importances](pictures/feature_importances_plot.png)
 
 <!-- partial dependancy plot -->
+
+Trained models were then dumped to pickle files to be read in for improved prediction time.
+
+[code_link](model_dumper.py)
+
 
 ## Pick-a-Winner Functionality and Bracket Creation
 
