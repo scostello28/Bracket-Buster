@@ -180,7 +180,8 @@ An interactive function was created to pit two teams against on another to see t
 
 ## 2018_March_Madness_Bracket_Results
 
-**Bracket point system:**
+**Bracket scoring system:**
+
 | Round | Teams Remaining | Points per pick |
 |-------|-----------------|-----------------|
 | 1 | 64 | 1 |
