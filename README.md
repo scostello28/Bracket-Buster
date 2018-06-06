@@ -3,16 +3,15 @@
 <!-- # Bracket Buster -->
 
 ## Table of Contents
-1. [Hypotheses](#Hypotheses)
-2. [Data](#data)
-3. [Feature Engineering](#Feature_Engineering)
-4. [Team Composition Clustering](#Team_Composition_Clustering)
-5. [Modeling](#Modeling)
-6. [Pick a winner](#Pick-a-winner-feature)
-7. [Brackets](#Brackets)
-8. [Tech Stack](#Tech_Stack)
-9. [Future Update](#Future-Updates)
-10. [Appendix](#Appendix)
+- [Hypotheses](#Hypotheses)
+- [Data](#data)
+- [Feature_Engineering](#Feature_Engineering)
+- [Team_Composition_Features_with_K-Means_Clustering](#Team_Composition_Features_with_K-Means_Clustering)
+- [Modeling](#Modeling)
+- [Pick-a-Winner_Functionality_and_Bracket_Creation](#Pick-a-Winner_Functionality_and_Bracket_Creation)
+- [2018_March_Madness_Bracket_Results](#2018_March_Madness_Bracket_Results)
+- [Tech_Stack](#Tech_Stack)
+- [Appendix](#Appendix)
 
 ## Hypotheses
 Hypothesis 1: Using Gradient Boosting Classification I can create a model to predict winners that can build a better bracket than Obama.
@@ -50,7 +49,7 @@ All team stats were transformed into five-game rolling averages to represent cur
 
 [code_link](model_dataset_selection.py)
 
-## Team Composition Features with K-Means Clustering
+## Team_Composition_Features_with_K-Means_Clustering
 
 ### Player Archetype Clustering with K-Means
 
@@ -167,7 +166,7 @@ Trained models were then dumped to pickle files to be read in for improved predi
 [code_link](model_dumper.py)
 
 
-## Pick-a-Winner Functionality and Bracket Creation
+## Pick-a-Winner_Functionality_and_Bracket_Creation
 
 An interactive function was created to pit two teams against on another to see the modeled outcome.  The greater probability of victory distinguishes a winner from a loser.  
 
@@ -177,7 +176,7 @@ Using final 2018 season stats for each team the model was trained on games from 
 
 [code_link](win_or_lose_2018.py)
 
-## 2018-March-Madness-Bracket-Results
+## 2018_March_Madness_Bracket_Results
 
 **Bracket point system:**
 | Round | Teams Remaining | Points per pick |
@@ -198,7 +197,7 @@ Using final 2018 season stats for each team the model was trained on games from 
 
 The base model outperformed the model with the team composition features on this go around.  The team composition features pushed a couple close games in the wrong direction, in the final four, leading to a different champion for each model.  Picking the overall winner and having at least a couple correct teams in the final four is paramount to a high score.  It is hard to say which model is objectively *better* but each performed well showing promise in my methodology.  
 
-## Tech Stack
+## Tech_Stack
 
 ![python](pictures/tech_stack/python.png)
 ![numpy](pictures/tech_stack/numpy.jpeg)
@@ -215,7 +214,7 @@ The base model outperformed the model with the team composition features on this
 3. [Brackets](#Brackets)
 
 
-## Future-Updates
+## Future_Updates
 - Test on previous tournaments
 - Test with per 100 possession data instead of per game data for game logs
 - Explore clustering alternatives
