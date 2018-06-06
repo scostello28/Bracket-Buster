@@ -3,15 +3,15 @@
 <!-- # Bracket Buster -->
 
 ## Table of Contents
-- [Hypotheses](#Hypotheses)
+- [Hypotheses](#hypotheses)
 - [Data](#data)
-- [Feature_Engineering](#Feature_Engineering)
-- [Team_Composition_Features_with_K-Means_Clustering](#Team_Composition_Features_with_K-Means_Clustering)
-- [Modeling](#Modeling)
-- [Pick-a-Winner_Functionality_and_Bracket_Creation](#Pick-a-Winner_Functionality_and_Bracket_Creation)
-- [2018_March_Madness_Bracket_Results](#2018_March_Madness_Bracket_Results)
-- [Tech_Stack](#Tech_Stack)
-- [Appendix](#Appendix)
+- [Feature_Engineering](#feature_engineering)
+- [Team_Composition_Features_with_K-Means_Clustering](#team_composition_features_with_k-means_clustering)
+- [Modeling](#modeling)
+- [Bracket_Creation](#bracket_creation)
+- [2018_March_Madness_Bracket_Results](#2018_march_madness_bracket_results)
+- [Tech_Stack](#tech_stack)
+- [Appendix](#appendix)
 
 ## Hypotheses
 Hypothesis 1: Using Gradient Boosting Classification I can create a model to predict winners that can build a better bracket than Obama.
@@ -166,13 +166,15 @@ Trained models were then dumped to pickle files to be read in for improved predi
 [code_link](model_dumper.py)
 
 
-## Pick-a-Winner_Functionality_and_Bracket_Creation
+## Bracket_Creation
 
-An interactive function was created to pit two teams against on another to see the modeled outcome.  The greater probability of victory distinguishes a winner from a loser.  
+Optimized models trained on games from the previous five years were used to make predictions from tournament teams final 2018 season stats.
 
-Using final 2018 season stats for each team the model was trained on games from the previous five years using optimized models to predict the 2018 bracket.
+### Pick-a-Winner_Functionality
 
-![Prediction Plot](pictures/predict_plot.png)
+An interactive function was created to pit two teams against on another to see the modeled outcome.  The greater probability of victory distinguishes a winner from a loser.
+
+![Prediction Plot](pictures/prediction_plot.png)
 
 [code_link](win_or_lose_2018.py)
 
