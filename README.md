@@ -1,4 +1,6 @@
-# Bracket Buster
+![banner](pictures/bb-banner.png)
+
+<!-- # Bracket Buster -->
 
 ## Table of Contents
 1. [Hypotheses](#Hypotheses)
