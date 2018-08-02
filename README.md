@@ -159,7 +159,7 @@ The feature importance plot (below) details features as the contribute to the mo
 
 ![Feature Importances](pictures/feature_importances_plot.png)
 
-<!-- partial dependancy plot -->
+<!-- partial dependency plot -->
 
 Trained models were then dumped to pickle files to be read in for improved prediction time.
 

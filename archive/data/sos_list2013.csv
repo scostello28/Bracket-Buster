@@ -1,0 +1,348 @@
+,school,sos,school-format,season
+0,Air Force,4.28,air-force,2013
+1,Akron NCAA,0.18,akron,2013
+2,Alabama A&M,-9.82,alabama-am,2013
+3,Alabama-Birmingham,1.51,alabama-birmingham,2013
+4,Alabama State,-9.01,alabama-state,2013
+5,Alabama,5.93,alabama,2013
+6,Albany (NY) NCAA,-4.53,albany-ny,2013
+7,Alcorn State,-7.11,alcorn-state,2013
+8,American,-2.53,american,2013
+9,Appalachian State,-5.77,appalachian-state,2013
+10,Arizona State,4.60,arizona-state,2013
+11,Arizona NCAA,7.47,arizona,2013
+12,Little Rock,-2.23,little-rock,2013
+13,Arkansas-Pine Bluff,-8.20,arkansas-pine-bluff,2013
+14,Arkansas State,-4.36,arkansas-state,2013
+15,Arkansas,4.97,arkansas,2013
+16,Army,-4.52,army,2013
+17,Auburn,4.18,auburn,2013
+18,Austin Peay,-4.31,austin-peay,2013
+19,Ball State,-3.15,ball-state,2013
+20,Baylor,7.13,baylor,2013
+21,Belmont NCAA,-0.96,belmont,2013
+22,Bethune-Cookman,-6.44,bethune-cookman,2013
+23,Binghamton,-3.70,binghamton,2013
+24,Boise State NCAA,5.27,boise-state,2013
+25,Boston College,7.03,boston-college,2013
+26,Boston University,-3.93,boston-university,2013
+27,Bowling Green State,-1.75,bowling-green-state,2013
+28,Bradley,1.97,bradley,2013
+29,Brigham Young,3.75,brigham-young,2013
+30,Brown,-3.03,brown,2013
+31,Bryant,-4.72,bryant,2013
+32,Bucknell NCAA,-1.96,bucknell,2013
+33,Buffalo,-0.35,buffalo,2013
+34,Butler NCAA,6.08,butler,2013
+35,Cal Poly,-0.62,cal-poly,2013
+36,Cal State Bakersfield,-2.17,cal-state-bakersfield,2013
+37,Cal State Fullerton,-3.03,cal-state-fullerton,2013
+38,Cal State Northridge,-1.93,cal-state-northridge,2013
+39,UC-Davis,-2.57,california-davis,2013
+40,UC-Irvine,-0.66,california-irvine,2013
+41,UC-Riverside,-1.71,california-riverside,2013
+42,UC-Santa Barbara,0.40,california-santa-barbara,2013
+43,University of California NCAA,7.77,california,2013
+44,Campbell,-5.55,campbell,2013
+45,Canisius,-0.99,canisius,2013
+46,Central Arkansas,-6.12,central-arkansas,2013
+47,Central Connecticut State,-4.04,central-connecticut-state,2013
+48,Central Florida,0.96,central-florida,2013
+49,Central Michigan,-1.21,central-michigan,2013
+50,Charleston Southern,-5.62,charleston-southern,2013
+51,Charlotte,2.75,charlotte,2013
+52,Chattanooga,-4.97,chattanooga,2013
+53,Chicago State,-4.91,chicago-state,2013
+54,Cincinnati NCAA,6.93,cincinnati,2013
+55,Citadel,-5.45,citadel,2013
+56,Clemson,4.44,clemson,2013
+57,Cleveland State,-0.16,cleveland-state,2013
+58,Coastal Carolina,-5.22,coastal-carolina,2013
+59,Colgate,-2.58,colgate,2013
+60,College of Charleston,-3.86,college-of-charleston,2013
+61,Colorado State NCAA,5.89,colorado-state,2013
+62,Colorado NCAA,7.95,colorado,2013
+63,Columbia,-3.48,columbia,2013
+64,Connecticut,7.42,connecticut,2013
+65,Coppin State,-4.20,coppin-state,2013
+66,Cornell,-2.37,cornell,2013
+67,Creighton NCAA,5.16,creighton,2013
+68,Dartmouth,-3.17,dartmouth,2013
+69,Davidson NCAA,-3.45,davidson,2013
+70,Dayton,4.27,dayton,2013
+71,Delaware State,-5.90,delaware-state,2013
+72,Delaware,-0.81,delaware,2013
+73,Denver,0.26,denver,2013
+74,DePaul,5.61,depaul,2013
+75,Detroit Mercy,1.62,detroit-mercy,2013
+76,Drake,5.14,drake,2013
+77,Drexel,-0.98,drexel,2013
+78,Duke NCAA,9.54,duke,2013
+79,Duquesne,3.50,duquesne,2013
+80,East Carolina,0.81,east-carolina,2013
+81,East Tennessee State,-2.25,east-tennessee-state,2013
+82,Eastern Illinois,-5.09,eastern-illinois,2013
+83,Eastern Kentucky,-3.92,eastern-kentucky,2013
+84,Eastern Michigan,-1.25,eastern-michigan,2013
+85,Eastern Washington,-5.48,eastern-washington,2013
+86,Elon,-5.19,elon,2013
+87,Evansville,2.91,evansville,2013
+88,Fairfield,-2.00,fairfield,2013
+89,Fairleigh Dickinson,-4.65,fairleigh-dickinson,2013
+90,Florida A&M,-6.21,florida-am,2013
+91,Florida Atlantic,-2.49,florida-atlantic,2013
+92,Florida Gulf Coast NCAA,-2.07,florida-gulf-coast,2013
+93,Florida International,-2.11,florida-international,2013
+94,Florida State,7.23,florida-state,2013
+95,Florida NCAA,6.83,florida,2013
+96,Fordham,4.59,fordham,2013
+97,Fresno State,6.56,fresno-state,2013
+98,Furman,-5.29,furman,2013
+99,Gardner-Webb,-5.93,gardner-webb,2013
+100,George Mason,-0.17,george-mason,2013
+101,George Washington,3.49,george-washington,2013
+102,Georgetown NCAA,7.59,georgetown,2013
+103,Georgia Southern,-5.02,georgia-southern,2013
+104,Georgia State,-2.40,georgia-state,2013
+105,Georgia Tech,4.67,georgia-tech,2013
+106,Georgia,6.09,georgia,2013
+107,Gonzaga NCAA,4.18,gonzaga,2013
+108,Grambling,-9.17,grambling,2013
+109,Green Bay,-0.27,green-bay,2013
+110,Hampton,-7.84,hampton,2013
+111,Hartford,-4.71,hartford,2013
+112,Harvard NCAA,0.16,harvard,2013
+113,Hawaii,-2.37,hawaii,2013
+114,High Point,-7.25,high-point,2013
+115,Hofstra,-1.92,hofstra,2013
+116,Holy Cross,-2.97,holy-cross,2013
+117,Houston Baptist,-8.03,houston-baptist,2013
+118,Houston,-3.77,houston,2013
+119,Howard,-5.35,howard,2013
+120,Idaho State,-4.85,idaho-state,2013
+121,Idaho,0.33,idaho,2013
+122,Illinois-Chicago,-0.69,illinois-chicago,2013
+123,Illinois State,3.72,illinois-state,2013
+124,Illinois NCAA,10.08,illinois,2013
+125,Indiana State,5.64,indiana-state,2013
+126,Indiana NCAA,8.38,indiana,2013
+127,Iona NCAA,-0.02,iona,2013
+128,Iowa State NCAA,6.13,iowa-state,2013
+129,Iowa,6.93,iowa,2013
+130,Fort Wayne,-5.32,fort-wayne,2013
+131,IUPUI,-2.79,iupui,2013
+132,Jackson State,-9.52,jackson-state,2013
+133,Jacksonville State,-4.29,jacksonville-state,2013
+134,Jacksonville,-4.74,jacksonville,2013
+135,James Madison NCAA,-2.28,james-madison,2013
+136,Kansas State NCAA,6.53,kansas-state,2013
+137,Kansas NCAA,7.54,kansas,2013
+138,Kennesaw State,-4.76,kennesaw-state,2013
+139,Kent State,-0.83,kent-state,2013
+140,Kentucky,5.78,kentucky,2013
+141,La Salle NCAA,4.46,la-salle,2013
+142,Lafayette,-2.36,lafayette,2013
+143,Lamar,-3.26,lamar,2013
+144,Lehigh,-3.01,lehigh,2013
+145,Liberty NCAA,-5.80,liberty,2013
+146,Lipscomb,-3.45,lipscomb,2013
+147,Long Beach State,1.92,long-beach-state,2013
+148,Long Island University NCAA,-5.80,long-island-university,2013
+149,Longwood,-5.10,longwood,2013
+150,Louisiana,-2.23,louisiana-lafayette,2013
+151,Louisiana-Monroe,-1.45,louisiana-monroe,2013
+152,Louisiana State,4.01,louisiana-state,2013
+153,Louisiana Tech,-2.06,louisiana-tech,2013
+154,Louisville NCAA,9.13,louisville,2013
+155,Loyola (IL),-2.30,loyola-il,2013
+156,Loyola Marymount,2.86,loyola-marymount,2013
+157,Loyola (MD),-2.10,loyola-md,2013
+158,Maine,-4.12,maine,2013
+159,Manhattan,-0.38,manhattan,2013
+160,Marist,-1.63,marist,2013
+161,Marquette NCAA,8.58,marquette,2013
+162,Marshall,0.93,marshall,2013
+163,Maryland-Baltimore County,-3.70,maryland-baltimore-county,2013
+164,Maryland-Eastern Shore,-5.11,maryland-eastern-shore,2013
+165,Maryland,4.66,maryland,2013
+166,Massachusetts,4.55,massachusetts,2013
+167,McNeese State,-4.63,mcneese-state,2013
+168,Memphis NCAA,2.70,memphis,2013
+169,Mercer,-4.08,mercer,2013
+170,Miami (FL) NCAA,7.88,miami-fl,2013
+171,Miami (OH),-0.26,miami-oh,2013
+172,Michigan State NCAA,10.55,michigan-state,2013
+173,Michigan NCAA,10.05,michigan,2013
+174,Middle Tennessee NCAA,-1.52,middle-tennessee,2013
+175,Milwaukee,-0.26,milwaukee,2013
+176,Minnesota NCAA,10.31,minnesota,2013
+177,Mississippi State,4.34,mississippi-state,2013
+178,Mississippi Valley State,-8.28,mississippi-valley-state,2013
+179,Mississippi NCAA,4.14,mississippi,2013
+180,Missouri-Kansas City,-2.74,missouri-kansas-city,2013
+181,Missouri State,4.65,missouri-state,2013
+182,Missouri NCAA,6.00,missouri,2013
+183,Monmouth,-4.19,monmouth,2013
+184,Montana State,-6.69,montana-state,2013
+185,Montana NCAA,-4.21,montana,2013
+186,Morehead State,-1.81,morehead-state,2013
+187,Morgan State,-7.51,morgan-state,2013
+188,Mount St. Mary's,-4.10,mount-st-marys,2013
+189,Murray State,-2.89,murray-state,2013
+190,Navy,-4.44,navy,2013
+191,Omaha,-3.90,omaha,2013
+192,Nebraska,9.59,nebraska,2013
+193,Nevada-Las Vegas NCAA,5.71,nevada-las-vegas,2013
+194,Nevada,5.35,nevada,2013
+195,New Hampshire,-4.19,new-hampshire,2013
+196,New Mexico State NCAA,0.70,new-mexico-state,2013
+197,New Mexico NCAA,6.63,new-mexico,2013
+198,New Orleans,-6.12,new-orleans,2013
+199,Niagara,-1.15,niagara,2013
+200,Nicholls State,-4.97,nicholls-state,2013
+201,NJIT,-9.01,njit,2013
+202,Norfolk State,-6.56,norfolk-state,2013
+203,North Carolina-Asheville,-3.98,north-carolina-asheville,2013
+204,North Carolina A&T NCAA,-6.30,north-carolina-at,2013
+205,North Carolina Central,-7.05,north-carolina-central,2013
+206,North Carolina-Greensboro,-5.31,north-carolina-greensboro,2013
+207,North Carolina State NCAA,7.17,north-carolina-state,2013
+208,North Carolina-Wilmington,-2.27,north-carolina-wilmington,2013
+209,North Carolina NCAA,8.01,north-carolina,2013
+210,North Dakota State,-4.01,north-dakota-state,2013
+211,North Dakota,-5.34,north-dakota,2013
+212,North Florida,-3.22,north-florida,2013
+213,North Texas,-2.73,north-texas,2013
+214,Northeastern,-1.93,northeastern,2013
+215,Northern Arizona,-3.55,northern-arizona,2013
+216,Northern Colorado,-5.19,northern-colorado,2013
+217,Northern Illinois,-2.20,northern-illinois,2013
+218,Northern Iowa,5.23,northern-iowa,2013
+219,Northern Kentucky,-5.42,northern-kentucky,2013
+220,Northwestern State NCAA,-3.77,northwestern-state,2013
+221,Northwestern,8.30,northwestern,2013
+222,Notre Dame NCAA,7.22,notre-dame,2013
+223,Oakland,-1.61,oakland,2013
+224,Ohio State NCAA,9.32,ohio-state,2013
+225,Ohio,-1.06,ohio,2013
+226,Oklahoma State NCAA,6.73,oklahoma-state,2013
+227,Oklahoma NCAA,7.09,oklahoma,2013
+228,Old Dominion,-1.55,old-dominion,2013
+229,Oral Roberts,-3.00,oral-roberts,2013
+230,Oregon State,4.29,oregon-state,2013
+231,Oregon NCAA,5.77,oregon,2013
+232,Pacific NCAA,1.05,pacific,2013
+233,Penn State,9.46,penn-state,2013
+234,Pennsylvania,-1.48,pennsylvania,2013
+235,Pepperdine,1.06,pepperdine,2013
+236,Pittsburgh NCAA,5.63,pittsburgh,2013
+237,Portland State,-5.54,portland-state,2013
+238,Portland,3.28,portland,2013
+239,Prairie View,-10.10,prairie-view,2013
+240,Presbyterian,-4.71,presbyterian,2013
+241,Princeton,-1.65,princeton,2013
+242,Providence,6.55,providence,2013
+243,Purdue,7.87,purdue,2013
+244,Quinnipiac,-4.91,quinnipiac,2013
+245,Radford,-7.32,radford,2013
+246,Rhode Island,4.95,rhode-island,2013
+247,Rice,0.01,rice,2013
+248,Richmond,3.43,richmond,2013
+249,Rider,-1.66,rider,2013
+250,Robert Morris,-4.90,robert-morris,2013
+251,Rutgers,6.77,rutgers,2013
+252,Sacramento State,-6.77,sacramento-state,2013
+253,Sacred Heart,-3.69,sacred-heart,2013
+254,Saint Francis (PA),-4.37,saint-francis-pa,2013
+255,Saint Joseph's,4.03,saint-josephs,2013
+256,Saint Louis NCAA,4.28,saint-louis,2013
+257,Saint Mary's (CA) NCAA,3.31,saint-marys-ca,2013
+258,Saint Peter's,-2.92,saint-peters,2013
+259,Sam Houston State,-5.16,sam-houston-state,2013
+260,Samford,-4.38,samford,2013
+261,San Diego State NCAA,6.19,san-diego-state,2013
+262,San Diego,2.60,san-diego,2013
+263,San Francisco,2.83,san-francisco,2013
+264,San Jose State,-0.92,san-jose-state,2013
+265,Santa Clara,1.72,santa-clara,2013
+266,Savannah State,-4.73,savannah-state,2013
+267,Seattle,-1.05,seattle,2013
+268,Seton Hall,5.96,seton-hall,2013
+269,Siena,-1.87,siena,2013
+270,South Alabama,-2.96,south-alabama,2013
+271,South Carolina State,-5.10,south-carolina-state,2013
+272,South Carolina Upstate,-4.79,south-carolina-upstate,2013
+273,South Carolina,2.11,south-carolina,2013
+274,South Dakota State NCAA,-3.27,south-dakota-state,2013
+275,South Dakota,-2.92,south-dakota,2013
+276,South Florida,7.70,south-florida,2013
+277,Southeast Missouri State,-6.06,southeast-missouri-state,2013
+278,Southeastern Louisiana,-3.76,southeastern-louisiana,2013
+279,Southern California,8.25,southern-california,2013
+280,SIU Edwardsville,-4.67,southern-illinois-edwardsville,2013
+281,Southern Illinois,2.28,southern-illinois,2013
+282,Southern Methodist,-1.33,southern-methodist,2013
+283,Southern Mississippi,1.49,southern-mississippi,2013
+284,Southern Utah,-5.00,southern-utah,2013
+285,Southern NCAA,-10.31,southern,2013
+286,St. Bonaventure,2.71,st-bonaventure,2013
+287,St. Francis (NY),-4.75,st-francis-ny,2013
+288,St. John's (NY),7.16,st-johns-ny,2013
+289,Stanford,7.37,stanford,2013
+290,Stephen F. Austin,-6.64,stephen-f-austin,2013
+291,Stetson,-4.45,stetson,2013
+292,Stony Brook,-4.12,stony-brook,2013
+293,Syracuse NCAA,8.57,syracuse,2013
+294,Temple NCAA,5.20,temple,2013
+295,Tennessee-Martin,-4.19,tennessee-martin,2013
+296,Tennessee State,-1.30,tennessee-state,2013
+297,Tennessee Tech,-3.31,tennessee-tech,2013
+298,Tennessee,6.03,tennessee,2013
+299,Texas A&M-Corpus Christi,-3.65,texas-am-corpus-christi,2013
+300,Texas A&M,4.86,texas-am,2013
+301,Texas-Arlington,-0.90,texas-arlington,2013
+302,Texas Christian,4.41,texas-christian,2013
+303,Texas-El Paso,2.38,texas-el-paso,2013
+304,Texas-Rio Grande Valley,-8.18,texas-pan-american,2013
+305,Texas-San Antonio,-1.00,texas-san-antonio,2013
+306,Texas Southern,-7.25,texas-southern,2013
+307,Texas State,-0.90,texas-state,2013
+308,Texas Tech,4.31,texas-tech,2013
+309,Texas,6.55,texas,2013
+310,Toledo,-3.04,toledo,2013
+311,Towson,-2.59,towson,2013
+312,Troy,-4.01,troy,2013
+313,Tulane,-1.80,tulane,2013
+314,Tulsa,0.95,tulsa,2013
+315,UCLA NCAA,7.82,ucla,2013
+316,Utah State,-0.68,utah-state,2013
+317,Utah Valley,-7.02,utah-valley,2013
+318,Utah,6.68,utah,2013
+319,Valparaiso NCAA,-1.13,valparaiso,2013
+320,Vanderbilt,6.03,vanderbilt,2013
+321,Vermont,-4.46,vermont,2013
+322,Villanova NCAA,8.53,villanova,2013
+323,Virginia Commonwealth NCAA,4.47,virginia-commonwealth,2013
+324,VMI,-7.11,virginia-military-institute,2013
+325,Virginia Tech,6.27,virginia-tech,2013
+326,Virginia,4.23,virginia,2013
+327,Wagner,-5.07,wagner,2013
+328,Wake Forest,6.15,wake-forest,2013
+329,Washington State,5.26,washington-state,2013
+330,Washington,7.22,washington,2013
+331,Weber State,-5.61,weber-state,2013
+332,West Virginia,6.54,west-virginia,2013
+333,Western Carolina,-4.42,western-carolina,2013
+334,Western Illinois,-5.42,western-illinois,2013
+335,Western Kentucky NCAA,-1.14,western-kentucky,2013
+336,Western Michigan,-1.43,western-michigan,2013
+337,Wichita State NCAA,6.09,wichita-state,2013
+338,William & Mary,-3.45,william-mary,2013
+339,Winthrop,-4.43,winthrop,2013
+340,Wisconsin NCAA,9.73,wisconsin,2013
+341,Wofford,-4.65,wofford,2013
+342,Wright State,-1.15,wright-state,2013
+343,Wyoming,4.61,wyoming,2013
+344,Xavier,4.96,xavier,2013
+345,Yale,-0.81,yale,2013
+346,Youngstown State,-0.81,youngstown-state,2013
