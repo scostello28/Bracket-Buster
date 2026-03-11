@@ -1,0 +1,90 @@
+First Round
+-----------
+gonzaga v georgia-state
+boise-state v memphis
+connecticut v new-mexico-state
+arkansas v vermont
+alabama v notre-dame
+texas-tech v montana-state
+michigan-state v davidson
+duke v cal-state-fullerton
+baylor v norfolk-state
+north-carolina v marquette
+saint-marys-ca v indiana
+ucla v akron
+texas v virginia-tech
+purdue v yale
+murray-state v san-francisco
+kentucky v saint-peters
+arizona v wright-state
+seton-hall v texas-christian
+houston v alabama-birmingham
+illinois v chattanooga
+colorado-state v michigan
+tennessee v longwood
+ohio-state v loyola-il
+villanova v delaware
+kansas v texas-southern
+san-diego-state v creighton
+iowa v richmond
+providence v south-dakota-state
+louisiana-state v iowa-state
+wisconsin v colgate
+southern-california v miami-fl
+auburn v jacksonville-state
+
+
+Second Round
+------------
+gonzaga v boise-state
+connecticut v arkansas
+notre-dame v texas-tech
+davidson v duke
+baylor v north-carolina
+saint-marys-ca v ucla
+texas v purdue
+san-francisco v kentucky
+arizona v seton-hall
+houston v illinois
+colorado-state v tennessee
+loyola-il v villanova
+kansas v san-diego-state
+iowa v providence
+louisiana-state v wisconsin
+southern-california v auburn
+
+
+Sweet 16
+-------
+boise-state v arkansas
+texas-tech v davidson
+baylor v ucla
+purdue v kentucky
+arizona v houston
+colorado-state v villanova
+kansas v providence
+wisconsin v southern-california
+
+
+Elite 8
+-------
+arkansas v davidson
+ucla v kentucky
+houston v colorado-state
+providence v southern-california
+
+
+Final4
+------
+davidson v kentucky
+colorado-state v providence
+
+
+Championship
+------------
+davidson v providence
+
+
+Champion
+--------
+providence

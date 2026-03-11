@@ -1,0 +1,90 @@
+First Round
+-----------
+alabama v texas-am-corpus-christi
+maryland v west-virginia
+san-diego-state v manhattan
+virginia v furman
+creighton v north-carolina-state
+baylor v california-santa-barbara
+missouri v utah-state
+arizona v princeton
+purdue v fairleigh-dickinson
+memphis v florida-atlantic
+duke v oral-roberts
+tennessee v louisiana-lafayette
+kentucky v providence
+kansas-state v montana-state
+michigan-state v southern-california
+marquette v vermont
+kansas v howard
+arkansas v illinois
+saint-marys-ca v virginia-commonwealth
+connecticut v iona
+texas-christian v arizona-state
+gonzaga v grand-canyon
+northwestern v boise-state
+ucla v north-carolina-asheville
+houston v northern-kentucky
+iowa v auburn
+miami-fl v drake
+indiana v kent-state
+iowa-state v pittsburgh
+xavier v kennesaw-state
+texas-am v penn-state
+texas v colgate
+
+
+Second Round
+------------
+alabama v west-virginia
+san-diego-state v virginia
+creighton v baylor
+utah-state v arizona
+purdue v memphis
+duke v tennessee
+kentucky v kansas-state
+michigan-state v marquette
+kansas v arkansas
+saint-marys-ca v connecticut
+texas-christian v gonzaga
+northwestern v ucla
+houston v auburn
+miami-fl v indiana
+iowa-state v xavier
+penn-state v texas
+
+
+Sweet 16
+-------
+west-virginia v san-diego-state
+baylor v utah-state
+purdue v tennessee
+kansas-state v michigan-state
+kansas v connecticut
+texas-christian v ucla
+auburn v indiana
+iowa-state v texas
+
+
+Elite 8
+-------
+west-virginia v baylor
+tennessee v michigan-state
+kansas v ucla
+auburn v texas
+
+
+Final4
+------
+west-virginia v michigan-state
+kansas v texas
+
+
+Championship
+------------
+west-virginia v kansas
+
+
+Champion
+--------
+kansas
