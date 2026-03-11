@@ -1,4 +1,4 @@
-# bracket_buster_v2.0
+# Bracket Buster
 
 ## Pipeline
 
