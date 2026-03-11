@@ -25,96 +25,157 @@ def school_name_transform(school_name):
         school_name = school_name.replace(".", "")
         school_name = school_name.replace("'", "")
 
-        if school_name == "siu-edwardsville":
-            school_name = "southern-illinois-edwardsville"
-        elif school_name == "vmi":
-            school_name = "virginia-military-institute"
-        elif school_name == "uc-davis":
-            school_name = "california-davis"
-        elif school_name == "uc-irvine":
-            school_name = "california-irvine"
-        elif school_name == "uc-riverside":
-            school_name = "california-riverside"
-        elif school_name == "uc-santa-barbara":
-            school_name = "california-santa-barbara"
-        elif school_name == "uc-san-diego":
-            school_name = "california-san-diego"
-        elif school_name == "university-of-california":
-            school_name = "california"
-        elif school_name == "cal-state-long-beach":
-            school_name = "long-beach-state"
-        elif school_name == "louisiana":
-            school_name = "louisiana-lafayette"
-        elif school_name == "texas-rio-grande-valley":
-            school_name = "texas-pan-american"
-        elif school_name == "byu":
-            school_name = "brigham-young"
-        elif school_name == "etsu":
-            school_name = "east-tennessee-state"
-        elif school_name == "liu":
-            school_name = "long-island-university"
-        elif school_name == "lsu":
-            school_name = "louisiana-state"
-        elif school_name == "nc-state":
-            school_name = "north-carolina-state"
-        elif school_name == "ole-miss":
-            school_name = "mississippi"
-        elif school_name == "pitt":
-            school_name = "pittsburgh"
-        elif school_name == "penn":
-            school_name = "pennsylvania"
-        elif school_name == "saint-marys":
-            school_name = "saint-marys-ca"
-        elif school_name == "smu":
-            school_name = "southern-methodist"
-        elif school_name == "tcu":
-            school_name = "texas-christian"
-        elif school_name == "umbc":
-            school_name = "maryland-baltimore-county"  
-        elif school_name == "umass":
-            school_name = "massachusetts"    
-        elif school_name == "umass-lowell":
-            school_name = "massachusetts-lowell"  
-        elif school_name == "unc":
-            school_name = "north-carolina"  
-        elif school_name == "unc-asheville":
-            school_name = "north-carolina-asheville" 
-        elif school_name == "unc-greensboro":
-            school_name = "north-carolina-greensboro" 
-        elif school_name == "unc-wilmington":
-            school_name = "north-carolina-wilmington" 
-        elif school_name == "ucf":
-            school_name = "central-florida" 
-        elif school_name == "uab":
-            school_name = "alabama-birmingham"
-        elif school_name == "the-citadel":
-            school_name = "citadel"
-        elif school_name == "ucsb":
-            school_name = "california-santa-barbara"
-        elif school_name == "uconn":
-            school_name = "connecticut"
-        elif school_name == "umkc":
-            school_name = "missouri-kansas-city"
-        elif school_name == "unlv":
-            school_name = "nevada-las-vegas"
-        elif school_name == "utep":
-            school_name = "texas-el-paso"
-        elif school_name == "utsa":
-            school_name = "texas-san-antonio"
-        elif school_name == "ut-arlington":
-            school_name = "texas-arlington"
-        elif school_name == "usc":
-            school_name = "nsouthern-california"
-        elif school_name == "vcu":
-            school_name = "virginia-commonwealth"
-        elif school_name == "uic":
-            school_name = "illinois-chicago"
-        elif school_name == "little-rock":
-            school_name = "arkansas-little-rock"
-        elif school_name == "purdue-fort-wayne":
-            school_name = "ipfw"
-        elif school_name == "omaha":
-            school_name = "nebraska-omaha"
+        # if school_name == "siu-edwardsville":
+        #     school_name = "southern-illinois-edwardsville"
+        # elif school_name == "vmi":
+        #     school_name = "virginia-military-institute"
+        # elif school_name == "uc-davis":
+        #     school_name = "california-davis"
+        # elif school_name == "uc-irvine":
+        #     school_name = "california-irvine"
+        # elif school_name == "uc-riverside":
+        #     school_name = "california-riverside"
+        # elif school_name == "uc-santa-barbara":
+        #     school_name = "california-santa-barbara"
+        # elif school_name == "uc-san-diego":
+        #     school_name = "california-san-diego"
+        # elif school_name == "university-of-california":
+        #     school_name = "california"
+        # elif school_name == "cal-state-long-beach":
+        #     school_name = "long-beach-state"
+        # elif school_name == "louisiana":
+        #     school_name = "louisiana-lafayette"
+        # elif school_name == "texas-rio-grande-valley":
+        #     school_name = "texas-pan-american"
+        # elif school_name == "byu":
+        #     school_name = "brigham-young"
+        # elif school_name == "etsu":
+        #     school_name = "east-tennessee-state"
+        # elif school_name == "liu":
+        #     school_name = "long-island-university"
+        # elif school_name == "lsu":
+        #     school_name = "louisiana-state"
+        # elif school_name == "nc-state":
+        #     school_name = "north-carolina-state"
+        # elif school_name == "ole-miss":
+        #     school_name = "mississippi"
+        # elif school_name == "pitt":
+        #     school_name = "pittsburgh"
+        # elif school_name == "penn":
+        #     school_name = "pennsylvania"
+        # elif school_name == "saint-marys":
+        #     school_name = "saint-marys-ca"
+        # elif school_name == "smu":
+        #     school_name = "southern-methodist"
+        # elif school_name == "tcu":
+        #     school_name = "texas-christian"
+        # elif school_name == "umbc":
+        #     school_name = "maryland-baltimore-county"  
+        # elif school_name == "umass":
+        #     school_name = "massachusetts"    
+        # elif school_name == "umass-lowell":
+        #     school_name = "massachusetts-lowell"  
+        # elif school_name == "unc":
+        #     school_name = "north-carolina"  
+        # elif school_name == "unc-asheville":
+        #     school_name = "north-carolina-asheville" 
+        # elif school_name == "unc-greensboro":
+        #     school_name = "north-carolina-greensboro" 
+        # elif school_name == "unc-wilmington":
+        #     school_name = "north-carolina-wilmington" 
+        # elif school_name == "ucf":
+        #     school_name = "central-florida" 
+        # elif school_name == "uab":
+        #     school_name = "alabama-birmingham"
+        # elif school_name == "the-citadel":
+        #     school_name = "citadel"
+        # elif school_name == "ucsb":
+        #     school_name = "california-santa-barbara"
+        # elif school_name == "uconn":
+        #     school_name = "connecticut"
+        # elif school_name == "umkc":
+        #     school_name = "missouri-kansas-city"
+        # elif school_name == "unlv":
+        #     school_name = "nevada-las-vegas"
+        # elif school_name == "utep":
+        #     school_name = "texas-el-paso"
+        # elif school_name == "utsa":
+        #     school_name = "texas-san-antonio"
+        # elif school_name == "ut-arlington":
+        #     school_name = "texas-arlington"
+        # elif school_name == "usc":
+        #     school_name = "nsouthern-california"
+        # elif school_name == "vcu":
+        #     school_name = "virginia-commonwealth"
+        # elif school_name == "uic":
+        #     school_name = "illinois-chicago"
+        # elif school_name == "little-rock":
+        #     school_name = "arkansas-little-rock"
+        # elif school_name == "purdue-fort-wayne":
+        #     school_name = "ipfw"
+        # elif school_name == "omaha":
+        #     school_name = "nebraska-omaha"
+
+        school_name_map = {
+            "siu-edwardsville": "southern-illinois-edwardsville",
+            "vmi": "virginia-military-institute",
+            "uc-davis": "california-davis",
+            "uc-irvine": "california-irvine",
+            "uc-riverside": "california-riverside",
+            "uc-santa-barbara": "california-santa-barbara",
+            "uc-san-diego": "california-san-diego",
+            "university-of-california": "california",
+            "cal-state-long-beach": "long-beach-state",
+            "louisiana": "louisiana-lafayette",
+            "texas-rio-grande-valley": "texas-pan-american",
+            "byu": "brigham-young",
+            "etsu": "east-tennessee-state",
+            "liu": "long-island-university",
+            "lsu": "louisiana-state",
+            "nc-state": "north-carolina-state",
+            "ole-miss": "mississippi",
+            "pitt": "pittsburgh",
+            "penn": "pennsylvania",
+            "saint-marys": "saint-marys-ca",
+            "smu": "southern-methodist",
+            "tcu": "texas-christian",
+            "umbc": "maryland-baltimore-county",
+            "umass": "massachusetts",
+            "umass-lowell": "massachusetts-lowell",
+            "unc": "north-carolina", 
+            "unc-asheville": "north-carolina-asheville",
+            "unc-greensboro": "north-carolina-greensboro",
+            "unc-wilmington": "north-carolina-wilmington",
+            "ucf": "central-florida",
+            "uab": "alabama-birmingham",
+            "the-citadel": "citadel",
+            "ucsb": "california-santa-barbara",
+            "uconn": "connecticut",
+            "umkc": "missouri-kansas-city",
+            "unlv": "nevada-las-vegas",
+            "utep": "texas-el-paso",
+            "utsa": "texas-san-antonio",
+            "ut-arlington": "texas-arlington",
+            "usc": "southern-california",
+            "vcu": "virginia-commonwealth",
+            "uic": "illinois-chicago",
+            "little-rock": "arkansas-little-rock",
+            "purdue-fort-wayne": "ipfw",
+            "omaha": "nebraska-omaha",
+            "bowling-green": "bowling-green-state",
+            "east-texas-am": "texas-am-commerce",
+            "fdu": "fairleigh-dickinson",
+            "houston-christian": "houston-baptist",
+            "iu-indy": "iupui",
+            "kansas-city": "missouri-kansas-city",
+            "sam-houston": "sam-houston-state",
+            "st-thomas": "st-thomas-mn",
+            "utah-tech": "dixie-state"
+        }
+
+        if school_name in school_name_map.keys():
+            school_name = school_name_map[school_name]
+
     except Exception as e:
         print(e)
 

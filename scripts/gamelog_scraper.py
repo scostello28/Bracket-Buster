@@ -81,6 +81,11 @@ def add_game_type(row):
     tourney2025start = date(2025,3,19)
     tourney2025end = date(2025,4,15)
 
+    season2026start = date(2025,4,16)
+    season2026end = date(2025,3,18)
+    tourney2026start = date(2026,3,19)
+    tourney2026end = date(2026,4,15)
+
 
     if row['just_date'] >= tourney2014start and row['just_date'] <= tourney2014end:
         row['GameType'] = 'tourney2014'
@@ -153,6 +158,12 @@ def add_game_type(row):
 
     elif row['just_date'] >= season2025start and row['just_date'] <= season2025end:
         row['GameType'] = 'season2025'
+
+    elif row['just_date'] >= tourney2026start and row['just_date'] <= tourney2026end:
+        row['GameType'] = 'tourney2026'
+
+    elif row['just_date'] >= season2026start and row['just_date'] <= season2026end:
+        row['GameType'] = 'season2026'
 
     else:
         row['GameType'] = 'season'
@@ -227,7 +238,7 @@ def clean_team_gamelog(df, team, sos_season_dict):
     return df
 
 
-def gamelog_scraper(seasons, output_dir="0_scraped_data"):
+def gamelog_scraper(seasons, output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"):
     """
     Bot/Scraping/Crawler Traffic on Sports-Reference.com Sites
     https://www.sports-reference.com/bot-traffic.html
@@ -238,8 +249,6 @@ def gamelog_scraper(seasons, output_dir="0_scraped_data"):
 
     Output: DataFrame of all gamelogs for teams over all years
     """
-
-    
 
     gamelog_base_url = "https://www.sports-reference.com/cbb/schools/{team}/{season}-gamelogs.html#sgl-basic::none"
 
@@ -301,7 +310,6 @@ if __name__ == '__main__':
 
     """sos_csv_creator needs to be run if this file is not already created"""
 
-    # seasons = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
     seasons = read_seasons(seasons_path='seasons_list.txt')
 
     """Get full season gamelog data for all teams over all seasons"""

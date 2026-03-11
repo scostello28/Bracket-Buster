@@ -254,11 +254,8 @@ if __name__ == '__main__':
 
     # Dependencies:
     # - sos_csv_creator
-
-    # seasons = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
     seasons = read_seasons(seasons_path='seasons_list.txt')
 
-    roster_scraper(seasons, source_dir="0_scraped_data", output_dir="0_scraped_data", verbose=True)
+    # roster_scraper(seasons, source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", verbose=True)
 
-    # player_per100_scraper(seasons, source_dir="0_scraped_data", output_dir="0_scraped_data")
-    player_per100_scraper_pre_2022(seasons, source_dir="0_scraped_data", output_dir="0_scraped_data")
+    player_per100_scraper_pre_2022(seasons, source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data")

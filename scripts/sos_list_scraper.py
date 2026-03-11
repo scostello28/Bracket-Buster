@@ -14,7 +14,7 @@ def clean_team(row):
         row["school"] = row['school'].replace("NCAA", "").strip()
     return row
 
-def sos_csv_creator(seasons, output_dir="0_scraped_data"):
+def sos_csv_creator(seasons, output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"):
     """
     Arguments:
         seasons (list): season years
@@ -81,7 +81,7 @@ def sos_csv_creator(seasons, output_dir="0_scraped_data"):
         time.sleep(15)
 
 if __name__ == "__main__":
-ß
+
     seasons = read_seasons(seasons_path='seasons_list.txt')
     # windows = [5]
 
