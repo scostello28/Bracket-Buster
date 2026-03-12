@@ -12,15 +12,14 @@ from filters import games_up_to_tourney_filter, tourney_filter, games_up_to_tour
 from scraping_utils import check_for_file, read_seasons
 
 
-def lr_model(X, y, model_name):
-    '''
+def lr_model(X, y, model_name, output_dir):
+    """
     Set up logistic regession pipeline.
     Input: data matricies
     Output: fit model
-    '''
-    output_dir = "fit_models"
-    filename = f"{output_dir}/{model_name}.joblib"
-    # ilename = f"{output_dir}/{model_name}.pkl"
+    """
+
+    filename = f"{model_name}.joblib"
 
     if check_for_file(directory=output_dir, filename=filename):
         return
@@ -31,22 +30,21 @@ def lr_model(X, y, model_name):
     print(f"Training: {model_name}")
     lr_pipeline.fit(X, y)
 
-    print(f"Save {filename}")
-    joblib.dump(lr_pipeline, filename)
+    print(f"Save: {output_dir}/{filename}")
+    joblib.dump(lr_pipeline, f"{output_dir}/{filename}")
 
     # with open(filename, 'wb') as f:
     #     # Write the model to a file.
     #     pickle.dump(lr_pipeline, f)
 
-def rf_model(X, y, model_name):
-    '''
+def rf_model(X, y, model_name, output_dir):
+    """
     Set up Random Forest Classification pipeline.
     Input: data matricies
     Output: fit model
-    '''
-    output_dir = "fit_models"
-    filename = f"{output_dir}/{model_name}.joblib"
-    # ilename = f"{output_dir}/{model_name}.pkl"
+    """
+
+    filename = f"{model_name}.joblib"
 
     if check_for_file(directory=output_dir, filename=filename):
         return
@@ -59,21 +57,20 @@ def rf_model(X, y, model_name):
     print(f"Training: {model_name}")
     rf_pipeline.fit(X, y)
 
-    print(f"Save {filename}")
-    joblib.dump(rf_pipeline, filename)
+    print(f"Save: {output_dir}/{filename}")
+    joblib.dump(rf_pipeline, f"{output_dir}/{filename}")
     # with open(filename, 'wb') as f:
     #     # Write the model to a file.
     #     pickle.dump(rf_pipeline, f)
 
-def gb_model(X, y, model_name):
-    '''
+def gb_model(X, y, model_name, output_dir):
+    """
     Set up Random Gradient Boosting Classification pipeline.
     Input: data matricies
     Output: fit model
-    '''
-    output_dir = "fit_models"
-    filename = f"{output_dir}/{model_name}.joblib"
-    # ilename = f"{output_dir}/{model_name}.pkl"
+    """
+
+    filename = f"{model_name}.joblib"
 
     if check_for_file(directory=output_dir, filename=filename):
         return
@@ -87,8 +84,8 @@ def gb_model(X, y, model_name):
     print(f"Training: {model_name}")
     gb_pipeline.fit(X, y)
 
-    print(f"Save {filename}")
-    joblib.dump(gb_pipeline, filename)
+    print(f"Save: {output_dir}/{filename}")
+    joblib.dump(gb_pipeline, f"{output_dir}/{filename}")
     # with open(filename, 'wb') as f:
     #     # Write the model to a file.
     #     pickle.dump(gb_pipeline, f)
@@ -100,7 +97,8 @@ if __name__ == "__main__":
     season = read_seasons(seasons_path='seasons_list.txt')[-1]
 
     source_dir = "3_model_data"
-    data = pd.read_pickle(f"{source_dir}/gamelog_exp_clust-{season}.pkl")
+    data_dir = "/Users/sean/Documents/bracket_buster/data"
+    data = pd.read_pickle(f"{data_dir}/{source_dir}/{season}/gamelog_exp_clust-{season}.pkl")
 
     # test models
     Xy_train_t, Xy_test_t = data_for_model(data, feature_set='exp_tcf', season=season)
@@ -120,19 +118,62 @@ if __name__ == "__main__":
     # gb_model(X_train_no_clust_t, y_train_no_clust_t, f"gb_{season}_fit_model_no_clust_testing")
 
     # bracket models
-    Xy_train, Xy_test = data_for_model(data, feature_set='exp_tcf', train_filter=games_up_to_tourney_filter, test_filter=tourney_filter, season=season)
-    Xy_train_no_clust, Xy_test_no_clust = data_for_model(data, feature_set='gamelogs', train_filter=games_up_to_tourney_filter, test_filter=tourney_filter, season=season)
+    Xy_train, Xy_test = data_for_model(
+        data, 
+        feature_set='exp_tcf', 
+        train_filter=games_up_to_tourney_filter, 
+        test_filter=tourney_filter, 
+        season=season
+        )
+
+    Xy_train_no_clust, Xy_test_no_clust = data_for_model(
+        data, 
+        feature_set='gamelogs', 
+        train_filter=games_up_to_tourney_filter, 
+        test_filter=tourney_filter, 
+        season=season
+        )
 
     X_train, y_train = set_up_data(Xy_train, Xy_test, bracket=True)
     X_train_no_clust, y_train_no_clust = set_up_data(Xy_train_no_clust, Xy_test_no_clust, bracket=True)
 
     # print('Data with No Odds')
-    lr_model(X_train, y_train, f"lr_{season}_fit_model")
-    rf_model(X_train, y_train, f"rf_{season}_fit_model")
-    gb_model(X_train, y_train, f"gb_{season}_fit_model")
+    lr_model(
+        X_train, 
+        y_train, 
+        f"lr_{season}_fit_model", 
+        output_dir=f"{data_dir}/{source_dir}/{season}"
+        )
+    rf_model(
+        X_train, 
+        y_train, 
+        f"rf_{season}_fit_model", 
+        output_dir=f"{data_dir}/{source_dir}/{season}"
+        )
+    gb_model(
+        X_train, 
+        y_train, 
+        f"gb_{season}_fit_model", 
+        output_dir=f"{data_dir}/{source_dir}/{season}"
+        )
 
     # print('No Clusters or odds')
-    lr_model(X_train_no_clust, y_train_no_clust, f"lr_{season}_fit_model_no_clust")
-    rf_model(X_train_no_clust, y_train_no_clust, f"rf_{season}_fit_model_no_clust")
-    gb_model(X_train_no_clust, y_train_no_clust, f"gb_{season}_fit_model_no_clust")
+    lr_model(
+        X_train_no_clust, 
+        y_train_no_clust, 
+        f"lr_{season}_fit_model_no_clust", 
+        output_dir=f"{data_dir}/{source_dir}/{season}"
+        )
+    rf_model(
+        X_train_no_clust, 
+        y_train_no_clust, 
+        f"rf_{season}_fit_model_no_clust", 
+        output_dir=f"{data_dir}/{source_dir}/{season}"
+        )
+    gb_model(
+        X_train_no_clust, 
+        y_train_no_clust, 
+        f"gb_{season}_fit_model_no_clust", 
+        output_dir=f"{data_dir}/{source_dir}/{season}"
+        )
  
