@@ -81,173 +81,165 @@ def roster_scraper(seasons, source_dir, output_dir, verbose=False):
         time.sleep(30)
 
 
-def player_per100_scraper(seasons, source_dir, output_dir):
+def player_per100_scraper(season, source_dir, output_dir):
     '''
     Inputs:
         season = season year
 
     Output: DataFrame of all games
     '''
-    
-    for season in seasons:
 
-        player_per100_df = pd.DataFrame()
+    df_list = []
 
-        # Get teams list for season
-        team_names_filepath = f"{output_dir}/sos_list{season}.csv"
-        teams = team_list(team_names_filepath)
+    team_counter = 0
 
-        season_filename = f"player_per100_{season}_data.pkl"
+    for team in teams:
+        try:
+            '''Print for progress update'''
+            print('per100_scraper, team: {}, season: {}'.format(team, season))
 
-        if check_for_file(directory=output_dir, filename=season_filename):
-            continue
-
-        team_counter = 0
-
-        for team in teams:
-            try:
-                '''Print for progress update'''
-                print('per100_scraper, team: {}, season: {}'.format(team, season))
-
-                '''URL for data pull'''
-                url = 'https://www.sports-reference.com/cbb/schools/{}/{}.html#per_poss'.format(team, season)
-                
-                # df = pd.read_html(url)[11]
-
-                try:
-                    df = pd.read_html(url)[11]
-                except IndexError as index_error:
-                    print(index_error)
-                    print(url)
-                    print("Index is out of range try alternate table index as team may not have conference stats")
-                    df = pd.read_html(url)[6]
-                
-                # Drop uneeded columns
-                df = df.drop(['Rk', 'Unnamed: 24'], axis=1)
-                
-                # Add Team and Season Columns
-                df['Team'] = team
-                df['Season'] = season
-
-            except HTTPError as http_error:
-                print(http_error)
-                print(url)
-                print(f"skip {season} {team}")
-            except ValueError as value_error:
-                print(value_error)
-                print(url)
-                print(f"skip {season} {team}")
-            else:
-                # Add individual player stats to full per_poss DataFrame
-                player_per100_df = pd.concat([player_per100_df, df], ignore_index=True)
-
-            team_counter += 1
-            if team_counter == 10:
-                time.sleep(10)
-                team_counter = 0
-            else:
-                time.sleep(5)
-
-        # Filter out irrelevant columns
-        cols = ['Player', 'G', 'GS', 'MP',
-        'FG', 'FGA', 'FG%', '2P', '2PA', '2P%', '3P', '3PA', '3P%', 'FT',
-        'FTA', 'FT%', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS',
-        'ORtg', 'DRtg', 'Team', 'Season']
-
-        player_per100_df = player_per100_df[cols]
+            '''URL for data pull'''
+            url = 'https://www.sports-reference.com/cbb/schools/{}/{}.html#per_poss'.format(team, season)
             
-        print(f"Saving {season_filename}")
-        player_per100_df.to_pickle(f'{source_dir}/{season_filename}')
+            # df = pd.read_html(url)[11]
 
-        time.sleep(30)
+            try:
+                df = pd.read_html(url)[11]
+            except IndexError as index_error:
+                print(index_error)
+                print(url)
+                print("Index is out of range try alternate table index as team may not have conference stats")
+                df = pd.read_html(url)[6]
+            
+            # Drop uneeded columns
+            # df = df.drop(['Rk', 'Unnamed: 24'], axis=1)
+            df = df.drop(['Rk', 'Awards'], axis=1) # 2025 fix
+            
+            # Add Team and Season Columns
+            df['Team'] = team
+            df['Season'] = season
+
+        except HTTPError as http_error:
+            print(http_error)
+            print(url)
+            print(f"skip {season} {team}")
+        except ValueError as value_error:
+            print(value_error)
+            print(url)
+            print(f"skip {season} {team}")
+        else:
+            # Add individual player stats to full per_poss DataFrame
+            df_list.append(df)
+
+        team_counter += 1
+        if team_counter == 10:
+            time.sleep(10)
+            team_counter = 0
+        else:
+            time.sleep(5)
+
+    player_per100_df = pd.concat(df_list, ignore_index=True)
+
+    # Filter out irrelevant columns
+    cols = ['Player', 'G', 'GS', 'MP',
+    'FG', 'FGA', 'FG%', '2P', '2PA', '2P%', '3P', '3PA', '3P%', 'FT',
+    'FTA', 'FT%', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS',
+    'ORtg', 'DRtg', 'Team', 'Season']
+
+    player_per100_df = player_per100_df[cols]
+        
+    print(f"Saving {season_filename}")
+    player_per100_df.to_pickle(f'{source_dir}/{season_filename}')
+
+    time.sleep(30)
         
 
-def player_per100_scraper_pre_2022(seasons, source_dir, output_dir):
+def player_per100_scraper_pre_2022(season, source_dir, output_dir):
     '''
     Inputs:
         season = season year
 
     Output: DataFrame of all games
     '''
-    
 
-    for season in seasons:
+    df_list = []
 
-        player_per100_df = pd.DataFrame()
+    team_counter = 0
 
-        # Get teams list for season
-        team_names_filepath = f"{output_dir}/sos_list{season}.csv"
-        teams = team_list(team_names_filepath)
+    for team in teams:
+        try:
+            '''Print for progress update'''
+            print('per100_scraper, team: {}, season: {}'.format(team, season))
 
-        season_filename = f"player_per100_{season}_data.pkl"
+            '''URL for data pull'''
+            url = 'https://www.sports-reference.com/cbb/schools/{}/{}.html#per_poss'.format(team, season)
 
-        if check_for_file(directory=output_dir, filename=season_filename):
-            continue
+            # Extract html from player page
+            req = requests.get(url).text
 
-        for team in teams:
-            try:
-                '''Print for progress update'''
-                print('per100_scraper, team: {}, season: {}'.format(team, season))
+            # Create soup object form html
+            soup = BeautifulSoup(req, 'html.parser')
 
-                '''URL for data pull'''
-                url = 'https://www.sports-reference.com/cbb/schools/{}/{}.html#per_poss'.format(team, season)
+            # Extract placeholder classes
+            placeholders = soup.find_all('div', {'class': 'placeholder'})
 
-                # Extract html from player page
-                req = requests.get(url).text
+            for x in placeholders:
+                # Get elements after placeholder and combine into one string
+                comment = ''.join(x.next_siblings)
 
-                # Create soup object form html
-                soup = BeautifulSoup(req, 'html.parser')
+                # Parse comment back into soup object
+                soup_comment = BeautifulSoup(comment, 'html.parser')
 
-                # Extract placeholder classes
-                placeholders = soup.find_all('div', {'class': 'placeholder'})
+                # Extract correct table from soup object using 'id' attribute
+                tables = soup_comment.find_all('table', attrs={"id":"players_per_poss"})
 
-                for x in placeholders:
-                    # Get elements after placeholder and combine into one string
-                    comment = ''.join(x.next_siblings)
+                # Iterate tables
+                for tag in tables:
+                    # Turn table from html to pandas DataFrame
+                    df = pd.read_html(tag.prettify())[0]
 
-                    # Parse comment back into soup object
-                    soup_comment = BeautifulSoup(comment, 'html.parser')
+                    # Extract a player's stats from their most recent college season
+                    table = df.iloc[:, :]
 
-                    # Extract correct table from soup object using 'id' attribute
-                    tables = soup_comment.find_all('table', attrs={"id":"players_per_poss"})
+                    # Add Team Column
+                    table['Team'] = team
+                    table['Season'] = season
 
-                    # Iterate tables
-                    for tag in tables:
-                        # Turn table from html to pandas DataFrame
-                        df = pd.read_html(tag.prettify())[0]
+        except HTTPError as http_error:
+            print(http_error)
+            print(url)
+            print(f"skip {season} {team}")
+        except ValueError as value_error:
+            print(value_error)
+            print(url)
+            print(f"skip {season} {team}")
+        else:
+            # Add individual player stats to full per_poss DataFrame
+            df_list.append(df)
 
-                        # Extract a player's stats from their most recent college season
-                        table = df.iloc[:, :]
+        team_counter += 1
+        if team_counter == 10:
+            time.sleep(10)
+            team_counter = 0
+        else:
+            time.sleep(5)
 
-                        # Add Team Column
-                        table['Team'] = team
-                        table['Season'] = season
-
-            except HTTPError as http_error:
-                print(http_error)
-                print(url)
-                print(f"skip {season} {team}")
-            except ValueError as value_error:
-                print(value_error)
-                print(url)
-                print(f"skip {season} {team}")
-            else:
-                # Add individual player stats to full per_poss DataFrame
-                player_per100_df = pd.concat([player_per100_df, df], ignore_index=True)
+    player_per100_df = pd.concat(df_list, ignore_index=True)
                 
 
-        # Filter out irrelevant columns
-        cols = ['Player', 'G', 'GS', 'MP',
-        'FG', 'FGA', 'FG%', '2P', '2PA', '2P%', '3P', '3PA', '3P%', 'FT',
-        'FTA', 'FT%', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS',
-        'ORtg', 'DRtg', 'Team', 'Season']
+    # Filter out irrelevant columns
+    cols = [
+        'Player', 'G', 'GS', 'MP', 'FG', 'FGA', 'FG%', '2P', '2PA', '2P%', '3P', 
+        '3PA', '3P%', 'FT', 'FTA', 'FT%', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 
+        'PTS', 'ORtg', 'DRtg', 'Team', 'Season'
+        ]
 
-        player_per100_df = player_per100_df[cols]
-            
-        print(f"Saving {season_filename}")
-        player_per100_df.to_pickle(f'{source_dir}/{season_filename}')
+    player_per100_df = player_per100_df[cols]
+        
+    print(f"Saving {season_filename}")
+    player_per100_df.to_pickle(f'{source_dir}/{season_filename}')
 
-        time.sleep(30)
+    time.sleep(30)
 
 
 if __name__ == '__main__':
@@ -256,6 +248,31 @@ if __name__ == '__main__':
     # - sos_csv_creator
     seasons = read_seasons(seasons_path='seasons_list.txt')
 
-    # roster_scraper(seasons, source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", verbose=True)
+    roster_scraper(seasons, source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", verbose=True)
 
-    player_per100_scraper_pre_2022(seasons, source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data")
+
+    for season in seasons:
+
+        player_per100_df = pd.DataFrame()
+
+        # Get teams list for season
+        team_names_filepath = f"{output_dir}/sos_list{season}.csv"
+        teams = team_list(team_names_filepath)
+
+        season_filename = f"player_per100_{season}_data.pkl"
+
+        if check_for_file(directory=output_dir, filename=season_filename):
+            continue
+        if season < 2022:
+            player_per100_scraper_pre_2022(
+                season=season, 
+                source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", 
+                output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"
+            )
+                
+        else:
+            player_per100_scraper(
+                season=season, 
+                source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", 
+                output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"
+                )
