@@ -77,7 +77,7 @@ def add_game_type(row):
     tourney2024end = date(2024,4,9)
 
     season2025start = date(2024,4,10)
-    season2025end = date(2024,3,18)
+    season2025end = date(2025,3,18)
     tourney2025start = date(2025,3,19)
     tourney2025end = date(2025,4,15)
 
@@ -238,7 +238,7 @@ def clean_team_gamelog(df, team, sos_season_dict):
     return df
 
 
-def gamelog_scraper(seasons, output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"):
+def gamelog_scraper(seasons, output_dir):
     """
     Bot/Scraping/Crawler Traffic on Sports-Reference.com Sites
     https://www.sports-reference.com/bot-traffic.html
@@ -254,7 +254,7 @@ def gamelog_scraper(seasons, output_dir="/Users/sean/Documents/bracket_buster/da
 
     for season in seasons:
 
-        season_df = pd.DataFrame()
+        team_df_list = []
 
         # Get teams list for season
         team_names_filepath = f"{output_dir}/sos_list{season}.csv"
@@ -296,9 +296,11 @@ def gamelog_scraper(seasons, output_dir="/Users/sean/Documents/bracket_buster/da
             else:
                 """Add df to games_df"""
                 # season_df = season_df.append(df, ignore_index=True)
-                season_df = pd.concat([season_df, df], ignore_index=True)
+                team_df_list.append(df)
 
             time.sleep(10)
+        
+        season_df = pd.concat(team_df_list, ignore_index=True)
         
         print(f"Saving {season_filename}")
         season_df.to_pickle(f"{output_dir}/{season_filename}")
@@ -313,4 +315,4 @@ if __name__ == '__main__':
     seasons = read_seasons(seasons_path='seasons_list.txt')
 
     """Get full season gamelog data for all teams over all seasons"""
-    gamelog_scraper(seasons)
+    gamelog_scraper(seasons, output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data")

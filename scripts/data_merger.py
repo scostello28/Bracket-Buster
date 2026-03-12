@@ -7,11 +7,13 @@ from scraping_utils import check_for_file, read_seasons
 def concat_seasons(filepath, seasons, source_dir, output_dir):
 
     final_season = seasons[-1]
-    # stop func if full season data already exists in output dir
-    if check_for_file(output_dir, f"{filepath.format(f'full-{final_season}')}"):
-        return 
+    full_final_season = f"full-{final_season}"
+    output_dir = output_dir.format(season=final_season)
 
-    master_df = pd.DataFrame()
+    if check_for_file(output_dir, filepath.format(full_final_season)):
+        return
+
+    master_df_list = []
 
     for season in seasons:
         filename = f"{source_dir}/{filepath.format(season)}"
@@ -22,15 +24,15 @@ def concat_seasons(filepath, seasons, source_dir, output_dir):
         elif filepath[-3:] == 'csv':
             df = pd.read_csv(filename, index_col=0)
 
-        master_df = master_df.append(df, ignore_index=True)
+        master_df_list.append(df)
 
-    print(f"Saving: {filepath.format(f'full-{final_season}')}")
+    master_df = pd.concat(master_df_list, ignore_index=True)
+
+    print(f"Saving: {filepath.format(full_final_season)}")
     if filepath[-3:] == 'pkl':
-        master_df.to_pickle(f"{output_dir}/{filepath.format(f'full-{final_season}')}")
+        master_df.to_pickle(f"{output_dir}/{filepath.format(full_final_season)}")
     elif filepath[-3:] == 'csv':
-        master_df.to_csv(f"{output_dir}/{filepath.format(f'full-{final_season}')}")
-    
-    
+        master_df.to_csv(f"{output_dir}/{filepath.format(full_final_season)}")
 
     
 def map_pos(df):
@@ -65,9 +67,10 @@ def player_roster_merger(source_dir, output_dir, final_season):
     Input: 2 pickled dataframes with different player data
     Output: Saves new merged dateframe to pickle file
     '''
-
     
     player_stats_filename = f"player_stats_full-{final_season}.pkl"
+    source_dir = source_dir.format(season=final_season)
+    output_dir = output_dir.format(season=final_season)
 
     if check_for_file(directory=output_dir, filename=player_stats_filename):
         return
@@ -119,12 +122,35 @@ if __name__ == '__main__':
     roster_filepath = "roster_{}_data.csv"
     player_per100_filepath = "player_per100_{}_data.pkl"
 
+    data_dir = "/Users/sean/Documents/bracket_buster/data/"
+
     print("Concat Gamelog Stats Data")
-    concat_seasons(filepath=gamelog_stats_filepath, seasons=seasons, source_dir="1_transformed_data", output_dir="2_full_season_data")
+    concat_seasons(
+        filepath=gamelog_stats_filepath, 
+        seasons=seasons, 
+        source_dir=data_dir+"1_transformed_data", 
+        output_dir=data_dir+"2_full_season_data/{season}"
+        )
+
     print("Concat Roster Data")
-    concat_seasons(filepath=roster_filepath, seasons=seasons, source_dir="0_scraped_data", output_dir="2_full_season_data")
+    concat_seasons(
+        filepath=roster_filepath, 
+        seasons=seasons, 
+        source_dir=data_dir+"0_scraped_data", 
+        output_dir=data_dir+"2_full_season_data/{season}"
+        )
+
     print("Concat Player per 100 Data")
-    concat_seasons(filepath=player_per100_filepath, seasons=seasons, source_dir="0_scraped_data", output_dir="2_full_season_data")
+    concat_seasons(
+        filepath=player_per100_filepath, 
+        seasons=seasons, 
+        source_dir=data_dir+"0_scraped_data", 
+        output_dir=data_dir+"2_full_season_data/{season}"
+        )
 
     print("player_roster_merger")
-    player_roster_merger(source_dir="2_full_season_data", output_dir="2_full_season_data", final_season=seasons[-1])
+    player_roster_merger(
+        source_dir=data_dir+"2_full_season_data/{season}", 
+        output_dir=data_dir+"2_full_season_data/{season}", 
+        final_season=seasons[-1]
+        )

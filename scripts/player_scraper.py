@@ -22,7 +22,7 @@ def roster_scraper(seasons, source_dir, output_dir, verbose=False):
 
         print(f"Scraping rosters from {season} season")
 
-        roster_df = pd.DataFrame()
+        roster_df_list = []
 
         # Get teams list for season
         team_names_filepath = f"{output_dir}/sos_list{season}.csv"
@@ -70,10 +70,12 @@ def roster_scraper(seasons, source_dir, output_dir, verbose=False):
                 print(url)
                 print(f"skip {season} {team}")
             else:
-                '''Add df to roster_df'''
-                roster_df = pd.concat([roster_df, df], ignore_index=True)
-
+                '''Add df to roster_df_list'''
+                roster_df_list.append(df)
+                
             time.sleep(10)
+
+        roster_df = pd.concat(roster_df_list, ignore_index=True)
 
         print(f"Saving {season_filename}")
         roster_df.to_csv(f"{output_dir}/{season_filename}")

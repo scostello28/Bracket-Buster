@@ -72,18 +72,16 @@ def gamelog_stats_transform(seasons, source_dir, output_dir, window=5, lag=True,
     """
 
     for season in seasons:
-        
-        season_df = pd.DataFrame()
-
-        # Get teams list for season
-        team_names_filepath = f"0_scraped_data/sos_list{season}.csv"
-        teams = team_list(team_names_filepath)
 
         gamelog_season_filename = f"season_{season}_gamelog_data.pkl"
         stats_season_filename = f"season_{season}_gamelog_stats_data.pkl"
 
         if check_for_file(directory=output_dir, filename=stats_season_filename):
             continue
+        
+        # Get teams list for season
+        team_names_filepath = f"{source_dir}/sos_list{season}.csv"
+        teams = team_list(team_names_filepath)
         
         print(f"Transforming {season} stats")
 
@@ -93,11 +91,8 @@ def gamelog_stats_transform(seasons, source_dir, output_dir, window=5, lag=True,
         df = df[df['W'].notna()].copy()
 
         try:
-            if verbose:
-                """Print for progress update"""
-                print(f"gamelog stats transform, team: {team}, season: {season}")
 
-            teams_df = pd.DataFrame()
+            team_df_list = []
             
             for team in teams:
                 # Filter to team
@@ -107,14 +102,14 @@ def gamelog_stats_transform(seasons, source_dir, output_dir, window=5, lag=True,
                 team_df = calc_gamelog_stats(team_df)
 
                 """Add team_df to teams_df"""
-                teams_df = teams_df.append(team_df, ignore_index=True)
+                team_df_list.append(team_df)
 
         except Exception as e:
             print(e)
             raise e
                 
         """Add teams_df to season_df"""
-        season_df = season_df.append(teams_df, ignore_index=True)
+        season_df = pd.concat(team_df_list, ignore_index=True)
         
         print(f"Saving: {stats_season_filename}")
         season_df.to_pickle(f"{output_dir}/{stats_season_filename}")
@@ -130,8 +125,6 @@ def gamelog_final_stats(seasons, source_dir, output_dir, verbose=False):
     """
 
     for season in seasons:
-        
-        season_df = pd.DataFrame()
 
         gamelog_season_filename = f"season_{season}_gamelog_stats_data.pkl"
         stats_season_filename = f"season_{season}_gamelog_final_stats_data.pkl"
@@ -143,12 +136,8 @@ def gamelog_final_stats(seasons, source_dir, output_dir, verbose=False):
 
         df = pd.read_pickle(source_dir + "/" + gamelog_season_filename)
 
-        if verbose:
-            """Print for progress update"""
-            print(f"gamelog final stats, team: {team}, season: {season}")
-
         try:
-            teams_df = pd.DataFrame()
+            teams_df_list = []
 
             for team in set(df.Tm.values):
                 # Filter to team and season
@@ -157,17 +146,17 @@ def gamelog_final_stats(seasons, source_dir, output_dir, verbose=False):
                 team_df = df[team_cond & season_cond].copy()
                 print(team)
                 # filter to final game of season for team
-                team_df = team_df.iloc[-1, :]
+                team_df = pd.DataFrame(team_df.iloc[-1, :]).T
 
                 """Add team_df to teams_df"""
-                teams_df = teams_df.append(team_df, ignore_index=True)
+                teams_df_list.append(team_df)
 
         except Exception as e:
             print(e)
             raise e
                 
         """Add teams_df to season_df"""
-        season_df = season_df.append(teams_df, ignore_index=True)
+        season_df = pd.concat(teams_df_list, ignore_index=True)
         
         print(f"Saving: {stats_season_filename}")
         season_df.to_pickle(f"{output_dir}/{stats_season_filename}")
@@ -182,7 +171,15 @@ if __name__ == '__main__':
     seasons = read_seasons(seasons_path='seasons_list.txt')
 
     # Get gamelog stats
-    gamelog_stats_transform(seasons, source_dir="0_scraped_data", output_dir="1_transformed_data")
+    gamelog_stats_transform(
+        seasons, 
+        source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", 
+        output_dir="/Users/sean/Documents/bracket_buster/data/1_transformed_data"
+        )
 
     # Get final season stats
-    gamelog_final_stats(seasons, source_dir="1_transformed_data", output_dir="1_transformed_data")
+    gamelog_final_stats(
+        seasons, 
+        source_dir="/Users/sean/Documents/bracket_buster/data/1_transformed_data", 
+        output_dir="/Users/sean/Documents/bracket_buster/data/1_transformed_data"
+        )
