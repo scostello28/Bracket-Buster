@@ -79,7 +79,7 @@ def create_clusters(X, nclusters):
     '''
     kmeans = KMeans(n_clusters=nclusters, init='k-means++', n_init=20, max_iter=500, tol=0.0001,
                         verbose=0, random_state=None,
-                        copy_x=True, algorithm='auto')
+                        copy_x=True, algorithm='lloyd')
     kmeans.fit(X)
     return kmeans.labels_
 
@@ -177,9 +177,10 @@ if __name__ == '__main__':
 
     source_dir = "2_full_season_data"
     output_dir = "2_full_season_data"
+    data_dir = "/Users/sean/Documents/bracket_buster/data/"
 
     season = read_seasons(seasons_path='seasons_list.txt')[-1]
-    df = pd.read_pickle(f"{source_dir}/player_stats_full-{season}.pkl")
+    df = pd.read_pickle(f"{data_dir}/{source_dir}/{season}/player_stats_full-{season}.pkl")
 
     # Create DataFrames by position ready for clustering
     centers_df, forwards_df, guards_df = pos_dfs(df)
@@ -204,10 +205,10 @@ if __name__ == '__main__':
 
     # Sum Position cluster minutes played by Team and Season
     team_clusters_df = team_and_season_mp_by_cluster(players_df)
-    print(f"{output_dir}/team_clusters-{season}.pkl")
-    team_clusters_df.to_pickle(f"{output_dir}/team_clusters-{season}.pkl")
+    print(f"{data_dir}/{output_dir}/{season}/team_clusters-{season}.pkl")
+    team_clusters_df.to_pickle(f"{data_dir}/{output_dir}/{season}/team_clusters-{season}.pkl")
 
     # Create Team Experience Level DataFrame
     team_experience_df = team_and_season_mp_by_class(df)
-    print(f"{output_dir}/team_experience-{season}.pkl")
-    team_experience_df.to_pickle(f"{output_dir}/team_experience-{season}.pkl")
+    print(f"{data_dir}/{output_dir}/{season}/team_experience-{season}.pkl")
+    team_experience_df.to_pickle(f"{data_dir}/{output_dir}/{season}/team_experience-{season}.pkl")
