@@ -4,13 +4,13 @@ import pickle
 from scraping_utils import check_for_file, read_seasons
 
 
-def gamelog_experience_cluster_merge(gamelog_df, experience_df, cluster_df, season):
-    '''
+def gamelog_experience_cluster_merge(gamelog_df, experience_df, cluster_df, season, output_dir):
+    """
     INPUT: Gamelog DataFrame and experience DataFrame
     OUTPUT: DataFrame with matching IDs merged to same row (1 game per row!)
-    '''
-    output_dir = "3_model_data"
-    output_file_name = f"gamelog_exp_clust-{season}.pkl"
+    """
+
+    output_file_name=f"gamelog_exp_clust-{season}.pkl"
 
     if check_for_file(directory=output_dir, filename=output_file_name):
         return
@@ -54,10 +54,10 @@ def gamelog_experience_cluster_merge(gamelog_df, experience_df, cluster_df, seas
     df = df.dropna()
 
     filepath = f"{output_dir}/{output_file_name}"
-    print(filepath)
+    print(f"Saving: {filepath}")
     df.to_pickle(filepath)
 
-def final_stats_experience_cluster_merge(gamelog_df, experience_df, cluster_df, season):
+def final_stats_experience_cluster_merge(gamelog_df, experience_df, cluster_df, season, output_dir):
     """
     Merges Gamelog DataFrame, experience and cluster DataFrames to get full final season data for matchup prediction
     
@@ -72,7 +72,6 @@ def final_stats_experience_cluster_merge(gamelog_df, experience_df, cluster_df, 
     -------
         df (Pandas DataFrame): final stats dataframe with gamelog, clustering and experience 
     """
-    output_dir = "3_model_data"
     output_file_name = f"season{season}_final_stats.pkl"
 
     if check_for_file(directory=output_dir, filename=output_file_name):
@@ -92,7 +91,7 @@ def final_stats_experience_cluster_merge(gamelog_df, experience_df, cluster_df, 
     df = gamelog_df.merge(experience_df, on='ID', how='left').merge(cluster_df, on='ID', how='left')
 
     filepath = f"{output_dir}/{output_file_name}"
-    print(filepath)
+    print(f"Saving: {filepath}")
     df.to_pickle(filepath)
 
 def matchup_unique_id(row):
@@ -124,15 +123,29 @@ if __name__ == "__main__":
 
     transformed_data = "1_transformed_data"
     full_season_data = "2_full_season_data"
+    data_dir = "/Users/sean/Documents/bracket_buster/data"
 
     season = read_seasons(seasons_path='seasons_list.txt')[-1]
 
     # Read in gamelog, current year final stats, experience and cluster data
-    final_stats_df = pd.read_pickle(f"{transformed_data}/season_{season}_gamelog_final_stats_data.pkl")
-    gamelog_df = pd.read_pickle(f"{full_season_data}/season_full-{season}_gamelog_stats_data.pkl")
-    team_experience_df = pd.read_pickle(f"{full_season_data}/team_experience-{season}.pkl")
-    team_clusters_df = pd.read_pickle(f"{full_season_data}/team_clusters-{season}.pkl")
+    final_stats_df = pd.read_pickle(f"{data_dir}/{transformed_data}/season_{season}_gamelog_final_stats_data.pkl")
+    gamelog_df = pd.read_pickle(f"{data_dir}/{full_season_data}/{season}/season_full-{season}_gamelog_stats_data.pkl")
+    team_experience_df = pd.read_pickle(f"{data_dir}/{full_season_data}/{season}/team_experience-{season}.pkl")
+    team_clusters_df = pd.read_pickle(f"{data_dir}/{full_season_data}/{season}/team_clusters-{season}.pkl")
 
     # Matchups for modeling from Gamelog, year final stats, experience and cluster data.
-    gamelog_experience_cluster_merge(gamelog_df, team_experience_df, team_clusters_df, season=season)
-    final_stats_experience_cluster_merge(final_stats_df, team_experience_df, team_clusters_df, season=season)
+    gamelog_experience_cluster_merge(
+        gamelog_df, 
+        team_experience_df, 
+        team_clusters_df, 
+        season=season,
+        output_dir=f"{data_dir}/3_model_data/{season}"
+        )
+
+    final_stats_experience_cluster_merge(
+        final_stats_df, 
+        team_experience_df, 
+        team_clusters_df, 
+        season=season,
+        output_dir=f"{data_dir}/3_model_data/{season}"
+        )

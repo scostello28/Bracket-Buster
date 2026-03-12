@@ -177,7 +177,7 @@ if __name__ == '__main__':
 
     source_dir = "2_full_season_data"
     output_dir = "2_full_season_data"
-    data_dir = "/Users/sean/Documents/bracket_buster/data/"
+    data_dir = "/Users/sean/Documents/bracket_buster/data"
 
     season = read_seasons(seasons_path='seasons_list.txt')[-1]
     df = pd.read_pickle(f"{data_dir}/{source_dir}/{season}/player_stats_full-{season}.pkl")
