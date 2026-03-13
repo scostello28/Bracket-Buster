@@ -12,7 +12,7 @@ north-carolina
 iowa-state
 lipscomb
 marquette
-mew-mexico
+new-mexico
 michigan-state
 bryant
 # WEST
@@ -42,7 +42,7 @@ liberty
 arizona
 akron
 brigham-young
-vinginia-commonwealth
+virginia-commonwealth
 wisconsin
 montana
 saint-marys-ca

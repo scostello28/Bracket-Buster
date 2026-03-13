@@ -82,7 +82,7 @@ def add_game_type(row):
     tourney2025end = date(2025,4,15)
 
     season2026start = date(2025,4,16)
-    season2026end = date(2025,3,18)
+    season2026end = date(2026,3,18)
     tourney2026start = date(2026,3,19)
     tourney2026end = date(2026,4,15)
 

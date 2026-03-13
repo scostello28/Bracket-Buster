@@ -97,6 +97,7 @@ if __name__ == "__main__":
     season = read_seasons(seasons_path='seasons_list.txt')[-1]
 
     source_dir = "3_model_data"
+    output_dir = "/Users/sean/Documents/bracket_buster/fit_models"
     data_dir = "/Users/sean/Documents/bracket_buster/data"
     data = pd.read_pickle(f"{data_dir}/{source_dir}/{season}/gamelog_exp_clust-{season}.pkl")
 
@@ -142,19 +143,19 @@ if __name__ == "__main__":
         X_train, 
         y_train, 
         f"lr_{season}_fit_model", 
-        output_dir=f"{data_dir}/{source_dir}/{season}"
+        output_dir=f"{data_dir}/{output_dir}/{season}"
         )
     rf_model(
         X_train, 
         y_train, 
         f"rf_{season}_fit_model", 
-        output_dir=f"{data_dir}/{source_dir}/{season}"
+        output_dir=f"{data_dir}/{output_dir}/{season}"
         )
     gb_model(
         X_train, 
         y_train, 
         f"gb_{season}_fit_model", 
-        output_dir=f"{data_dir}/{source_dir}/{season}"
+        output_dir=f"{data_dir}/{output_dir}/{season}"
         )
 
     # print('No Clusters or odds')
@@ -162,18 +163,18 @@ if __name__ == "__main__":
         X_train_no_clust, 
         y_train_no_clust, 
         f"lr_{season}_fit_model_no_clust", 
-        output_dir=f"{data_dir}/{source_dir}/{season}"
+        output_dir=f"{data_dir}/{output_dir}/{season}"
         )
     rf_model(
         X_train_no_clust, 
         y_train_no_clust, 
         f"rf_{season}_fit_model_no_clust", 
-        output_dir=f"{data_dir}/{source_dir}/{season}"
+        output_dir=f"{data_dir}/{output_dir}/{season}"
         )
     gb_model(
         X_train_no_clust, 
         y_train_no_clust, 
         f"gb_{season}_fit_model_no_clust", 
-        output_dir=f"{data_dir}/{source_dir}/{season}"
+        output_dir=f"{data_dir}/{output_dir}/{season}"
         )
  

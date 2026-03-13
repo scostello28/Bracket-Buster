@@ -185,7 +185,7 @@ class BracketGen:
             i += 2
         return next_round
     
-    def gen_bracket(self, verbose=True, bracket_name=None, model_ave=False):
+    def gen_bracket(self, verbose=True, bracket_name=None, model_ave=False, brackets_dir=None):
 
         if model_ave:
             self.second_round = self._pick_round_ave(self.first_round)
@@ -204,7 +204,7 @@ class BracketGen:
 
         if bracket_name:
 
-            f = open(f"brackets/{bracket_name}.txt", 'w')
+            f = open(f"{brackets_dir}/{bracket_name}.txt", 'w')
             print("First Round", file=f)
             print("-----------", file=f)
             BracketGen.print_list(self.first_round, f)
@@ -260,19 +260,21 @@ class BracketGen:
 if __name__ == '__main__':
 
     season = read_seasons(seasons_path='seasons_list.txt')[-1]
+    root_dir = "/Users/sean/Documents/bracket_buster"
+    brackets_dir = "repo/brackets"
 
-    bracket = read_bracket(bracket_path=f"brackets/initial_bracket_{season}.txt")
+    bracket = read_bracket(bracket_path=f"{root_dir}/{brackets_dir}/{season}/initial_bracket_{season}.txt")
 
     models = {
-        "lr": f"fit_models/lr_{season}_fit_model.pkl",
-        "rf": f"fit_models/rf_{season}_fit_model.pkl",
-        "gb": f"fit_models/gb_{season}_fit_model.pkl",
-        "lr_nc": f"fit_models/lr_{season}_fit_model_no_clust.pkl",
-        "rf_nc": f"fit_models/rf_{season}_fit_model_no_clust.pkl",
-        "gb_nc": f"fit_models/gb_{season}_fit_model_no_clust.pkl"
+        "lr": f"{root_dir}/fit_models/{season}/lr_{season}_fit_model.joblib",
+        "rf": f"{root_dir}/fit_models/{season}/rf_{season}_fit_model.joblib",
+        "gb": f"{root_dir}/fit_models/{season}/gb_{season}_fit_model.joblib",
+        "lr_nc": f"{root_dir}/fit_models/{season}/lr_{season}_fit_model_no_clust.joblib",
+        "rf_nc": f"{root_dir}/fit_models/{season}/rf_{season}_fit_model_no_clust.joblib",
+        "gb_nc": f"{root_dir}/fit_models/{season}/gb_{season}_fit_model_no_clust.joblib"
     }  
 
-    final_stats_df = pd.read_pickle(f'3_model_data/season{season}_final_stats.pkl')
+    final_stats_df = pd.read_pickle(f'{root_dir}/data/3_model_data/{season}/season{season}_final_stats.pkl')
     finalgames_data = final_stats_df[final_stats_df['GameType'] == f'season{season}']
     finalgames_exp_tcf = pre_matchup_feature_selection(finalgames_data, 'exp_tcf')
     finalgames = pre_matchup_feature_selection(finalgames_data, 'gamelogs')
@@ -282,42 +284,60 @@ if __name__ == '__main__':
         pickled_model_path=models["lr"], 
         final_stats_df=finalgames_exp_tcf, 
         tcf=True)
-    lr_tcf.gen_bracket(bracket_name=f"lr_tcf_{season}")
+    lr_tcf.gen_bracket(
+        bracket_name=f"lr_tcf_{season}",
+        brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
+        )
 
     rf_tcf = BracketGen(
         bracket=bracket, 
         pickled_model_path=models["rf"], 
         final_stats_df=finalgames_exp_tcf, 
         tcf=True)
-    rf_tcf.gen_bracket(bracket_name=f"rf_tcf_{season}")
+    rf_tcf.gen_bracket(
+        bracket_name=f"rf_tcf_{season}",
+        brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
+        )
 
     gb_tcf = BracketGen(
         bracket=bracket, 
         pickled_model_path=models["gb"], 
         final_stats_df=finalgames_exp_tcf, 
         tcf=True)
-    gb_tcf.gen_bracket(bracket_name=f"gb_tcf_{season}")
+    gb_tcf.gen_bracket(
+        bracket_name=f"gb_tcf_{season}",
+        brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
+        )
 
     lr = BracketGen(
         bracket=bracket, 
         pickled_model_path=models["lr_nc"], 
         final_stats_df=finalgames, 
         tcf=False)
-    lr.gen_bracket(bracket_name=f"lr_{season}")
+    lr.gen_bracket(
+        bracket_name=f"lr_{season}",
+        brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
+        )
 
     rf = BracketGen(
         bracket=bracket, 
         pickled_model_path=models["rf_nc"], 
         final_stats_df=finalgames, 
         tcf=False)
-    rf.gen_bracket(bracket_name=f"rf_{season}")
+    rf.gen_bracket(
+        bracket_name=f"rf_{season}",
+        brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
+        )
 
     gb = BracketGen(
         bracket=bracket, 
         pickled_model_path=models["gb_nc"], 
         final_stats_df=finalgames, 
         tcf=False)
-    gb.gen_bracket(bracket_name=f"gb_{season}")
+    gb.gen_bracket(
+        bracket_name=f"gb_{season}",
+        brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
+        )
 
     ave_models = {
         models["gb"]: .9,
@@ -330,4 +350,8 @@ if __name__ == '__main__':
         pickled_model_path=ave_models, 
         final_stats_df=finalgames_exp_tcf, 
         tcf=True)
-    ave.gen_bracket(bracket_name=f"model_ave_{season}", model_ave=True)
+    ave.gen_bracket(
+        bracket_name=f"model_ave_{season}", 
+        model_ave=True,
+        brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
+        )

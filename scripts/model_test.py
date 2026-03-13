@@ -32,7 +32,12 @@ if __name__ == "__main__":
         f"gb_{season}_fit_model_no_clust_testing"
     ]
 
-    model_dir_path = 'fit_models'
+    model_dir_path = f"/Users/sean/Documents/bracket_buster/data/fit_models/{season}"
+
+    # for model_path in model_paths:
+    #     with open(f"{model_dir_path}/{model_path}.pkl", 'rb') as f:
+    #         pickled_model = pickle.load(f)
+    #         models[model_path] = pickled_model
 
     for model_path in model_paths:
         with open(f"{model_dir_path}/{model_path}.pkl", 'rb') as f:
