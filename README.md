@@ -97,10 +97,12 @@
         - testing models are trained on all data up to the current season and tested on the current season to assess model hyperparameter performance
         - prtion models are trained on the current season with optimal hyperparameters for use in bracket creation
     - saves models in `fit_models` dir
-11. `model_test.py`
+11. `model_test.py` - **Not updated**
     - tests models in `fit_models` dir and prints results
-12. `winner_predictor.py`
+12. `winner_predictor.py` - **Not updated**
     - can run to manually predict outcome of a matchup
 13. `bracket_generator.py`
     - Manual: archive past year's brackets
     - create new initial bracket for current season's tournament
+14. `bracket_scorer.py`
+    - Manual: add actual bracket
