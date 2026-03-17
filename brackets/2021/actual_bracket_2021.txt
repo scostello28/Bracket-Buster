@@ -1,0 +1,90 @@
+First Round
+-----------
+gonzaga v norfolk-state
+oklahoma v missouri
+creighton v california-santa-barbara
+virginia v ohio
+southern-california v drake
+kansas v eastern-washington
+oregon v virginia-commonwealth
+iowa v grand-canyon
+michigan v texas-southern
+louisiana-state v st-bonaventure
+colorado v georgetown
+florida-state v north-carolina-greensboro
+brigham-young v ucla
+texas v abilene-christian
+connecticut v maryland
+alabama v iona
+baylor v hartford
+north-carolina v wisconsin
+villanova v winthrop
+purdue v north-texas
+texas-tech v utah-state
+arkansas v colgate
+florida v virginia-tech
+ohio-state v oral-roberts
+illinois v drexel
+loyola-il v georgia-tech
+tennessee v oregon-state
+oklahoma-state v liberty
+san-diego-state v syracuse
+west-virginia v morehead-state
+clemson v rutgers
+houston v cleveland-state
+
+
+Second Round
+------------
+gonzaga v oklahoma
+creighton v ohio
+southern-california v kansas
+oregon v iowa
+michigan v louisiana-state
+colorado v florida-state
+ucla v abilene-christian
+maryland v alabama
+baylor v wisconsin
+villanova v north-texas
+texas-tech v arkansas
+florida v oral-roberts
+illinois v loyola-il
+oregon-state v oklahoma-state
+syracuse v west-virginia
+rutgers v houston
+
+
+Sweet 16
+-------
+gonzaga v creighton
+southern-california v oregon
+michigan v florida-state
+ucla v alabama
+baylor v villanova
+arkansas v oral-roberts
+loyola-il v oregon-state
+syracuse v houston
+
+
+Elite 8
+-------
+gonzaga v southern-california
+michigan v ucla
+baylor v arkansas
+oregon-state v houston
+
+
+Final 4
+------
+gonzaga v ucla
+baylor v houston
+
+
+Championship
+------------
+gonzaga v baylor
+
+
+Champion
+--------
+baylor

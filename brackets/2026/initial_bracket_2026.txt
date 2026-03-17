@@ -1,0 +1,68 @@
+# EAST
+duke
+sienna
+ohio-state
+texas-christian
+st-johns-ny
+northern-iowa
+kansas
+california-baptist
+louisville
+south-florida
+michigan-state
+north-dakota-state
+ucla
+central-florida
+connecticut
+furman
+# WEST
+arizona
+long-island-university
+villanova
+utah-state
+wisconsin
+high-point
+arkansas
+hawaii
+brigham-young
+texas / north-carolina-state #
+gonzaga
+kennesaw-state
+miami-fl
+missouri
+purdue
+queens-nc
+# SOUTH
+florida
+prairie-view / lehigh #
+clemson
+iowa
+vanderbilt
+mcneese-state
+nebraska
+troy
+north-carolina
+virginia-commonwealth
+illinois
+pennsylvania
+saint-marys-ca
+texas-am
+houston
+idaho
+# MIDWEST
+michigan
+maryland-baltimore-county / howard #
+georgia
+saint-louis
+texas-tech
+akron
+alabama
+hofstra
+tennessee
+miami-oh / southern-methodist #
+virginia
+wright-state
+kentucky
+santa-clara
+iowa-state
+tennessee-state
