@@ -137,7 +137,12 @@ if __name__ == '__main__':
     for season in season_dirs:
 
         # get list of files in season directory
-        season_dir_list = [file for file in os.listdir(f"{brackets_root_dir}/{season}") if not 'initial_bracket' in file]
+        season_dir_list = []
+        for file in os.listdir(f"{brackets_root_dir}/{season}"):
+            if not 'initial_bracket' in file and file != '.DS_Store':
+                season_dir_list.append(file)
+
+        print(f"season_dir_list: {season_dir_list}")
 
         # only try and score brackets if the actual bracket is present
         if any('actual_bracket' in file for file in season_dir_list):
@@ -154,11 +159,13 @@ if __name__ == '__main__':
 
                 # only score bracket if it hasn't already been scored and logged
                 if bracket_scores_file_exists:
+                    print(f"parsing: {season}/{file}")
                     if bracket_scores_df[(bracket_scores_df['Model'] == model_name) & (bracket_scores_df['Season'] == int(season))].shape[0] == 0:
                         season_brackets[model_name] = parse_bracket(f"{brackets_root_dir}/{season}/{file}")
                     else:
                         print(f"Model: {model_name} from Season: {season} already exists")
                 else:
+                    print(f"parsing: {season}/{file}")
                     season_brackets[model_name] = parse_bracket(f"{brackets_root_dir}/{season}/{file}")
 
             # score season brackets

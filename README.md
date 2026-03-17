@@ -106,3 +106,4 @@
     - create new initial bracket for current season's tournament
 14. `bracket_scorer.py`
     - Manual: add actual bracket
+    - https://www.ncaa.com/brackets/basketball-men/d1/2021
