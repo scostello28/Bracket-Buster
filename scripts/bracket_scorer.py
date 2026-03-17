@@ -142,8 +142,6 @@ if __name__ == '__main__':
             if not 'initial_bracket' in file and file != '.DS_Store':
                 season_dir_list.append(file)
 
-        print(f"season_dir_list: {season_dir_list}")
-
         # only try and score brackets if the actual bracket is present
         if any('actual_bracket' in file for file in season_dir_list):
             print(f"Scoring {season} brackets")
