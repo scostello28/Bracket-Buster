@@ -142,39 +142,39 @@ if __name__ == "__main__":
     lr_model(
         X_train, 
         y_train, 
-        f"lr_{season}_fit_model", 
-        output_dir=f"{data_dir}/{output_dir}/{season}"
+        f"lr_tcf_{season}_fit_model", 
+        output_dir=f"{output_dir}/{season}"
         )
     rf_model(
         X_train, 
         y_train, 
-        f"rf_{season}_fit_model", 
-        output_dir=f"{data_dir}/{output_dir}/{season}"
+        f"rf_tcf_{season}_fit_model", 
+        output_dir=f"{output_dir}/{season}"
         )
     gb_model(
         X_train, 
         y_train, 
-        f"gb_{season}_fit_model", 
-        output_dir=f"{data_dir}/{output_dir}/{season}"
+        f"gb_tcf_{season}_fit_model", 
+        output_dir=f"{output_dir}/{season}"
         )
 
     # print('No Clusters or odds')
     lr_model(
         X_train_no_clust, 
         y_train_no_clust, 
-        f"lr_{season}_fit_model_no_clust", 
-        output_dir=f"{data_dir}/{output_dir}/{season}"
+        f"lr_{season}_fit_model", 
+        output_dir=f"{output_dir}/{season}"
         )
     rf_model(
         X_train_no_clust, 
         y_train_no_clust, 
-        f"rf_{season}_fit_model_no_clust", 
-        output_dir=f"{data_dir}/{output_dir}/{season}"
+        f"rf_{season}_fit_model", 
+        output_dir=f"{output_dir}/{season}"
         )
     gb_model(
         X_train_no_clust, 
         y_train_no_clust, 
-        f"gb_{season}_fit_model_no_clust", 
-        output_dir=f"{data_dir}/{output_dir}/{season}"
+        f"gb_{season}_fit_model", 
+        output_dir=f"{output_dir}/{season}"
         )
  

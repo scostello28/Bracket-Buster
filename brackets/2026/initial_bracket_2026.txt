@@ -1,6 +1,6 @@
 # EAST
 duke
-sienna
+siena
 ohio-state
 texas-christian
 st-johns-ny
@@ -15,26 +15,9 @@ ucla
 central-florida
 connecticut
 furman
-# WEST
-arizona
-long-island-university
-villanova
-utah-state
-wisconsin
-high-point
-arkansas
-hawaii
-brigham-young
-texas / north-carolina-state #
-gonzaga
-kennesaw-state
-miami-fl
-missouri
-purdue
-queens-nc
 # SOUTH
 florida
-prairie-view / lehigh #
+lehigh
 clemson
 iowa
 vanderbilt
@@ -49,9 +32,26 @@ saint-marys-ca
 texas-am
 houston
 idaho
+# WEST
+arizona
+long-island-university
+villanova
+utah-state
+wisconsin
+high-point
+arkansas
+hawaii
+brigham-young
+texas
+gonzaga
+kennesaw-state
+miami-fl
+missouri
+purdue
+queens-nc
 # MIDWEST
 michigan
-maryland-baltimore-county / howard #
+howard
 georgia
 saint-louis
 texas-tech
@@ -59,7 +59,7 @@ akron
 alabama
 hofstra
 tennessee
-miami-oh / southern-methodist #
+southern-methodist
 virginia
 wright-state
 kentucky

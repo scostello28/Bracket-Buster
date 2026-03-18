@@ -249,10 +249,12 @@ if __name__ == '__main__':
     # Dependencies:
     # - sos_csv_creator
     seasons = read_seasons(seasons_path='seasons_list.txt')
+    source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"
+    output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"
 
-    roster_scraper(seasons, source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", verbose=True)
+    roster_scraper(seasons, source_dir=source_dir, output_dir=output_dir, verbose=True)
 
-
+    
     for season in seasons:
 
         player_per100_df = pd.DataFrame()
@@ -265,16 +267,16 @@ if __name__ == '__main__':
 
         if check_for_file(directory=output_dir, filename=season_filename):
             continue
-        if season < 2022:
+        if int(season) < 2022:
             player_per100_scraper_pre_2022(
                 season=season, 
-                source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", 
-                output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"
+                source_dir=source_dir, 
+                output_dir=output_dir
             )
                 
         else:
             player_per100_scraper(
                 season=season, 
-                source_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data", 
-                output_dir="/Users/sean/Documents/bracket_buster/data/0_scraped_data"
+                source_dir=source_dir, 
+                output_dir=output_dir
                 )

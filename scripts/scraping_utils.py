@@ -45,6 +45,7 @@ def school_name_transform(school_name):
             "ole-miss": "mississippi",
             "pitt": "pittsburgh",
             "penn": "pennsylvania",
+            "prairie-view-am": "prairie-view",
             "saint-marys": "saint-marys-ca",
             "smu": "southern-methodist",
             "tcu": "texas-christian",
@@ -79,7 +80,8 @@ def school_name_transform(school_name):
             "kansas-city": "missouri-kansas-city",
             "sam-houston": "sam-houston-state",
             "st-thomas": "st-thomas-mn",
-            "utah-tech": "dixie-state"
+            "utah-tech": "dixie-state",
+            "mcneese": "mcneese-state"
         }
 
         if school_name in school_name_map.keys():

@@ -1,3 +1,4 @@
+import joblib
 import pickle
 import pandas as pd
 import numpy as np
@@ -67,7 +68,35 @@ def game_predict(model, matchup, matchup_reversed, team1, team2):
         print('{} has {}% chance to win.'.format(team1, int(round(team1_prob))))
         print('{} has {}% chance to win.'.format(team2, int(round(team2_prob))))
 
-def make_prediction(pickled_model, pickled_model_exp_tcf, final_games, finalgames_exp_tcf, team1, team2):
+def make_prediction(fit_model_path, final_games, team1, team2, tcf=True):
+    
+    model = read_model(fit_model_path)
+    matchup = merge(final_games, team1, team2, tcf)
+    matchup_reversed = merge(final_games, team2, team1, tcf)
+    game_predict(model, matchup, matchup_reversed, team1, team2)
+
+def read_model(fit_model_path):
+
+    if type(fit_model_path) == str:
+        if fit_model_path[-4:] == ".pkl":
+            with open(fit_model_path, 'rb') as f:
+                model = pickle.load(f)
+        elif fit_model_path[-7:] == ".joblib":
+            model = joblib.load(fit_model_path)
+
+    elif type(fit_model_path) == dict:
+        models = {}
+        for model_path, weight in fit_model_path.items():
+            if model_path[-4:] == ".pkl":
+                with open(model_path, 'rb') as f:
+                    model = pickle.load(f)
+                models[model] = weight
+            elif model_path[-7:] == ".joblib":
+                model = joblib.load(fit_model_path)
+                models[model] = weight
+    return model
+
+def make_prediction_old(pickled_model, pickled_model_exp_tcf, final_games, finalgames_exp_tcf, team1, team2):
     with open(pickled_model, 'rb') as f:
         model = pickle.load(f)
 
@@ -125,37 +154,48 @@ if __name__ == '__main__':
 
     season = read_seasons(seasons_path='seasons_list.txt')[-1]
 
-    final_stats_df = pd.read_pickle(f'3_model_data/season{season}_final_stats.pkl')
+    root_dir = "/Users/sean/Documents/bracket_buster"
+    brackets_dir = "repo/brackets"
+    model_dir = "fit_models"
+
+    final_stats_df = pd.read_pickle(f'{root_dir}/data/3_model_data/{season}/season{season}_final_stats.pkl')
     finalgames_data = final_stats_df[final_stats_df['GameType'] == f'season{season}']
-    finalgames = pre_matchup_feature_selection(finalgames_data, 'gamelogs')
     finalgames_exp_tcf = pre_matchup_feature_selection(finalgames_data, 'exp_tcf')
+    finalgames = pre_matchup_feature_selection(finalgames_data, 'gamelogs')
 
-    lr_model = f'fit_models/lr_{season}_fit_model_no_clust.pkl'
-    rf_model = f'fit_models/rf_{season}_fit_model_no_clust.pkl'
-    gb_model = f'fit_models/gb_{season}_fit_model_no_clust.pkl'
+    lr_model_path = f'lr_{season}_fit_model.joblib'
+    rf_model_path = f'rf_{season}_fit_model.joblib'
+    gb_model_path = f'gb_{season}_fit_model.joblib'
 
-    lr_model_exp_tcf = f'fit_models/lr_{season}_fit_model.pkl'
-    rf_model_exp_tcf = f'fit_models/rf_{season}_fit_model.pkl'
-    gb_model_exp_tcf = f'fit_models/gb_{season}_fit_model.pkl'
+    lr_model_exp_tcf_path = f'lr_tcf_{season}_fit_model.joblib'
+    rf_model_exp_tcf_path = f'rf_tcf_{season}_fit_model.joblib'
+    gb_model_exp_tcf_path = f'gb_tcf_{season}_fit_model.joblib'
 
-    pickled_model = gb_model
-    pickled_model_exp_tcf = gb_model_exp_tcf
-
+    # pickled_model = gb_model
+    model = gb_model_exp_tcf_path
 
     team1 = str(input('team1: '))
     team2 = str(input('team2: '))
 
-    ####################
-    models = {
-        'lr': (lr_model, lr_model_exp_tcf), 
-        'rf_model': (rf_model, rf_model_exp_tcf), 
-        'gb_model': (gb_model, gb_model_exp_tcf)
-    }
+    make_prediction(
+        fit_model_path=f"{root_dir}/{model_dir}/{season}/{gb_model_exp_tcf_path}", 
+        final_games=finalgames_exp_tcf, 
+        team1=team1, 
+        team2=team2, 
+        tcf=True
+        )
 
-    for model_name, model in models.items():
-        print('\n')
-        print(model_name)
-        make_prediction(model[0], model[1], finalgames, finalgames_exp_tcf, team1, team2)
+    ####################
+    # models = {
+    #     'lr': (lr_model, lr_model_exp_tcf), 
+    #     'rf_model': (rf_model, rf_model_exp_tcf), 
+    #     'gb_model': (gb_model, gb_model_exp_tcf)
+    # }
+
+    # for model_name, model in models.items():
+    #     print('\n')
+    #     print(model_name)
+    #     make_prediction(model[0], model[1], finalgames, finalgames_exp_tcf, team1, team2)
 
     ####################
     # with open(pickled_model, 'rb') as f:
@@ -180,24 +220,24 @@ if __name__ == '__main__':
 
     ####################
 
-    print("\n")
-    print("Model AVG")
-    ave_model_path_weight_dict = {
-        gb_model_exp_tcf: .9,
-        # rf_model_exp_tcf: .25,
-        lr_model_exp_tcf: .1
-    }
+    # print("\n")
+    # print("Model AVG")
+    # ave_model_path_weight_dict = {
+    #     gb_model_exp_tcf: .9,
+    #     # rf_model_exp_tcf: .25,
+    #     lr_model_exp_tcf: .1
+    # }
 
-    def read_models(model_path_weight_dict):
-        models = {}
-        for model_path, weight in model_path_weight_dict.items():
-            with open(model_path, 'rb') as f:
-                model = pickle.load(f)
-            models[model] = weight
-        return models
+    # def read_models(model_path_weight_dict):
+    #     models = {}
+    #     for model_path, weight in model_path_weight_dict.items():
+    #         with open(model_path, 'rb') as f:
+    #             model = pickle.load(f)
+    #         models[model] = weight
+    #     return models
 
-    models = read_models(ave_model_path_weight_dict)
+    # models = read_models(ave_model_path_weight_dict)
 
-    make_prediction_ave(models, finalgames_exp_tcf, team1, team2, tcf=True)
+    # make_prediction_ave(models, finalgames_exp_tcf, team1, team2, tcf=True)
 
 

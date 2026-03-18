@@ -39,7 +39,9 @@
 - filters.py
 
 **TODO for next update**
-- Add config so only need to update season in one place
+- update how Game Type dates are handled in `add_game_type` in `gamelog_scraper.py`
+    - use csv and more efficient logic
+- repull historic data
 - add season to file names on files that need archived
     - player_per100_full_date.pkl
     - player_stats_full.pkl
@@ -104,6 +106,7 @@
 13. `bracket_generator.py`
     - Manual: archive past year's brackets
     - create new initial bracket for current season's tournament
+    - Note: added funtionality to pick winner of games based on probability of teams chances of success. 
 14. `bracket_scorer.py`
     - Manual: add actual bracket
     - https://www.ncaa.com/brackets/basketball-men/d1/2021
