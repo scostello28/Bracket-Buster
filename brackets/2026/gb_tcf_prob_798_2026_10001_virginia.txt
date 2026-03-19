@@ -8,7 +8,7 @@ louisville v south-florida
 michigan-state v north-dakota-state
 ucla v central-florida
 connecticut v furman
-florida v lehigh
+florida v prairie-view
 clemson v iowa
 vanderbilt v mcneese-state
 nebraska v troy
@@ -28,7 +28,7 @@ michigan v howard
 georgia v saint-louis
 texas-tech v akron
 alabama v hofstra
-tennessee v southern-methodist
+tennessee v miami-oh
 virginia v wright-state
 kentucky v santa-clara
 iowa-state v tennessee-state
@@ -44,13 +44,13 @@ florida v clemson
 vanderbilt v nebraska
 virginia-commonwealth v illinois
 saint-marys-ca v houston
-arizona v villanova
+arizona v utah-state
 wisconsin v arkansas
 brigham-young v gonzaga
 miami-fl v purdue
-michigan v georgia
+michigan v saint-louis
 texas-tech v alabama
-southern-methodist v virginia
+tennessee v virginia
 santa-clara v iowa-state
 
 
@@ -59,7 +59,7 @@ Sweet 16
 duke v st-johns-ny
 michigan-state v connecticut
 florida v nebraska
-illinois v saint-marys-ca
+virginia-commonwealth v saint-marys-ca
 arizona v arkansas
 gonzaga v purdue
 michigan v alabama
@@ -76,15 +76,15 @@ michigan v virginia
 
 Final 4
 ------
-duke v saint-marys-ca
-gonzaga v michigan
+connecticut v saint-marys-ca
+arizona v virginia
 
 
 Championship
 ------------
-saint-marys-ca v gonzaga
+connecticut v virginia
 
 
 Champion
 --------
-gonzaga
+virginia

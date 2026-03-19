@@ -84,6 +84,8 @@ def read_model(fit_model_path):
         elif fit_model_path[-7:] == ".joblib":
             model = joblib.load(fit_model_path)
 
+        return model
+
     elif type(fit_model_path) == dict:
         models = {}
         for model_path, weight in fit_model_path.items():
@@ -94,7 +96,7 @@ def read_model(fit_model_path):
             elif model_path[-7:] == ".joblib":
                 model = joblib.load(fit_model_path)
                 models[model] = weight
-    return model
+        return models
 
 def make_prediction_old(pickled_model, pickled_model_exp_tcf, final_games, finalgames_exp_tcf, team1, team2):
     with open(pickled_model, 'rb') as f:

@@ -17,7 +17,7 @@ connecticut
 furman
 # SOUTH
 florida
-lehigh
+prairie-view
 clemson
 iowa
 vanderbilt
@@ -59,7 +59,7 @@ akron
 alabama
 hofstra
 tennessee
-southern-methodist
+miami-oh
 virginia
 wright-state
 kentucky

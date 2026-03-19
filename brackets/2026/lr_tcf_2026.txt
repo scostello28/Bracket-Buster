@@ -8,7 +8,7 @@ louisville v south-florida
 michigan-state v north-dakota-state
 ucla v central-florida
 connecticut v furman
-florida v lehigh
+florida v prairie-view
 clemson v iowa
 vanderbilt v mcneese-state
 nebraska v troy
@@ -28,7 +28,7 @@ michigan v howard
 georgia v saint-louis
 texas-tech v akron
 alabama v hofstra
-tennessee v southern-methodist
+tennessee v miami-oh
 virginia v wright-state
 kentucky v santa-clara
 iowa-state v tennessee-state

@@ -110,3 +110,20 @@
 14. `bracket_scorer.py`
     - Manual: add actual bracket
     - https://www.ncaa.com/brackets/basketball-men/d1/2021
+
+
+## 2026 Bracket Pools
+**Kyles $50**: 
+- [virginia](brackets/2026/gb_tcf_2026-virginia.txt)
+**Loop $75**:
+- [virginia](brackets/2026/gb_tcf_2026-virginia.txt)
+- [gonzaga](brackets/2026/gb_tcf_prob_259_2026_99999_gonzaga.txt)
+- [connecticut](brackets/2026/gb_tcf_prob_472_2026_99999_connecticut.txt)
+**Nates $40**:
+- [michigan - splendid](repo/brackets/2026/gb_tcf_prob_2035_2026_99999_michigan.txt)
+- [connecticut - swell](brackets/2026/gb_tcf_prob_2660_2026_99999_connecticut.txt)
+- [virginia - splendid](brackets/2026/gb_tcf_prob_3435_2026_99999_virginia.txt)
+- [gonzaga - marvelous](brackets/2026/gb_tcf_prob_1114_2026_99999_gonzaga.txt)
+
+
+

@@ -38,53 +38,53 @@ Second Round
 ------------
 duke v ohio-state
 st-johns-ny v kansas
-louisville v michigan-state
+south-florida v michigan-state
 ucla v connecticut
-florida v iowa
+florida v clemson
 vanderbilt v nebraska
-north-carolina v illinois
-texas-am v houston
-arizona v villanova
+virginia-commonwealth v illinois
+saint-marys-ca v houston
+arizona v utah-state
 wisconsin v arkansas
 brigham-young v gonzaga
 miami-fl v purdue
 michigan v georgia
 texas-tech v alabama
 tennessee v virginia
-kentucky v iowa-state
+santa-clara v iowa-state
 
 
 Sweet 16
 -------
-duke v kansas
+duke v st-johns-ny
 michigan-state v connecticut
-florida v vanderbilt
-illinois v houston
-arizona v wisconsin
-brigham-young v purdue
+florida v nebraska
+virginia-commonwealth v saint-marys-ca
+arizona v arkansas
+gonzaga v miami-fl
 michigan v texas-tech
-tennessee v iowa-state
+virginia v iowa-state
 
 
 Elite 8
 -------
 duke v connecticut
-florida v houston
-arizona v purdue
-michigan v tennessee
+nebraska v saint-marys-ca
+arizona v gonzaga
+michigan v virginia
 
 
 Final 4
 ------
-duke v florida
-purdue v michigan
+connecticut v saint-marys-ca
+gonzaga v virginia
 
 
 Championship
 ------------
-florida v purdue
+connecticut v gonzaga
 
 
 Champion
 --------
-purdue
+connecticut

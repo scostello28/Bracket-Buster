@@ -8,7 +8,7 @@ louisville v south-florida
 michigan-state v north-dakota-state
 ucla v central-florida
 connecticut v furman
-florida v lehigh
+florida v prairie-view
 clemson v iowa
 vanderbilt v mcneese-state
 nebraska v troy
@@ -28,7 +28,7 @@ michigan v howard
 georgia v saint-louis
 texas-tech v akron
 alabama v hofstra
-tennessee v southern-methodist
+tennessee v miami-oh
 virginia v wright-state
 kentucky v santa-clara
 iowa-state v tennessee-state
@@ -40,7 +40,7 @@ duke v texas-christian
 st-johns-ny v kansas
 louisville v michigan-state
 ucla v connecticut
-florida v iowa
+florida v clemson
 vanderbilt v nebraska
 north-carolina v illinois
 saint-marys-ca v houston
@@ -62,29 +62,29 @@ florida v nebraska
 illinois v saint-marys-ca
 arizona v arkansas
 gonzaga v purdue
-michigan v texas-tech
+michigan v alabama
 virginia v iowa-state
 
 
 Elite 8
 -------
 duke v connecticut
-florida v saint-marys-ca
+nebraska v saint-marys-ca
 arizona v gonzaga
 michigan v virginia
 
 
 Final 4
 ------
-connecticut v saint-marys-ca
-arizona v michigan
+duke v saint-marys-ca
+arizona v virginia
 
 
 Championship
 ------------
-connecticut v michigan
+duke v virginia
 
 
 Champion
 --------
-connecticut
+virginia

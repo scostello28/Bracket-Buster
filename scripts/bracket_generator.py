@@ -1,4 +1,3 @@
-import joblib
 import pickle
 import pandas as pd
 import numpy as np
@@ -6,6 +5,7 @@ import random
 from collections import Counter
 from filters import pre_matchup_feature_selection
 from scraping_utils import check_for_file, read_seasons
+from model_utils import read_model
 
 import sys
 import warnings
@@ -26,9 +26,10 @@ def read_bracket(bracket_path):
     
     return bracket
 
+
 class BracketGen:
     
-    def __init__(self, bracket, pickled_model_path, final_stats_df, tcf=True):
+    def __init__(self, bracket, pickled_model_path, final_stats_df, k=None, tcf=True):
         self.first_round = bracket
         self.second_round = None
         self.sweet16 = None
@@ -36,39 +37,17 @@ class BracketGen:
         self.final4 = None
         self.championship = None
         self.champion = None
+        self.k = k
 
-        self.model = None
-        self.models = None
-
-        self.read_model_joblib(pickled_model_path)
-
-        # with open(pickled_model_path, 'rb') as f:
-        #     self.model = pickle.load(f)
+        self.model = read_model(pickled_model_path)
+        if isinstance(self.model, dict):
+            self.models = self.model
+            self.model = None
+        else:
+            self.models = None
 
         self.final_stats_df = final_stats_df
         self.tcf = tcf
-
-    def read_model(self, pickled_model_path):
-        if type(pickled_model_path) == str:
-            with open(pickled_model_path, 'rb') as f:
-                self.model = pickle.load(f)
-        elif type(pickled_model_path) == dict:
-            self.models = {}
-            for model_path, weight in pickled_model_path.items():
-                with open(model_path, 'rb') as f:
-                    model = pickle.load(f)
-                self.models[model] = weight
-
-
-    def read_model_joblib(self, fit_model_path):
-        if type(fit_model_path) == str:
-            self.model = joblib.load(fit_model_path)
-            
-        elif type(fit_model_path) == dict:
-            self.models = {}
-            for model_path, weight in fit_model_path.items():
-                model = joblib.load(model_path)
-                self.models[model] = weight
 
     def merge(self, team1, team2):
         '''
@@ -113,8 +92,8 @@ class BracketGen:
 
         return dfout, team1, team2
 
-    @staticmethod
-    def game_predict(model, matchup, matchup_reversed, team1, team2, probability, verbose=True):
+    # @staticmethod
+    def game_predict(self, model, matchup, matchup_reversed, team1, team2, probability, verbose=True):
         '''Predict on matchup'''
         # print(f'matchup: {matchup}')
         if verbose: print(f'{team1} vs {team2}')
@@ -125,7 +104,8 @@ class BracketGen:
 
         if probability:
             if verbose: print(f"{team1}: {team1_prob} | {team2}: {team2_prob}")
-            return BracketGen._pick_winner_probability(team1, team2, team1_prob, team2_prob)
+            # return BracketGen._pick_winner_probability(team1, team2, team1_prob, team2_prob)
+            return self._pick_winner_probability(team1, team2, team1_prob, team2_prob)
         else:
             if team1_prob > team2_prob:
                 return team1
@@ -153,7 +133,8 @@ class BracketGen:
     def _pick_winner(self, team1, team2, probability=False):
         matchup, team1, team2 = self.merge(team1, team2)
         matchup_reversed, team2_rev, team1_rev = self.merge(team2, team1)
-        return BracketGen.game_predict(self.model, matchup, matchup_reversed, team1, team2, probability)
+        return self.game_predict(self.model, matchup, matchup_reversed, team1, team2, probability)
+        # return BracketGen.game_predict(self.model, matchup, matchup_reversed, team1, team2, probability)
 
     def _pick_winner_ave(self, team1, team2):
         matchup, team1, team2 = self.merge(team1, team2)
@@ -171,15 +152,15 @@ class BracketGen:
         else:
             return team2
 
-    @staticmethod
-    def _pick_winner_probability(team_1, team_2, prob_1, prob_2):
+    # @staticmethod
+    def _pick_winner_probability(self, team_1, team_2, prob_1, prob_2):
         """
         Selects between two teams based on their probability of winning.
         """
         options = [team_1, team_2]
         weights = [prob_1, prob_2]
         
-        selection = random.choices(options, weights=weights, k=10001)
+        selection = random.choices(options, weights=weights, k=self.k)
         counts = Counter(selection)
         most_common_item, frequency = counts.most_common(1)[0]
         return most_common_item
@@ -223,7 +204,7 @@ class BracketGen:
 
         if bracket_name:
 
-            f = open(f"{brackets_dir}/{bracket_name}.txt", 'w')
+            f = open(f"{brackets_dir}/{bracket_name}_{self.k}_{self.champion[0]}.txt", 'w')
             print("First Round", file=f)
             print("-----------", file=f)
             BracketGen.print_list(self.first_round, f)
@@ -303,6 +284,7 @@ if __name__ == '__main__':
         bracket=bracket, 
         pickled_model_path=models["gb_tcf"], 
         final_stats_df=finalgames_exp_tcf, 
+        k=10001, #99999,
         tcf=True
         )
     gb_tcf.gen_bracket(
