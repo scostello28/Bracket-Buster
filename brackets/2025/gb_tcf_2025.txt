@@ -1,0 +1,90 @@
+First Round
+-----------
+auburn v alabama-state
+louisville v creighton
+michigan v california-san-diego
+texas-am v yale
+mississippi v north-carolina
+iowa-state v lipscomb
+marquette v new-mexico
+michigan-state v bryant
+florida v norfolk-state
+connecticut v oklahoma
+memphis v colorado-state
+maryland v grand-canyon
+missouri v drake
+texas-tech v north-carolina-wilmington
+kansas v arkansas
+st-johns-ny v nebraska-omaha
+duke v mount-st-marys
+mississippi-state v baylor
+oregon v liberty
+arizona v akron
+brigham-young v virginia-commonwealth
+wisconsin v montana
+saint-marys-ca v vanderbilt
+alabama v robert-morris
+houston v southern-illinois-edwardsville
+gonzaga v georgia
+clemson v mcneese-state
+purdue v high-point
+illinois v xavier
+kentucky v troy
+ucla v utah-state
+tennessee v wofford
+
+
+Second Round
+------------
+auburn v louisville
+michigan v texas-am
+mississippi v iowa-state
+new-mexico v michigan-state
+florida v connecticut
+memphis v maryland
+missouri v texas-tech
+arkansas v st-johns-ny
+duke v mississippi-state
+oregon v arizona
+brigham-young v wisconsin
+saint-marys-ca v alabama
+houston v gonzaga
+clemson v purdue
+xavier v kentucky
+utah-state v tennessee
+
+
+Sweet 16
+-------
+auburn v michigan
+iowa-state v michigan-state
+florida v memphis
+texas-tech v st-johns-ny
+duke v oregon
+wisconsin v saint-marys-ca
+houston v clemson
+kentucky v tennessee
+
+
+Elite 8
+-------
+auburn v michigan-state
+florida v st-johns-ny
+duke v saint-marys-ca
+houston v tennessee
+
+
+Final 4
+------
+auburn v florida
+duke v houston
+
+
+Championship
+------------
+florida v duke
+
+
+Champion
+--------
+duke

@@ -1,0 +1,90 @@
+First Round
+-----------
+alabama v texas-am-corpus-christi
+maryland v west-virginia
+san-diego-state v manhattan
+virginia v furman
+creighton v north-carolina-state
+baylor v california-santa-barbara
+missouri v utah-state
+arizona v princeton
+purdue v fairleigh-dickinson
+memphis v florida-atlantic
+duke v oral-roberts
+tennessee v louisiana-lafayette
+kentucky v providence
+kansas-state v montana-state
+michigan-state v southern-california
+marquette v vermont
+kansas v howard
+arkansas v illinois
+saint-marys-ca v virginia-commonwealth
+connecticut v iona
+texas-christian v arizona-state
+gonzaga v grand-canyon
+northwestern v boise-state
+ucla v north-carolina-asheville
+houston v northern-kentucky
+iowa v auburn
+miami-fl v drake
+indiana v kent-state
+iowa-state v pittsburgh
+xavier v kennesaw-state
+texas-am v penn-state
+texas v colgate
+
+
+Second Round
+------------
+alabama v west-virginia
+san-diego-state v virginia
+creighton v baylor
+utah-state v arizona
+purdue v memphis
+duke v tennessee
+providence v kansas-state
+southern-california v marquette
+kansas v illinois
+saint-marys-ca v connecticut
+texas-christian v gonzaga
+boise-state v ucla
+houston v auburn
+miami-fl v indiana
+iowa-state v xavier
+penn-state v texas
+
+
+Sweet 16
+-------
+alabama v virginia
+creighton v utah-state
+purdue v tennessee
+kansas-state v marquette
+kansas v connecticut
+gonzaga v ucla
+houston v indiana
+xavier v penn-state
+
+
+Elite 8
+-------
+alabama v utah-state
+purdue v marquette
+kansas v ucla
+houston v xavier
+
+
+Final4
+------
+alabama v marquette
+ucla v houston
+
+
+Championship
+------------
+alabama v ucla
+
+
+Champion
+--------
+ucla

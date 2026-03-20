@@ -1,0 +1,90 @@
+First Round
+-----------
+duke v siena
+ohio-state v texas-christian
+st-johns-ny v northern-iowa
+kansas v california-baptist
+louisville v south-florida
+michigan-state v north-dakota-state
+ucla v central-florida
+connecticut v furman
+florida v prairie-view
+clemson v iowa
+vanderbilt v mcneese-state
+nebraska v troy
+north-carolina v virginia-commonwealth
+illinois v pennsylvania
+saint-marys-ca v texas-am
+houston v idaho
+arizona v long-island-university
+villanova v utah-state
+wisconsin v high-point
+arkansas v hawaii
+brigham-young v texas
+gonzaga v kennesaw-state
+miami-fl v missouri
+purdue v queens-nc
+michigan v howard
+georgia v saint-louis
+texas-tech v akron
+alabama v hofstra
+tennessee v miami-oh
+virginia v wright-state
+kentucky v santa-clara
+iowa-state v tennessee-state
+
+
+Second Round
+------------
+duke v texas-christian
+st-johns-ny v kansas
+louisville v michigan-state
+ucla v connecticut
+florida v clemson
+vanderbilt v nebraska
+virginia-commonwealth v illinois
+saint-marys-ca v houston
+arizona v utah-state
+wisconsin v arkansas
+brigham-young v gonzaga
+miami-fl v purdue
+michigan v georgia
+texas-tech v alabama
+tennessee v virginia
+santa-clara v iowa-state
+
+
+Sweet 16
+-------
+duke v st-johns-ny
+michigan-state v connecticut
+florida v nebraska
+virginia-commonwealth v saint-marys-ca
+arizona v arkansas
+gonzaga v miami-fl
+michigan v alabama
+virginia v iowa-state
+
+
+Elite 8
+-------
+duke v connecticut
+nebraska v saint-marys-ca
+arizona v gonzaga
+michigan v virginia
+
+
+Final 4
+------
+connecticut v saint-marys-ca
+arizona v michigan
+
+
+Championship
+------------
+connecticut v michigan
+
+
+Champion
+--------
+connecticut

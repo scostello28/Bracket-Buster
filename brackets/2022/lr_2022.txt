@@ -1,0 +1,90 @@
+First Round
+-----------
+gonzaga v georgia-state
+boise-state v memphis
+connecticut v new-mexico-state
+arkansas v vermont
+alabama v notre-dame
+texas-tech v montana-state
+michigan-state v davidson
+duke v cal-state-fullerton
+baylor v norfolk-state
+north-carolina v marquette
+saint-marys-ca v indiana
+ucla v akron
+texas v virginia-tech
+purdue v yale
+murray-state v san-francisco
+kentucky v saint-peters
+arizona v wright-state
+seton-hall v texas-christian
+houston v alabama-birmingham
+illinois v chattanooga
+colorado-state v michigan
+tennessee v longwood
+ohio-state v loyola-il
+villanova v delaware
+kansas v texas-southern
+san-diego-state v creighton
+iowa v richmond
+providence v south-dakota-state
+louisiana-state v iowa-state
+wisconsin v colgate
+southern-california v miami-fl
+auburn v jacksonville-state
+
+
+Second Round
+------------
+gonzaga v memphis
+connecticut v arkansas
+alabama v texas-tech
+michigan-state v duke
+baylor v marquette
+indiana v ucla
+texas v purdue
+san-francisco v kentucky
+arizona v texas-christian
+houston v illinois
+michigan v tennessee
+ohio-state v villanova
+kansas v creighton
+iowa v providence
+iowa-state v wisconsin
+miami-fl v auburn
+
+
+Sweet 16
+-------
+memphis v connecticut
+alabama v michigan-state
+baylor v ucla
+purdue v kentucky
+texas-christian v illinois
+tennessee v villanova
+kansas v providence
+wisconsin v auburn
+
+
+Elite 8
+-------
+memphis v alabama
+ucla v kentucky
+texas-christian v tennessee
+kansas v wisconsin
+
+
+Final4
+------
+alabama v ucla
+tennessee v kansas
+
+
+Championship
+------------
+alabama v kansas
+
+
+Champion
+--------
+kansas

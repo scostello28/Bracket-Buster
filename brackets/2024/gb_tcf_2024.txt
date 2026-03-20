@@ -1,0 +1,90 @@
+First Round
+-----------
+connecticut v stetson
+florida-atlantic v northwestern
+san-diego-state v alabama-birmingham
+auburn v yale
+brigham-young v duquesne
+illinois v morehead-state
+washington-state v drake
+iowa-state v south-dakota-state
+north-carolina v wagner
+mississippi-state v michigan-state
+saint-marys-ca v grand-canyon
+alabama v charleston-southern
+clemson v new-mexico
+baylor v colgate
+dayton v nevada
+arizona v long-beach-state
+houston v longwood
+nebraska v texas-am
+wisconsin v james-madison
+duke v vermont
+texas-tech v north-carolina-state
+kentucky v oakland
+florida v colorado
+marquette v western-kentucky
+purdue v grambling
+utah-state v texas-christian
+gonzaga v mcneese-state
+kansas v samford
+south-carolina v oregon
+creighton v akron
+texas v colorado-state
+tennessee v saint-peters
+
+
+Second Round
+------------
+connecticut v florida-atlantic
+san-diego-state v auburn
+brigham-young v illinois
+washington-state v iowa-state
+north-carolina v mississippi-state
+saint-marys-ca v alabama
+new-mexico v baylor
+nevada v arizona
+houston v nebraska
+wisconsin v duke
+texas-tech v kentucky
+colorado v marquette
+purdue v utah-state
+gonzaga v kansas
+south-carolina v creighton
+colorado-state v tennessee
+
+
+Sweet 16
+-------
+connecticut v auburn
+brigham-young v washington-state
+north-carolina v saint-marys-ca
+baylor v arizona
+houston v duke
+kentucky v marquette
+purdue v gonzaga
+creighton v colorado-state
+
+
+Elite 8
+-------
+connecticut v washington-state
+saint-marys-ca v arizona
+houston v kentucky
+purdue v colorado-state
+
+
+Final 4
+------
+connecticut v arizona
+houston v purdue
+
+
+Championship
+------------
+connecticut v purdue
+
+
+Champion
+--------
+connecticut
