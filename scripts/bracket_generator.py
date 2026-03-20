@@ -29,7 +29,7 @@ def read_bracket(bracket_path):
 
 class BracketGen:
     
-    def __init__(self, bracket, pickled_model_path, final_stats_df, k=None, tcf=True):
+    def __init__(self, bracket, pickled_model_path, final_stats_df, season, tcf=True):
         self.first_round = bracket
         self.second_round = None
         self.sweet16 = None
@@ -37,7 +37,8 @@ class BracketGen:
         self.final4 = None
         self.championship = None
         self.champion = None
-        self.k = k
+        self.k = None
+        self.season = season
 
         self.model = read_model(pickled_model_path)
         if isinstance(self.model, dict):
@@ -185,7 +186,9 @@ class BracketGen:
             i += 2
         return next_round
     
-    def gen_bracket(self, verbose=True, bracket_name=None, model_ave=False, brackets_dir=None, probability=False):
+    def gen_bracket(self, verbose=True, bracket_name=None, model_ave=False, brackets_dir=None, k=None, probability=False):
+
+        self.k = k
 
         if model_ave:
             self.second_round = self._pick_round_ave(self.first_round)
@@ -204,7 +207,12 @@ class BracketGen:
 
         if bracket_name:
 
-            f = open(f"{brackets_dir}/{bracket_name}_{self.k}_{self.champion[0]}.txt", 'w')
+            if probability:
+                bracket_file_name = f"{bracket_name}_prob_k{self.k}_{random.randint(0, 9999)}_{self.champion[0]}_{self.season}.txt"
+            else:
+                bracket_file_name = f"{bracket_name}_{self.champion[0]}_{season}.txt"
+
+            f = open(f"{brackets_dir}/{bracket_file_name}", 'w')
             print("First Round", file=f)
             print("-----------", file=f)
             BracketGen.print_list(self.first_round, f)
@@ -284,13 +292,14 @@ if __name__ == '__main__':
         bracket=bracket, 
         pickled_model_path=models["gb_tcf"], 
         final_stats_df=finalgames_exp_tcf, 
-        k=10001, #99999,
+        season=season,
         tcf=True
         )
     gb_tcf.gen_bracket(
-        bracket_name=f"gb_tcf_prob_{random.randint(0, 9999)}_{season}",
+        bracket_name=f"gb_tcf",
         brackets_dir=f"{root_dir}/{brackets_dir}/{season}",
-        probability=True
+        probability=True,
+        k=99999
         )
 
     # lr_tcf = BracketGen(
@@ -299,7 +308,7 @@ if __name__ == '__main__':
     #     final_stats_df=finalgames_exp_tcf, 
     #     tcf=True)
     # lr_tcf.gen_bracket(
-    #     bracket_name=f"lr_tcf_{season}",
+    #     bracket_name=f"lr_tcf",
     #     brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
     #     )
 
@@ -309,7 +318,7 @@ if __name__ == '__main__':
     #     final_stats_df=finalgames_exp_tcf, 
     #     tcf=True)
     # rf_tcf.gen_bracket(
-    #     bracket_name=f"rf_tcf_{season}",
+    #     bracket_name=f"rf_tcf",
     #     brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
     #     )
 
@@ -319,7 +328,7 @@ if __name__ == '__main__':
     #     final_stats_df=finalgames_exp_tcf, 
     #     tcf=True)
     # gb_tcf.gen_bracket(
-    #     bracket_name=f"gb_tcf_{season}",
+    #     bracket_name=f"gb_tcf",
     #     brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
     #     )
 
@@ -329,7 +338,7 @@ if __name__ == '__main__':
     #     final_stats_df=finalgames, 
     #     tcf=False)
     # lr.gen_bracket(
-    #     bracket_name=f"lr_{season}",
+    #     bracket_name=f"lr",
     #     brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
     #     )
 
@@ -339,7 +348,7 @@ if __name__ == '__main__':
     #     final_stats_df=finalgames, 
     #     tcf=False)
     # rf.gen_bracket(
-    #     bracket_name=f"rf_{season}",
+    #     bracket_name=f"rf",
     #     brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
     #     )
 
@@ -349,7 +358,7 @@ if __name__ == '__main__':
     #     final_stats_df=finalgames, 
     #     tcf=False)
     # gb.gen_bracket(
-    #     bracket_name=f"gb_{season}",
+    #     bracket_name=f"gb",
     #     brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
     #     )
 
@@ -365,7 +374,7 @@ if __name__ == '__main__':
     #     final_stats_df=finalgames_exp_tcf, 
     #     tcf=True)
     # ave.gen_bracket(
-    #     bracket_name=f"model_ave_{season}", 
+    #     bracket_name=f"model_ave", 
     #     model_ave=True,
     #     brackets_dir=f"{root_dir}/{brackets_dir}/{season}"
     #     )

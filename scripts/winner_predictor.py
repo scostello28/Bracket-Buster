@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from filters import pre_matchup_feature_selection
 from scraping_utils import read_seasons
+from model_utils import read_model
 
 import sys
 import warnings
@@ -74,29 +75,6 @@ def make_prediction(fit_model_path, final_games, team1, team2, tcf=True):
     matchup = merge(final_games, team1, team2, tcf)
     matchup_reversed = merge(final_games, team2, team1, tcf)
     game_predict(model, matchup, matchup_reversed, team1, team2)
-
-def read_model(fit_model_path):
-
-    if type(fit_model_path) == str:
-        if fit_model_path[-4:] == ".pkl":
-            with open(fit_model_path, 'rb') as f:
-                model = pickle.load(f)
-        elif fit_model_path[-7:] == ".joblib":
-            model = joblib.load(fit_model_path)
-
-        return model
-
-    elif type(fit_model_path) == dict:
-        models = {}
-        for model_path, weight in fit_model_path.items():
-            if model_path[-4:] == ".pkl":
-                with open(model_path, 'rb') as f:
-                    model = pickle.load(f)
-                models[model] = weight
-            elif model_path[-7:] == ".joblib":
-                model = joblib.load(fit_model_path)
-                models[model] = weight
-        return models
 
 def make_prediction_old(pickled_model, pickled_model_exp_tcf, final_games, finalgames_exp_tcf, team1, team2):
     with open(pickled_model, 'rb') as f:
